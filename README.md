@@ -4,7 +4,11 @@
 
 Demo paper submitted to The Web Conference 2027 (WWW '27 Companion, Demo Track).
 
-<!-- TODO: add links when available: paper PDF · demo video · live demo -->
+<p align="center">
+  <a href="http://82.157.0.181:8084/"><b>Live demo</b></a> ·
+  <a href="https://youtu.be/5Gy8rtLjVBg"><b>Demo video</b></a> ·
+  <a href="http://82.157.0.181:8084/cseg.html"><b>Evidence-graph walkthrough</b></a>
+</p>
 
 <p align="center">
   <img src="docs/figures/interface.png" alt="The CampusScope web interface" width="100%">
@@ -111,6 +115,10 @@ CampusScope answers 85.0% of the items correctly (95% CI 79.9–90.2), against 7
 
 ## Demonstration scenarios
 
+Watch them in the [demo video](https://youtu.be/5Gy8rtLjVBg), or try them in the [live demo](http://82.157.0.181:8084/)
+with the S1–S4 buttons of the dialogue panel. The [evidence-graph walkthrough](http://82.157.0.181:8084/cseg.html)
+explains the graph behind S1 step by step.
+
 | | Scenario | What the visitor sees |
 |---|---|---|
 | **S1** | Silent campus (C2) | "When is the track field open today?" on 20 January 2026 without a campus: the branches disagree, and listing both (0.80) beats asking (1.00) and guessing (1.71). |
@@ -134,7 +142,8 @@ data files into `data/` (format: [data/README.md](data/README.md)) and the cache
 The cache holds every LLM reply and embedding of the paper's runs, so with it the demo answers the scenarios as in
 the paper without any model endpoint.
 
-**Demo.** One command starts the front end, the back end and Milvus, and builds the index on first start:
+**Demo.** A hosted version runs at <http://82.157.0.181:8084/>. To run your own, one command starts the front end,
+the back end and Milvus, and builds the index on first start:
 
 ```bash
 cd demo

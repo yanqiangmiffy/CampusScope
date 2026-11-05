@@ -8,6 +8,8 @@ the deployed RAG assistant's, and explores the condition-scoped evidence graph b
 English by default (`?lang=zh` for Chinese). Questions are asked in Chinese, like the notices; every answer
 gets an English gloss.
 
+Hosted version: <http://82.157.0.181:8084/> · video: <https://youtu.be/5Gy8rtLjVBg>.
+
 ## Run (laptop or venue)
 
 Needs `../data/` and `../cache/` (see [`../data/README.md`](../data/README.md)) and `../.env` with the model
