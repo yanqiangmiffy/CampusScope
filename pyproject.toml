@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "campusscope"
+version = "1.0.0"
+description = "Condition-scoped evidence graphs for question answering over institutional web notices (WWW 2027 demo)"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.10"
+dependencies = [
+    "openai>=1.40",
+    "pymilvus>=2.5.0",
+]
+
+[project.optional-dependencies]
+corpus = ["pdfplumber>=0.11"]          # scripts/prepare_corpus.py
+dev = ["pytest>=8", "ruff>=0.6"]
+
+[tool.setuptools.packages.find]
+include = ["campusscope*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 140
+target-version = "py310"
+extend-exclude = ["demo"]              # the demo has its own configuration (demo/backend/pyproject.toml)
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+ignore = [
+    "E501",   # the prompts are long lines and stay byte-identical (the LLM cache is keyed by them)
+    "E741",   # `l` as the loop variable over JSONL lines
+    "B008",   # Options() as a default argument: a read-only dataclass
+    "B023",   # closures over loop variables that are called inside the same iteration
+    "B905",   # zip() over sequences of deliberately different lengths (e.g. cuts, cuts[1:])
+]

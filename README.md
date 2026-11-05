@@ -17,6 +17,15 @@ Middle: the agent trace, with the cost of guessing (1.71), listing (0.80) and as
 Right: the timeline of the evidence graph; lanes are campuses, bars are validity periods, the black line is "today".
 </sub></p>
 
+<p align="center">
+  <a href="#getting-started">Getting started</a> ·
+  <a href="#reproducing-table-1">Reproducing Table 1</a> ·
+  <a href="demo/README.md">Demo</a> ·
+  <a href="#repository-layout">Repository layout</a> ·
+  <a href="data/README.md">Data</a> ·
+  <a href="#citation">Citation</a>
+</p>
+
 ## Overview
 
 Institutions publish their services on the Web as a stream of notices, each valid for one campus and one period
@@ -109,12 +118,116 @@ CampusScope answers 85.0% of the items correctly (95% CI 79.9–90.2), against 7
 | **S3** | Revision (C3) | "When does the East bathhouse open in the morning?" on 9 March 2026: the September slot is struck through, revised in January; dragging "today" back to October makes it apply again. |
 | **S4** | No notice yet (C3) | Winter-break hours asked in December 2025: no fact of the new cycle exists, so the *rec* edge leads to last winter's hours, given with their year. |
 
+## Getting started
+
+Requires Python ≥ 3.10 (and Docker for the demo).
+
+```bash
+git clone https://github.com/yanqiangmiffy/CampusScope.git
+cd CampusScope
+pip install -e ".[dev]"
+cp .env.example .env        # model endpoints and Milvus; see the comments in the file
+```
+
+**Data and cache.** The data files, the run records and the LLM cache are not included in this repository.
+With them, put the data files into `data/` (format: [data/README.md](data/README.md)), the cache into
+`cache/llm_cache.sqlite` and the run records into `outputs/runs/`. The cache holds every LLM reply and embedding
+of the paper's runs, so with it the demo and the scripts replay the paper without any model endpoint.
+
+**Demo.** One command starts the front end, the back end and Milvus, and builds the index on first start:
+
+```bash
+cd demo
+docker compose up -d --build          # http://localhost:8795
+```
+
+The interface is in English (`?lang=zh` for Chinese); the five scenarios work offline from the cache.
+See [demo/README.md](demo/README.md) for the server setup with a shared Milvus, the URL parameters and the
+fallbacks when a service is down.
+
+**Tests.** `pytest` runs the unit tests of the mechanisms (scope inheritance, applicability with revision and
+recurrence, the costs of Eq. 2, the metrics); they need neither data nor services.
+
+## Reproducing Table 1
+
+From the run records (`outputs/runs/`), without any model call:
+
+```bash
+python scripts/make_table.py          # -> outputs/table1.md, outputs/table1.json
+```
+
+Rerunning the systems (with the cache, the recorded calls are replayed):
+
+```bash
+docker compose -f demo/docker-compose.yml up -d milvus           # Milvus on localhost:19531
+export MILVUS_URI=http://localhost:19531
+python scripts/build_index.py --only chunks,full                 # all variants: no --only (ablations)
+python scripts/run_benchmark.py --suite main                     # also: ablation, sweep
+python scripts/run_scenarios.py                                  # S1-S5 of the demo
+python scripts/make_table.py
+```
+
+For a few items whose named service point matches several graph keys equally well, `EvidenceGraph.lookup`
+breaks the tie in hash order, so a rerun can differ from the recorded run on those items.
+
+The full pipeline, in order:
+
+| Script | Paper | Needs |
+| --- | --- | --- |
+| `scripts/check_env.py` | | checks Milvus, the embedder and the chat model |
+| `scripts/prepare_corpus.py` | §2.1 | the notice PDFs (not distributed), Qwen3-32B |
+| `scripts/compile_graph.py` | §2.2 | DeepSeek-V4.1-Flash (or the cache) |
+| `scripts/build_index.py` | §3.1 | Milvus, bge-large-zh-v1.5 (or the cache) |
+| `scripts/build_benchmark.py` | §4.1 | Bonsai-27B, Qwen3-32B |
+| `scripts/run_benchmark.py` | §4.1 | Milvus, DeepSeek-V4.1-Flash (or the cache) |
+| `scripts/run_scenarios.py` | §4.2 | Milvus, DeepSeek-V4.1-Flash (or the cache) |
+| `scripts/make_table.py` | Table 1 | the run records only |
+
+### Hyper-parameters
+
+All fixed before the first full evaluation and never tuned.
+
+| | Value | Where |
+| --- | --- | --- |
+| λ (cost of a wrong answer, in clarification turns) | 10 | `campusscope/policy.py` |
+| β (cost of each extra listed fact) | 0.4 | `campusscope/policy.py` |
+| Temperature, thinking | 0, off | `campusscope/llm.py` |
+| Compiler window | 800 characters | `campusscope/compiler.py` |
+| Year anchoring of dates | a date outside [τ(d) − 200 d, τ(d) + 400 d] takes the year that places it in [τ(d) − 60 d, τ(d) + 400 d] | `campusscope/text.py` |
+| Baseline chunks | 600 characters, overlap 100, top 6 | `campusscope/chunking.py`, `campusscope/baselines.py` |
+| Hybrid retrieval | bge-large-zh-v1.5 + BM25, RRF (k = 60) | `campusscope/search.py` |
+| Clarifications per dialogue | at most 2 | `campusscope/evaluation/simulate.py` |
+
+## Repository layout
+
+```text
+campusscope/                the system
+├── compiler.py             evidence-graph compiler, LLM part: outline and span-grounded facts (§2.2)
+├── graph.py                scope inheritance σ*(f), validity V(f), rev/rec edges (§2.2); applicability A(x,t,T) (Eq. 1)
+├── policy.py               cost-sensitive responder: guess, list or ask (Eq. 2)
+├── agent.py                the online agent: plan → ground → apply → decide → write → verify (§2.3, §3.2)
+├── search.py, index.py     Milvus hybrid retrieval and the indexed units: chunks, facts, passages (§3.1)
+├── baselines.py            the seven baselines of Table 1
+├── evaluation/             simulated users, outcome-based judge, Table 1 metrics (§4.1)
+└── llm.py, text.py, chunking.py, config.py
+scripts/                    the pipeline (table above)
+demo/                       the web demo: FastAPI + SSE back end, React front end, Docker Compose (§3.2, §3.3)
+data/                       notices, compiled notices, CondQA-RUC (see data/README.md)
+tests/                      unit tests (no data or services needed)
+```
+
 ## Data and ethics
 
-CampusScope uses only public information: the notices that the General Services Department of Renmin University
-of China publishes on its website (Comprehensive Services Portal) and on its official WeChat account. No non-public
-or personal data enter the system or reach a model. The users in the evaluation are simulated by an LLM, and the
-questions are generated from notices.
+CampusScope is built on the notices that the General Services Department of Renmin University of China publishes
+on its website (Comprehensive Services Portal) and on its official WeChat account. Two small aggregate files, a
+place-name gazetteer and a per-type campus prior, were derived from the department's internal service log; they
+contain no request text and no personal data (see [data/README.md](data/README.md)). No personal data reach a
+model. The questions of CondQA-RUC are generated from the notices, and the users in the evaluation are simulated
+by rules that answer a clarification truthfully, only about what was asked.
+
+## License
+
+The code is released under the [MIT License](LICENSE). The notices remain the property of their publisher.
 
 ## Citation
 
