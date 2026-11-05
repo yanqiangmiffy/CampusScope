@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>证据图长什么样？· 以田径场为例 · CampusScope</title>
+<title>Evidence graph walkthrough · CampusScope</title>
 <style>
 :root{
   --bg:#F4F5FA; --ink:#101828; --ink2:#344054; --ink3:#667085; --ink4:#98A2B3; --line:#E4E7EC; --card:#fff;
@@ -163,7 +163,7 @@ ul.kv li .chip{flex:none}
 .fgrid button:hover{color:var(--ink)}
 .fgrid button.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(16,24,40,.14);font-weight:700}
 .chain{margin:6px 0 4px;display:flex;flex-direction:column;gap:9px}
-.crow{display:grid;grid-template-columns:44px 1fr;gap:6px;align-items:start}
+.crow{display:grid;grid-template-columns:64px 1fr;gap:6px;align-items:start}
 .clabel{font-size:12px;font-weight:800;color:var(--ink3);padding-top:4px}
 .csteps{display:flex;flex-wrap:wrap;gap:3px 2px;align-items:center}
 .cs{font-size:11.5px;padding:3px 7px;border-radius:8px;background:#F2F4F7;color:#98A2B3;opacity:0;transform:translateY(5px);animation:pop .35s forwards;line-height:1.35;text-align:center}
@@ -178,7 +178,7 @@ ul.kv li .chip{flex:none}
 .qcard{border-radius:15px;padding:10px 13px;background:linear-gradient(135deg,#F5F3FF,#FFF6EE);border:1px solid #ECE8FF;margin:6px 0 8px}
 .qcard .qt{font-size:16px;font-weight:800;color:var(--ink)}
 .qcard .qm{margin-top:6px;display:flex;gap:6px;flex-wrap:wrap}
-.ctrl{display:grid;grid-template-columns:40px 1fr;gap:8px;align-items:center;margin:5px 0}
+.ctrl{display:grid;grid-template-columns:64px 1fr;gap:8px;align-items:center;margin:5px 0}
 .ctrl>label{font-size:12px;font-weight:800;color:var(--ink3)}
 .ctrl .seg{justify-self:start}
 .daterow{display:flex;align-items:center;gap:10px}
@@ -208,7 +208,7 @@ input[type=range]{width:100%;accent-color:var(--brand)}
 .brc.zgc .bh{color:var(--zgc-ink)} .brc.tz .bh{color:var(--tz-ink)}
 .brc.pick{box-shadow:0 0 0 2px var(--ok) inset}
 .costs{margin-top:8px;display:flex;flex-direction:column;gap:6px}
-.cost{display:grid;grid-template-columns:78px 1fr 44px;gap:8px;align-items:center;font-size:12px;color:var(--ink2)}
+.cost{display:grid;grid-template-columns:118px 1fr 44px;gap:8px;align-items:center;font-size:12px;color:var(--ink2)}
 .cost .track{height:10px;border-radius:6px;background:#F2F4F7;overflow:hidden}
 .cost .fill{height:100%;border-radius:6px;background:#C9CED8;transition:width .5s cubic-bezier(.2,.8,.2,1)}
 .cost.win .fill{background:linear-gradient(90deg,#12B76A,#32D583)}
@@ -226,7 +226,7 @@ input[type=range]{width:100%;accent-color:var(--brand)}
 .chk .m.y{background:var(--ok)} .chk .m.n{background:#F04438} .chk .m.z{background:#98A2B3}
 .verdict{margin-top:6px;font-size:12.5px;font-weight:800;padding:6px 9px;border-radius:9px}
 .verdict.y{background:var(--ok-bg);color:#067647} .verdict.n{background:#F2F4F7;color:#475467} .verdict.h{background:var(--rec-bg);color:#5B3FD9}
-.kvs{display:grid;grid-template-columns:62px 1fr;gap:3px 8px;font-size:12px;line-height:1.55;margin-top:6px;color:var(--ink2)}
+.kvs{display:grid;grid-template-columns:84px 1fr;gap:3px 8px;font-size:12px;line-height:1.55;margin-top:6px;color:var(--ink2)}
 .kvs span:nth-child(odd){color:var(--ink4);font-weight:600}
 .foot{font-size:11.5px;color:var(--ink4);display:flex;justify-content:space-between;gap:16px}
 .foot code{font-size:11px}
@@ -239,6 +239,9 @@ input[type=range]{width:100%;accent-color:var(--brand)}
   .step .t2{display:none}
   .legend{display:none}
 }
+.langsw{flex:none;font-size:12.5px;font-weight:700;color:var(--ink2);background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px 13px;text-decoration:none;white-space:nowrap}
+.langsw:hover{border-color:#B8AEFF;color:var(--brand)}
+.noglosses .gloss{display:none}
 </style>
 </head>
 <body>
@@ -253,19 +256,20 @@ input[type=range]{width:100%;accent-color:var(--brand)}
         </svg>
       </div>
       <div style="min-width:0">
-        <h1>条件作用域证据图，<em>一步步看懂</em></h1>
-        <div class="sub">以「田径场」为例：通知 → 标题树 → 带条件的事实 → 连成图 → 回答问题 · 全部来自 CampusScope v10 的真实编译结果</div>
+        <h1 data-en="The condition-scoped evidence graph, &lt;em&gt;step by step&lt;/em&gt;">条件作用域证据图，<em>一步步看懂</em></h1>
+        <div class="sub" data-en="Track-field example: notice → heading tree → facts → graph → answer (real compiler output)">以「田径场」为例：通知 → 标题树 → 带条件的事实 → 连成图 → 回答问题 · 全部来自 CampusScope 的真实编译结果</div>
       </div>
     </div>
     <div class="legend">
-      <span class="lg"><i class="sw" style="background:var(--zgc)"></i>中关村校区</span>
-      <span class="lg"><i class="sw" style="background:var(--tz)"></i>通州校区</span>
-      <span class="lg"><i class="sw" style="background:var(--time)"></i>有效期</span>
-      <span class="lg"><i class="ln rec"></i>rec 往年同期</span>
-      <span class="lg"><i class="ln rev"></i>rev 被修订</span>
-      <span class="lg"><i class="sw" style="background:var(--ok)"></i>适用</span>
-      <span class="lg"><i class="sw" style="background:var(--warn)"></i>抽取错误</span>
+      <span class="lg"><i class="sw" style="background:var(--zgc)"></i><span data-en="Zhongguancun campus">中关村校区</span></span>
+      <span class="lg"><i class="sw" style="background:var(--tz)"></i><span data-en="Tongzhou campus">通州校区</span></span>
+      <span class="lg"><i class="sw" style="background:var(--time)"></i><span data-en="validity">有效期</span></span>
+      <span class="lg"><i class="ln rec"></i><span data-en="rec earlier cycle">rec 往年同期</span></span>
+      <span class="lg"><i class="ln rev"></i><span data-en="rev revised">rev 被修订</span></span>
+      <span class="lg"><i class="sw" style="background:var(--ok)"></i><span data-en="applicable">适用</span></span>
+      <span class="lg"><i class="sw" style="background:var(--warn)"></i><span data-en="extraction error">抽取错误</span></span>
     </div>
+    <a class="langsw" id="langSw" href="?lang=zh">中文</a>
   </header>
 
   <nav class="steps" id="steps"></nav>
@@ -276,10 +280,10 @@ input[type=range]{width:100%;accent-color:var(--brand)}
         <div class="stage-title" id="stageTitle"></div>
         <div class="tools">
           <div class="seg" id="dsSeg" style="display:none">
-            <button data-ds="track" class="on">田径场</button><button data-ds="bath">东区浴室（修订边）</button>
+            <button data-ds="track" class="on" data-en="Track field">田径场</button><button data-ds="bath" data-en="East bathhouse (revisions)">东区浴室（修订边）</button>
           </div>
-          <button class="switch" id="swEdges" style="display:none"><i></i>显示全部边</button>
-          <button class="switch" id="swFix" style="display:none"><i></i>按 PDF 原文更正</button>
+          <button class="switch" id="swEdges" style="display:none"><i></i><span data-en="Show all edges">显示全部边</span></button>
+          <button class="switch" id="swFix" style="display:none"><i></i><span data-en="Correct by the PDF">按 PDF 原文更正</span></button>
         </div>
       </div>
       <div class="canvas" id="canvas">
@@ -291,15 +295,15 @@ input[type=range]{width:100%;accent-color:var(--brand)}
     <aside class="panel">
       <div class="pbody-wrap" id="panel"></div>
       <div class="pnav">
-        <button class="btn" id="prev">← 上一步</button>
+        <button class="btn" id="prev" data-en="← Previous">← 上一步</button>
         <div class="dots" id="dots"></div>
         <button class="btn primary" id="next">下一步 →</button>
       </div>
     </aside>
   </div>
   <div class="foot">
-    <span>数据：<code>paper/v10/data/compiled_wb.jsonl</code> 经 <code>candor/graph.py</code> 构建（与论文实验同一份）；回答逻辑复刻 <code>candor_agent.respond</code>（不含检索段落和 LLM 写作，答复文字为示意）。</span>
-    <span>← → 键切换步骤</span>
+    <span data-en="Data: &lt;code&gt;data/compiled_deepseek.jsonl&lt;/code&gt;, built by &lt;code&gt;campusscope/graph.py&lt;/code&gt; (the same data as the paper’s experiments). The answer logic mirrors &lt;code&gt;CampusScope.respond&lt;/code&gt; in &lt;code&gt;campusscope/agent.py&lt;/code&gt;, without passage retrieval and LLM writing; the answer text is illustrative.">数据：<code>data/compiled_deepseek.jsonl</code> 经 <code>campusscope/graph.py</code> 构建（与论文实验同一份）；回答逻辑复刻 <code>campusscope/agent.py</code> 的 <code>CampusScope.respond</code>（不含检索段落和 LLM 写作，答复文字为示意）。</span>
+    <span data-en="← → keys switch steps">← → 键切换步骤</span>
   </div>
 </div>
 
@@ -315,13 +319,32 @@ const C = {zgc:'#2E6BE6',zgcBg:'#EAF1FE',zgcBd:'#B9CFFB',zgcInk:'#1D4ED8',tz:'#E
   ink:'#101828',ink2:'#344054',ink3:'#667085',ink4:'#98A2B3',line:'#E4E7EC'};
 const CAMPUS = {zgc:'中关村校区', tz:'通州校区'};
 const CSHORT = {zgc:'中关村', tz:'通州'};
+// ---- language: English by default, ?lang=zh for Chinese. The notices, quotes and headings stay in Chinese (they are
+// the source); CAMPUS / CSHORT / '寒假' are matched against the data and stay Chinese, display uses the *_D maps.
+const LANG = new URLSearchParams(location.search).get('lang') === 'zh' ? 'zh' : 'en';
+const EN = LANG === 'en';
+const TR = (zh, en) => EN ? en : zh;
+const CAMPUS_D = EN ? {zgc:'Zhongguancun campus', tz:'Tongzhou campus'} : CAMPUS;
+const CSHORT_D = EN ? {zgc:'Zhongguancun', tz:'Tongzhou'} : CSHORT;
+const HIST_BADGE = TR('往年', 'past');
+const PILL_FS = EN ? 12 : 12.5;
+// column headers of the timeline: one short word (the full title is in the tooltip)
+const KIND_EN = {'寒假通知':'winter', '暑假通知':'summer', '暑期指南':'summer', '国庆通知':'Natl Day', '跑道使用':'track', '新生攻略':'freshers', '增加早场':'early slot'};          // English labels are wider: the timeline must still fit
+const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const GLOSS = {"田径场": "track field", "东区浴室": "East bathhouse", "开放状态": "opening status", "开放时间": "opening hours", "田径球场": "track & ball fields", "浴室": "bathhouses", "田径场 · 开放情况": "track field · availability", "东区浴室 · 开放情况": "East bathhouse · availability", "寒假": "winter break", "暑假": "summer break", "国庆": "National Day", "春季学期": "spring term", "秋季学期": "autumn term", "国庆通知": "National Day", "增加早场": "morning slot", "寒假通知": "winter break", "新生攻略": "freshman guide", "暑假通知": "summer break", "暑期指南": "summer guide", "跑道使用": "track use", "2024 寒假通知": "2024 winter-break notice", "2024 暑期指南": "2024 summer guide", "2025 国庆通知": "2025 National Day notice", "2025 寒假通知": "2025 winter-break notice", "2025 新生住宿攻略": "2025 freshman housing guide", "2025 暑期指南": "2025 summer guide", "2026 寒假通知": "2026 winter-break notice", "2026 暑假通知": "2026 summer-break notice", "浴室增加早场": "bathhouse adds a morning slot", "田径场跑道使用通知": "track-use notice", "全天开放": "open all day", "全天暂停": "closed all day", "正常开放": "open", "暂停早场": "morning slot suspended", "2/10–2/24 暂停": "closed 2/10–2/24", "周六 9:30–12:00 训练": "Sat 9:30–12:00 training", "增加早场 7:00–8:00": "morning slot 7:00–8:00 added", "工作日 16:00–18:30 训练": "Mon–Fri 16:00–18:30 training", "工作日 19:40–21:10 跑课": "Mon–Fri 19:40–21:10 class", "除夕 12:00–20:00": "New Year’s Eve 12:00–20:00", "2025级新生": "first-year students (class of 2025)", "学生": "students", "师生": "students and staff", "暑期留校学生": "students on campus in the summer", "留校师生": "students and staff on campus", "综合服务保障体系各单位服务对象（含师生、教职工、校友及家属区住户等）": "everyone the department serves (students, staff, alumni, residents)", "引文本身": "the quote itself", "通知整体": "the notice as a whole", "中关村校区": "Zhongguancun campus", "通州校区": "Tongzhou campus", "体育场馆": "sports venues", "体育场馆假期开放时间": "sports venue hours in the break", "公共服务": "public services", "校内基础设施": "campus facilities", "浴室及开水房运行服务": "bathhouses and boiled water", "物业服务": "property services", "球类场地": "ball courts", "生活服务": "daily services", "中关村校区公共浴室增加早间开放时段": "morning hours added at the Zhongguancun bathhouses", "餐饮服务": "catering", "商贸服务": "retail", "水电暖收费": "utility fees", "开水房": "boiled water", "电梯维修": "elevator repair", "公共教学楼": "teaching buildings", "住宿服务": "housing", "其他服务": "other services", "电费业务": "electricity billing", "报修服务": "repairs", "一键报修": "one-click repair requests", "原文表格里，「10:00—18:00」这一格属于北区足球场（寒假期间正常开放，开放时间调整为10:00—18:00，其中2月16日暂停）。PDF 转文字时表格错行，LLM 把它挂到了田径场上。中关村田径场这一行只写了「正常开放」。": "In the source table, 10:00–18:00 belongs to the north football field (open as usual in the winter break, 10:00–18:00, closed on Feb 16). The PDF text shifted a table row and the LLM attached it to the track field, whose Zhongguancun row only says “open as usual”.", "原文表格里，这一格属于健身房、乒乓球室（2月10日—2月24日暂停开放，1月12日—2月9日按需调整）。PDF 转文字时表格错行，LLM 把它挂到了田径场上。通州田径场这一行是「正常开放，8:00—22:00」。": "In the source table, this cell belongs to the gym and the table-tennis room (closed Feb 10–24, hours adjusted to demand Jan 12–Feb 9). The PDF text shifted a table row and the LLM attached it to the track field, whose Tongzhou row says “open as usual, 8:00–22:00”."};
+const dx = s => {                       // English gloss of a data string (identity in Chinese)
+  if(!EN || s == null) return s;
+  if(s in GLOSS) return GLOSS[s];
+  const m = /^标题「(.+)」$/.exec(s);
+  return m ? `heading “${m[1]}”` + (GLOSS[m[1]] ? ` (${GLOSS[m[1]]})` : '') : s;
+};
 const ERR = new Set(['b28eb1484c#45','b28eb1484c#61']);
 const DAY = 86400000, MAXD = '9999-12-31';
 const $ = s => document.querySelector(s);
 const toMs = s => Date.UTC(+s.slice(0,4), +s.slice(5,7)-1, +s.slice(8,10));
 const fromMs = ms => new Date(ms).toISOString().slice(0,10);
-const md = s => `${+s.slice(5,7)}月${+s.slice(8,10)}日`;
-const ymd = s => `${+s.slice(0,4)}年${+s.slice(5,7)}月${+s.slice(8,10)}日`;
+const md = s => EN ? `${MON[+s.slice(5,7)-1]} ${+s.slice(8,10)}` : `${+s.slice(5,7)}月${+s.slice(8,10)}日`;
+const ymd = s => EN ? `${MON[+s.slice(5,7)-1]} ${+s.slice(8,10)}, ${+s.slice(0,4)}` : `${+s.slice(0,4)}年${+s.slice(5,7)}月${+s.slice(8,10)}日`;
 const mdShort = s => `${+s.slice(5,7)}/${+s.slice(8,10)}`;
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 function el(tag, attrs, parent){ const e = document.createElementNS(NS, tag);
@@ -331,20 +354,20 @@ function tx(parent, x, y, s, attrs){ const t = el('text', Object.assign({x, y}, 
 const mctx = document.createElement('canvas').getContext('2d');
 function tw(s, size=12, weight=400){ mctx.font = `${weight} ${size}px ${FONT}`; return mctx.measureText(s).width; }
 function vShort(f){
-  if(!f.start && !f.end) return `自${md(f.pub)}起长期`;
-  if(f.start && !f.end) return `${md(f.start)}起，未定结束`;
+  if(!f.start && !f.end) return TR(`自${md(f.pub)}起长期`, `from ${md(f.pub)}, no end date`);
+  if(f.start && !f.end) return TR(`${md(f.start)}起，未定结束`, `from ${md(f.start)}, end not set`);
   if(f.start === f.end) return md(f.start);
-  return `${md(f.start)}—${md(f.end)}`;
+  return TR(`${md(f.start)}—${md(f.end)}`, `${md(f.start)}–${md(f.end)}`);
 }
 function vLong(f){
-  if(!f.start && !f.end) return `无起止日期 → 自发布日 ${f.pub} 起一直有效`;
-  if(f.start && !f.end) return `${f.start} → 未定结束`;
+  if(!f.start && !f.end) return TR(`无起止日期 → 自发布日 ${f.pub} 起一直有效`, `no dates → valid from its publication date ${f.pub} on`);
+  if(f.start && !f.end) return TR(`${f.start} → 未定结束`, `${f.start} → no end date`);
   return `${f.start} → ${f.end}`;
 }
 function noticeOf(ds, f){ return ds.notices.find(n => n.id === f.doc); }
 
 /* =====================================================================
-   1. answer engine (mirrors graph.status + candor_agent.respond)
+   1. answer engine (mirrors EvidenceGraph.status + CampusScope.respond)
    ===================================================================== */
 const PER = {'寒假':[1,12,2,28]};
 const iso3 = (y,m,d) => `${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
@@ -429,26 +452,26 @@ function engine(ds, facts, t, campus, q){
 const S = {step:1, ds:'track', fix:false, allEdges:false, t:'2026-01-20', campus:null, q:'today', sel:'b28eb1484c#62', preset:0};
 const PRESETS = {
   track:[
-    {label:'Q1 · 1月20日 · 没说校区', t:'2026-01-20', campus:null, q:'today'},
-    {label:'通州同学 · 1月20日', t:'2026-01-20', campus:'tz', q:'today'},
-    {label:'Q3 · 12月28日 · 问寒假', t:'2025-12-28', campus:null, q:'寒假'},
-    {label:'去年寒假 · 2025年2月1日', t:'2025-02-01', campus:null, q:'today'},
-    {label:'寒假结束后 · 3月10日', t:'2026-03-10', campus:null, q:'today'},
+    {label:TR(`1月20日 · 没说校区`, `Jan 20 · campus not stated`), t:'2026-01-20', campus:null, q:'today'},
+    {label:TR(`通州同学 · 1月20日`, `Tongzhou student · Jan 20`), t:'2026-01-20', campus:'tz', q:'today'},
+    {label:TR(`12月28日 · 问寒假`, `Dec 28 · asks about the winter break`), t:'2025-12-28', campus:null, q:'寒假'},
+    {label:TR(`去年寒假 · 2025年2月1日`, `last winter break · Feb 1, 2025`), t:'2025-02-01', campus:null, q:'today'},
+    {label:TR(`寒假结束后 · 3月10日`, `after the winter break · Mar 10`), t:'2026-03-10', campus:null, q:'today'},
   ],
   bath:[
-    {label:'8月25日 · 常规时段', t:'2025-08-25', campus:'zgc', q:'today'},
-    {label:'9月13日 · 早场刚增加', t:'2025-09-13', campus:'zgc', q:'today'},
-    {label:'10月3日 · 国庆', t:'2025-10-03', campus:'zgc', q:'today'},
-    {label:'10月9日 · 国庆后', t:'2025-10-09', campus:'zgc', q:'today'},
-    {label:'1月20日 · 寒假', t:'2026-01-20', campus:'zgc', q:'today'},
-    {label:'3月9日 · 论文 S2', t:'2026-03-09', campus:'zgc', q:'today'},
+    {label:TR(`8月25日 · 常规时段`, `Aug 25 · regular hours`), t:'2025-08-25', campus:'zgc', q:'today'},
+    {label:TR(`9月13日 · 早场刚增加`, `Sep 13 · morning slot just added`), t:'2025-09-13', campus:'zgc', q:'today'},
+    {label:TR(`10月3日 · 国庆`, `Oct 3 · National Day`), t:'2025-10-03', campus:'zgc', q:'today'},
+    {label:TR(`10月9日 · 国庆后`, `Oct 9 · after National Day`), t:'2025-10-09', campus:'zgc', q:'today'},
+    {label:TR(`1月20日 · 寒假`, `Jan 20 · winter break`), t:'2026-01-20', campus:'zgc', q:'today'},
+    {label:TR(`3月9日 · 论文 S3`, `Mar 9 · paper S3`), t:'2026-03-09', campus:'zgc', q:'today'},
   ]};
 const STEPS = [
-  {t1:'原文', t2:'校区只在标题里写一次'},
-  {t1:'标题树', t2:'每个标题都可能带条件'},
-  {t1:'事实', t2:'从标题继承条件'},
-  {t1:'连成图', t2:'跨通知的两种边'},
-  {t1:'提问', t2:'同一张图，不同答案'},
+  {t1:TR(`原文`, `Notice`), t2:TR(`校区只在标题里写一次`, `campus stated once, in a heading`)},
+  {t1:TR(`标题树`, `Heading tree`), t2:TR(`每个标题都可能带条件`, `any heading may state a condition`)},
+  {t1:TR(`事实`, `Facts`), t2:TR(`从标题继承条件`, `conditions inherited from headings`)},
+  {t1:TR(`连成图`, `Graph`), t2:TR(`跨通知的两种边`, `two kinds of edges across notices`)},
+  {t1:TR(`提问`, `Ask`), t2:TR(`同一张图，不同答案`, `one graph, different answers`)},
 ];
 function ds(){ return DATA[S.ds]; }
 function activeFacts(){ const d = ds(); return d.facts.filter(f => !(S.fix && ERR.has(f.id))); }
@@ -511,12 +534,12 @@ function buildA(){
   el('rect', {x:318, y:12, width:464, height:98, rx:18, fill:'#fff', stroke:'#E4E7EC', filter:'url(#Ash2)'}, A.root);
   docIcon(A.root, 340, 30, 1.25);
   tx(A.root, 380, 43, an.title, {'font-size':16.5, 'font-weight':800, fill:C.ink});
-  tx(A.root, 380, 64, `${an.pub} 发布 · 23 个标题 · ${an.n_facts} 条原始事实 · 编译调用 LLM ${an.calls} 次`, {'font-size':12, fill:C.ink3});
+  tx(A.root, 380, 64, TR(`${an.pub} 发布 · 23 个标题 · ${an.n_facts} 条原始事实 · 编译调用 LLM ${an.calls} 次`, `published ${an.pub} · 23 headings · ${an.n_facts} raw facts · ${an.calls} LLM calls to compile`), {'font-size':12, fill:C.ink3});
   A.sigmaD = el('g', {class:'layer off'}, A.root);
   tx(A.sigmaD, 380, 91, 'σ(d)', {'font-size':12, 'font-style':'italic', 'font-weight':700, fill:C.ink3});
   let cx = 414;
   A.dChips = {};
-  for(const [k, text, bg, fg] of [['per','2026 寒假',C.timeBg,'#0E7490'],['v','1/12–3/1',C.timeBg,'#0E7490'],['aud','留校师生','#F2F4F7','#475467']]){
+  for(const [k, text, bg, fg] of [['per',TR(`2026 寒假`, `2026 winter break`),C.timeBg,'#0E7490'],['v','1/12–3/1',C.timeBg,'#0E7490'],['aud',TR(`留校师生`, `students & staff on campus`),'#F2F4F7','#475467']]){
     const c = chip(A.sigmaD, cx, 77, text, {bg, fg, size:11.5, h:20});
     A.dChips[k] = c; cx += c.w + 6;
   }
@@ -526,13 +549,13 @@ function buildDoc(){
   const g = A.doc;
   el('rect', {x:150, y:124, width:800, height:560, rx:18, fill:'#fff', stroke:'#E4E7EC', filter:'url(#Ash)'}, g);
   const it = (x, y, s, a) => tx(g, x, y, s, Object.assign({'font-size':12.5, fill:C.ink4, 'font-style':'italic'}, a||{}));
-  it(550, 152, '⋯ 前面是 餐饮服务 · 商贸服务 · 物业服务（水电暖、浴室、开水房……）⋯', {'text-anchor':'middle'});
+  it(550, 152, TR(`⋯ 前面是 餐饮服务 · 商贸服务 · 物业服务（水电暖、浴室、开水房……）⋯`, `⋯ before: catering · retail · property services (utilities, bathhouses, boiled water …) ⋯`), {'text-anchor':'middle'});
   // ZGC banner
   el('rect', {x:184, y:166, width:132, height:34, rx:17, fill:C.zgc}, g);
   tx(g, 250, 188, '中关村校区', {'text-anchor':'middle', 'font-size':15, 'font-weight':800, fill:'#fff'});
-  tx(g, 330, 188, '一级标题：下面几十条服务都属于中关村', {'font-size':12, fill:C.zgcInk, 'font-weight':600});
+  tx(g, 330, 188, TR(`一级标题：下面几十条服务都属于中关村`, `level-1 heading: the dozens of services below all belong to Zhongguancun`), {'font-size':12, fill:C.zgcInk, 'font-weight':600});
   const sub = (y, s) => { el('rect', {x:184, y:y-12, width:3.5, height:15, rx:1.7, fill:C.ink4}, g); tx(g, 194, y, s, {'font-size':12.5, 'font-weight':700, fill:C.ink2}); };
-  sub(228, '校内基础设施 › 体育场馆');
+  sub(228, TR(`校内基础设施 › 体育场馆`, `校内基础设施 › 体育场馆  (campus facilities › sports venues)`));
   const table = (y, rows) => {
     let yy = y;
     for(const r of rows){
@@ -554,24 +577,25 @@ function buildDoc(){
   table(238, [
     {a:'田径场、品园篮球场', b:['正常开放'], h:40},
     {a:'北区足球场', b:['寒假期间正常开放，开放时间调整为10:00—18:00，其中2月16','日（除夕）暂停开放'], h:58, fill:'#FFF6F0'},
-    {note:'⋯ 世纪馆、游泳馆、羽毛球馆等 6 行', h:30},
+    {note:TR(`⋯ 世纪馆、游泳馆、羽毛球馆等 6 行`, `⋯ 6 more rows: Century Hall, swimming pool, badminton hall …`), h:30},
   ]);
-  it(550, 392, '⋯ 住宿服务 · 其他服务 ⋯', {'text-anchor':'middle'});
+  it(550, 392, TR(`⋯ 住宿服务 · 其他服务 ⋯`, `⋯ housing · other services ⋯`), {'text-anchor':'middle'});
   el('rect', {x:184, y:406, width:112, height:34, rx:17, fill:C.tz}, g);
   tx(g, 240, 428, '通州校区', {'text-anchor':'middle', 'font-size':15, 'font-weight':800, fill:'#fff'});
-  tx(g, 310, 428, '← 这个标题落在了上一个切块里', {'font-size':12.5, fill:C.rev, 'font-weight':700});
-  it(194, 470, '⋯ 餐饮服务 · 商贸服务 · 物业服务（电费业务）⋯');
-  sub(496, '校内基础设施 › 体育场馆');
+  tx(g, 310, 428, TR(`← 这个标题落在了上一个切块里`, `← this heading fell into the previous chunk`), {'font-size':12.5, fill:C.rev, 'font-weight':700});
+  it(194, 470, TR(`⋯ 餐饮服务 · 商贸服务 · 物业服务（电费业务）⋯`, `⋯ catering · retail · property services (electricity billing) ⋯`));
+  sub(496, TR(`校内基础设施 › 体育场馆`, `校内基础设施 › 体育场馆  (campus facilities › sports venues)`));
   table(506, [
     {a:'田径场、多功能球场', b:['正常开放','开放时间：8:00—22:00'], h:58, mark:[null, ['开放时间：','8:00—22:00']]},
     {a:'健身房、乒乓球室', b:['2月10日—2月24日暂停开放，1月12日—2月9日期间根据学生锻炼需','求动态调整开放时间'], h:58, fill:'#FFF6F0'},
   ]);
-  it(550, 660, '⋯ 住宿服务 · 报修服务 ⋯', {'text-anchor':'middle'});
+  it(550, 660, TR(`⋯ 住宿服务 · 报修服务 ⋯`, `⋯ housing · repairs ⋯`), {'text-anchor':'middle'});
   // chunk overlay
   el('rect', {x:168, y:452, width:764, height:182, rx:13, fill:'rgba(229,72,77,.045)', stroke:C.rev, 'stroke-width':1.8, 'stroke-dasharray':'7 5'}, g);
-  el('rect', {x:716, y:440, width:204, height:25, rx:12.5, fill:C.rev}, g);
-  tx(g, 818, 457, '线上 RAG 的一个 600 字切块', {'text-anchor':'middle', 'font-size':12, 'font-weight':800, fill:'#fff'});
-  tx(g, 916, 624, '块里没有「通州」', {'text-anchor':'end', 'font-size':12, 'font-weight':800, fill:C.rev});
+  const chunkLbl = TR(`线上 RAG 的一个 600 字切块`, `one 600-character chunk of the deployed RAG`), chunkW = Math.max(204, tw(chunkLbl, 12, 800) + 28);
+  el('rect', {x:920 - chunkW, y:440, width:chunkW, height:25, rx:12.5, fill:C.rev}, g);
+  tx(g, 920 - chunkW/2, 457, chunkLbl, {'text-anchor':'middle', 'font-size':12, 'font-weight':800, fill:'#fff'});
+  tx(g, 916, 624, TR(`块里没有「通州」`, `no “Tongzhou” in this chunk`), {'text-anchor':'end', 'font-size':12, 'font-weight':800, fill:C.rev});
 }
 function outlineGroups(){
   const ol = DATA.anatomy.outline.map(o => ({L:o[0], name:o[1], campus:o[2], aud:o[3], start:o[4], end:o[5]}));
@@ -592,7 +616,7 @@ function buildTree(){
   groups.forEach((gr, gi) => {
     const {c, x0, px} = conf[gi], col = C[c], bg = c === 'zgc' ? '#F6F9FF' : '#FFF9F4', bd = c === 'zgc' ? '#DCE7FD' : '#FDE3CF';
     el('rect', {x:px, y:122, width:524, height:566, rx:20, fill:bg, stroke:bd}, g);
-    tx(g, px + 506, 676, c === 'zgc' ? '中关村校区这一支 · 13 个标题' : '通州校区这一支 · 10 个标题', {'text-anchor':'end', 'font-size':11.5, fill:C.ink4, 'font-weight':600});
+    tx(g, px + 506, 676, c === 'zgc' ? TR(`中关村校区这一支 · 13 个标题`, `Zhongguancun branch · 13 headings`) : TR(`通州校区这一支 · 10 个标题`, `Tongzhou branch · 10 headings`), {'text-anchor':'end', 'font-size':11.5, fill:C.ink4, 'font-weight':600});
     const pos = gr.map((n, i) => ({x:x0 + (n.L-1)*22 + 6, y:164 + i*30}));
     const lines = el('g', null, g), litLines = el('g', null, g), rows = el('g', null, g);
     gr.forEach((n, i) => {
@@ -608,13 +632,14 @@ function buildTree(){
       let cx = p.x + 11 + tw(n.name, size, w) + 8;
       const node = {x:p.x, y:p.y, textEnd:cx - 8};
       if(n.campus === 'zgc' || n.campus === 'tz'){
-        const c1 = chip(row, cx, p.y - 10.5, `σ(n) 校区 = ${CSHORT[n.campus]}`, {bg:C[n.campus], fg:'#fff', size:11.5, h:21});
+        const c1 = chip(row, cx, p.y - 10.5, TR(`σ(n) 校区 = ${CSHORT[n.campus]}`, `σ(n) campus = ${CSHORT_D[n.campus]}`), {bg:C[n.campus], fg:'#fff', size:11.5, h:21});
         node.chip = c1; cx += c1.w + 6;
       }
       if(n.start || n.end){
         const c2 = chip(row, cx, p.y - 9.5, `${mdShort(n.start)}–${mdShort(n.end)}`, {bg:C.timeBg, fg:'#0E7490', size:11, h:19});
         cx += c2.w + 6;
       }
+      if(EN && GLOSS[n.name]) tx(row, cx + 2, p.y + 4, GLOSS[n.name], {class:'gloss', 'font-size':11, fill:C.ink4, 'font-style':'italic'});
       A.nodes[`${c}:${i}`] = node;
     });
     A.nodes[c] = {pos, gr};
@@ -645,15 +670,16 @@ function buildFacts(){
     el('rect', {x, y, width:CARD.w, height:CARD.h, rx:15, fill:err ? `url(#Ahatch)` : '#fff', stroke:err ? '#F7B955' : (c === 'zgc' ? C.zgcBd : C.tzBd), 'stroke-width':1.4, filter:'url(#Ash)'}, cg);
     el('rect', {x:x+14, y:y, width:42, height:4, rx:2, fill:C[c]}, cg);
     tx(cg, x+14, y+22, id, {'font-size':10.5, fill:C.ink4, 'font-family':'Consolas,monospace'});
-    if(err){ el('rect', {x:x+CARD.w-86, y:y+9, width:74, height:19, rx:9.5, fill:C.warn}, cg);
-      tx(cg, x+CARD.w-49, y+22.5, '⚠ 抽取错误', {'text-anchor':'middle', 'font-size':11, 'font-weight':800, fill:'#fff'}); }
-    const t1 = tx(cg, x+14, y+46, f.entity, {'font-size':15, 'font-weight':800, fill:C.ink});
-    const ts = el('tspan', {'font-size':12, 'font-weight':500, fill:C.ink3}, t1); ts.textContent = `  ·  ${f.attr}`;
-    tx(cg, x+14, y+74, f.label, {'font-size':err ? 17 : 20, 'font-weight':800, fill:c === 'zgc' ? C.zgcInk : C.tzInk, class:'val'});
+    if(err){ const eLbl = TR(`⚠ 抽取错误`, `⚠ extraction error`), ew = Math.max(74, tw(eLbl, 11, 800) + 14);
+      el('rect', {x:x+CARD.w-12-ew, y:y+9, width:ew, height:19, rx:9.5, fill:C.warn}, cg);
+      tx(cg, x+CARD.w-12-ew/2, y+22.5, eLbl, {'text-anchor':'middle', 'font-size':11, 'font-weight':800, fill:'#fff'}); }
+    const t1 = tx(cg, x+14, y+46, dx(f.entity), {'font-size':15, 'font-weight':800, fill:C.ink});
+    const ts = el('tspan', {'font-size':12, 'font-weight':500, fill:C.ink3}, t1); ts.textContent = `  ·  ${dx(f.attr)}`;
+    tx(cg, x+14, y+74, dx(f.label), {'font-size':err ? 17 : 20, 'font-weight':800, fill:c === 'zgc' ? C.zgcInk : C.tzInk, class:'val'});
     const stamps = [
-      ['校区', CSHORT[c], c === 'zgc' ? C.zgcBg : C.tzBg, c === 'zgc' ? C.zgcInk : C.tzInk, `← 标题「${CAMPUS[c]}」`],
-      ['有效期', '1/12–3/1', C.timeBg, '#0E7490', '← 通知'],
-      ['人群', '留校师生', '#F2F4F7', '#475467', '← 通知'],
+      [TR(`校区`, `campus:`), CSHORT_D[c], c === 'zgc' ? C.zgcBg : C.tzBg, c === 'zgc' ? C.zgcInk : C.tzInk, TR(`← 标题「${CAMPUS[c]}」`, `← its heading`)],
+      [TR(`有效期`, `validity:`), '1/12–3/1', C.timeBg, '#0E7490', TR(`← 通知`, `← notice`)],
+      [TR(`人群`, `audience:`), TR(`留校师生`, `on campus`), '#F2F4F7', '#475467', TR(`← 通知`, `← notice`)],
     ];
     const pts = {};
     stamps.forEach((s, k) => {
@@ -665,7 +691,7 @@ function buildFacts(){
     // ghost overlay (used when "按原文更正" is on)
     const gh = el('g', {class:'ghostnote', opacity:0}, cg);
     el('rect', {x:x+8, y:y+54, width:CARD.w-16, height:26, rx:8, fill:'#fff', stroke:'#F7B955'}, gh);
-    tx(gh, x+CARD.w/2, y+71, id.endsWith('#45') ? '原文属于「北区足球场」' : '原文属于「健身房、乒乓球室」', {'text-anchor':'middle', 'font-size':12, 'font-weight':800, fill:'#B54708'});
+    tx(gh, x+CARD.w/2, y+71, id.endsWith('#45') ? TR(`原文属于「北区足球场」`, `source: north football field`) : TR(`原文属于「健身房、乒乓球室」`, `source: gym & table-tennis room`), {'text-anchor':'middle', 'font-size':12, 'font-weight':800, fill:'#B54708'});
     A.cards[id] = {g:cg, x, y, c, pts, err};
     cg.addEventListener('click', () => { S.sel = id; updateA(true); renderPanel(); });
     cg.addEventListener('mouseenter', ev => showTip(ev, f, DATA.track));
@@ -719,6 +745,7 @@ function updateA(reflow){
   A.facts.classList.toggle('off', s < 3);
   A.flow.classList.toggle('off', s < 3);
   A.sigmaD.classList.toggle('off', s < 2);
+  A.tree.classList.toggle('noglosses', s >= 3);
   for(const [id, cd] of Object.entries(A.cards)){
     cd.g.classList.toggle('sel', id === S.sel);
     const ghost = S.fix && cd.err;
@@ -741,7 +768,7 @@ function buildB(){
   // ----- one column per notice, in publication order; widths fit their widest fact -----
   const X0 = 128, X1 = 1074, lead = 18, tailMin = 132, gapMin = 8;
   const notices = [...d.notices].sort((a, b) => a.pub.localeCompare(b.pub));
-  const pillW = f => Math.ceil(tw(f.label, 12.5, 700)) + (f.err ? 46 : 30);
+  const pillW = f => Math.ceil(tw(dx(f.label), PILL_FS, 700)) + (f.err ? 46 : 30);
   const colW = notices.map(n => Math.max(...all.filter(f => f.doc === n.id).map(pillW)));
   const nN = notices.length, lastW = Math.max(colW[nN-1], tailMin);
   const sumW = colW.slice(0, -1).reduce((s, w) => s + w, 0);
@@ -792,10 +819,10 @@ function buildB(){
     const c = cols[n.id], gg = el('g', {style:'cursor:default'}, gHead);
     el('rect', {x:c.x - 5, y:40, width:Math.max(c.w, 86) + 4, height:34, rx:9, fill:'rgba(255,255,255,.001)'}, gg);
     docIcon(gg, c.x, 43, .78, '#6366F1');
-    tx(gg, c.x + 21, 54, n.kind, {'font-size':12, 'font-weight':800, fill:C.ink2});
-    tx(gg, c.x + 21, 68, n.pub, {'font-size':10.5, fill:C.ink4, 'font-family':'Consolas,monospace'});
-    gg.addEventListener('mouseenter', ev => showTipHTML(ev, `<div class="h">${esc(n.title)}</div><div class="r">发布 <b>${n.pub}</b>${n.ptype ? `　周期 <b>${esc(n.ptype)}</b>` : ''}</div>
-      <div class="r">其中「${esc(d.name)}」的事实 <b>${all.filter(f => f.doc === n.id).length}</b> 条</div><div class="id">${n.id}</div>`));
+    tx(gg, c.x + 21, 54, EN ? (KIND_EN[n.kind] || n.kind) : n.kind, {'font-size':EN ? 11 : 12, 'font-weight':800, fill:C.ink2});
+    tx(gg, c.x + 21, 68, EN ? md(n.pub) : n.pub, {'font-size':10.5, fill:C.ink4, 'font-family':'Consolas,monospace'});
+    gg.addEventListener('mouseenter', ev => showTipHTML(ev, `<div class="h">${esc(n.title)}</div><div class="r">${TR('发布', 'published')} <b>${n.pub}</b>${n.ptype ? `　${TR('周期', 'cycle')} <b>${esc(dx(n.ptype))}</b>` : ''}</div>
+      <div class="r">${TR(`其中「${esc(d.name)}」的事实 <b>${all.filter(f => f.doc === n.id).length}</b> 条`, `facts about “${esc(dx(d.name))}”: <b>${all.filter(f => f.doc === n.id).length}</b>`)}</div><div class="id">${n.id}</div>`));
     gg.addEventListener('mouseleave', hideTip);
   }
   // ----- axis: notice ticks + year boundaries -----
@@ -809,16 +836,16 @@ function buildB(){
     el('rect', {x:x - w/2, y:92, width:w, height:17, rx:8.5, fill:'#F2F4F7'}, gAxis);
     tx(gAxis, x, 104.5, `${yy}`, {'text-anchor':'middle', 'font-size':11, 'font-weight':800, fill:C.ink3});
   }
-  tx(gAxis, X1 + 2, 100, '时间', {'text-anchor':'end', 'font-size':10.5, fill:C.ink4});
+  tx(gAxis, X1 + 2, 100, TR(`时间`, `time`), {'text-anchor':'end', 'font-size':10.5, fill:C.ink4});
   // ----- campus lanes -----
   for(const L of lanes){
     const c = L.c, fill = c === 'zgc' ? 'rgba(46,107,230,.045)' : 'rgba(232,119,46,.05)', stroke = c === 'zgc' ? '#DCE7FD' : '#FDE3CF';
     const lg = el('g', {class:'lane-dim', 'data-lane':c}, gL);
     el('rect', {x:14, y:L.y, width:1072, height:L.h, rx:16, fill, stroke}, lg);
     el('rect', {x:24, y:L.y + L.h/2 - 18, width:4, height:36, rx:2, fill:C[c]}, lg);
-    tx(lg, 38, L.y + L.h/2 - 3, CSHORT[c], {'font-size':15.5, 'font-weight':800, fill:C[c]});
-    tx(lg, 38, L.y + L.h/2 + 15, '校区泳道', {'font-size':11, fill:C.ink4, 'font-weight':600});
-    if(!L.rows) tx(lg, X0 + 18, L.y + L.h/2 + 4, d.fixedCampus ? '东区浴室只在中关村（地名表：东区浴室 ⇒ 中关村），这条泳道是空的' : '（无）', {'font-size':12, fill:C.ink4, 'font-style':'italic'});
+    tx(lg, 38, L.y + L.h/2 - 3, CSHORT_D[c], {'font-size':EN ? 12.5 : 15.5, 'font-weight':800, fill:C[c]});
+    tx(lg, 38, L.y + L.h/2 + 15, TR(`校区泳道`, `campus lane`), {'font-size':11, fill:C.ink4, 'font-weight':600});
+    if(!L.rows) tx(lg, X0 + 18, L.y + L.h/2 + 4, d.fixedCampus ? TR(`东区浴室只在中关村（地名表：东区浴室 ⇒ 中关村），这条泳道是空的`, `the East bathhouse is on the Zhongguancun campus only (gazetteer: 东区浴室 ⇒ Zhongguancun), so this lane is empty`) : TR(`（无）`, `(none)`), {'font-size':12, fill:C.ink4, 'font-style':'italic'});
   }
   // ----- fact pills -----
   B.pills = {};
@@ -832,7 +859,7 @@ function buildB(){
     el('path', {d:`M${px},${by - 2} l4,4.5 l-4,4.5 l-4,-4.5 z`, fill:'#344054'}, pg);
     const body = el('rect', {class:'pbody', x:it.x, y:it.y, width:it.w, height:26, rx:13, fill:f.err ? '#FFFBF1' : '#fff', stroke:f.err ? C.warn : col, 'stroke-width':1.4, filter:'url(#Bsh)'}, pg);
     el('circle', {cx:it.x + 13, cy:it.y + 13, r:4, fill:col}, pg);
-    tx(pg, it.x + 23, it.y + 17.5, f.label, {'font-size':12.5, 'font-weight':700, fill:C.ink});
+    tx(pg, it.x + 23, it.y + 17.5, dx(f.label), {'font-size':PILL_FS, 'font-weight':700, fill:C.ink});
     if(f.err){ el('circle', {cx:it.x + it.w - 14, cy:it.y + 13, r:8, fill:C.warn}, pg);
       tx(pg, it.x + it.w - 14, it.y + 17, '!', {'text-anchor':'middle', 'font-size':11.5, 'font-weight':900, fill:'#fff'}); }
     el('line', {class:'strike', x1:it.x + 6, y1:it.y + 13, x2:it.x + it.w - 6, y2:it.y + 13, stroke:C.rev, 'stroke-width':2}, pg);
@@ -869,7 +896,7 @@ function buildB(){
     window.addEventListener('pointermove', mv); window.addEventListener('pointerup', up);
   };
   B.hint = tx(B.gHint, 550, Math.min(B.bottom + 36, 690),
-    '横轴按通知先后排开（两篇通知之间按日期等分）　◆ 发布日期 τ　细条 = 有效期 V（▶ = 没有结束日期）　泳道 = 继承来的校区 σ*',
+    TR(`横轴按通知先后排开（两篇通知之间按日期等分）　◆ 发布日期 τ　细条 = 有效期 V（▶ = 没有结束日期）　泳道 = 继承来的校区 σ*`, `notices in publication order (dates spread evenly between two notices)　◆ publication date τ　bar = validity V (▶ = no end date)　lane = inherited campus σ*`),
     {'text-anchor':'middle', 'font-size':12, fill:C.ink3});
   updateB();
 }
@@ -925,7 +952,7 @@ function drawStaticEdges(){
     el('path', {d:`M${x1},${yb} C${x1},${yb - h - 10} ${x2},${yb - h - 10} ${x2},${yb}`, fill:'none', stroke:C.rec,
       'stroke-width':p.near ? 2.2 : 1.2, opacity:p.near ? .85 : .35, 'stroke-dasharray':p.near ? null : '3 4', 'marker-end':'url(#BaRec)'}, g);
     if(p.near){
-      const mx = (x1 + x2)/2, my = yb - (h + 10)*0.75, lbl = `${p.ptype} rec`, w = tw(lbl, 10.5, 800) + 12;
+      const mx = (x1 + x2)/2, my = yb - (h + 10)*0.75, lbl = `${dx(p.ptype)} rec`, w = tw(lbl, 10.5, 800) + 12;
       el('rect', {x:mx - w/2, y:my - 9, width:w, height:17, rx:8.5, fill:'#fff', stroke:C.rec, 'stroke-width':1}, g);
       tx(g, mx, my + 3.6, lbl, {'text-anchor':'middle', 'font-size':10.5, 'font-weight':800, fill:'#5B3FD9'});
     }
@@ -960,12 +987,12 @@ function updateB(){
     const s = r.st[id]; let cls = 'pill';
     let badge = null;
     if(s == null){ cls += ' st-out'; }
-    else if(used.has(id)){ cls += r.mode === 'history' ? ' st-hist-used' : ' st-used'; badge = r.mode === 'history' ? ['往年', C.rec] : ['✓', C.ok]; }
+    else if(used.has(id)){ cls += r.mode === 'history' ? ' st-hist-used' : ' st-used'; badge = r.mode === 'history' ? [HIST_BADGE, C.rec] : ['✓', C.ok]; }
     else cls += ' st-' + s;
     if(r.mode === 'ask' && s === 'cur') { cls = 'pill st-used'; badge = ['?', '#7A5AF8']; }
     if(id === S.sel) cls += ' sel';
     p.g.setAttribute('class', cls);
-    p.body.setAttribute('filter', badge ? (badge[0] === '往年' ? 'url(#BgRec)' : (badge[0] === '?' ? 'url(#BgRec)' : 'url(#BgOk)')) : 'url(#Bsh)');
+    p.body.setAttribute('filter', badge ? (badge[0] === HIST_BADGE ? 'url(#BgRec)' : (badge[0] === '?' ? 'url(#BgRec)' : 'url(#BgOk)')) : 'url(#Bsh)');
     p.body.setAttribute('stroke', badge ? badge[1] : (ds().facts.find(f => f.id === id).err ? C.warn : C[p.it.lane]));
     p.badge.innerHTML = '';
     if(badge){
@@ -974,9 +1001,9 @@ function updateB(){
       tx(p.badge, bx + bw/2, byy + 12.5, badge[0], {'text-anchor':'middle', 'font-size':10.5, 'font-weight':800, fill:'#fff'});
       p.badge.setAttribute('opacity', 1);
     } else if(s === 'revised'){
-      const bw = 30, bx = p.it.x + p.it.w - bw + 6, byy = p.it.y - 9;
+      const rLbl = TR(`改写`, `revised`), bw = Math.max(30, tw(rLbl, 10.5, 800) + 10), bx = p.it.x + p.it.w - bw + 6, byy = p.it.y - 9;
       el('rect', {x:bx, y:byy, width:bw, height:17, rx:8.5, fill:C.rev, stroke:'#fff', 'stroke-width':1.5}, p.badge);
-      tx(p.badge, bx + bw/2, byy + 12.5, '改写', {'text-anchor':'middle', 'font-size':10.5, 'font-weight':800, fill:'#fff'});
+      tx(p.badge, bx + bw/2, byy + 12.5, rLbl, {'text-anchor':'middle', 'font-size':10.5, 'font-weight':800, fill:'#fff'});
       p.badge.setAttribute('opacity', 1);
     } else p.badge.setAttribute('opacity', 0);
   }
@@ -997,12 +1024,12 @@ function updateB(){
   B.tHit.setAttribute('x', x - 6);
   const hx = Math.max(B.X0 + 60, Math.min(B.X1 - 82, x));
   B.tHandle.setAttribute('transform', `translate(${hx},${B.bottom + 10})`);
-  B.tText.textContent = `今天 ${S.t}`;
+  B.tText.textContent = TR(`今天 ${S.t}`, `today ${S.t}`);
   // asked period band
   if(r.cycle){
     const bx0 = B.X(r.lo), bx1 = B.X(r.hi);
     B.band.setAttribute('x', bx0); B.band.setAttribute('width', Math.max(4, bx1 - bx0)); B.band.setAttribute('opacity', 1);
-    B.bandLabel.textContent = `问的时段 T：${r.cycle[1]} 寒假`; B.bandLabel.setAttribute('x', Math.min(bx0 + 6, B.X1 - 150)); B.bandLabel.setAttribute('opacity', 1);
+    const bl = TR(`问的时段 T：${r.cycle[1]} 寒假`, `asked period T: ${r.cycle[1]} winter break`); B.bandLabel.textContent = bl; B.bandLabel.setAttribute('x', Math.min(bx0 + 6, B.X1 - tw(bl, 11.5, 800) - 6)); B.bandLabel.setAttribute('opacity', 1);
   } else { B.band.setAttribute('opacity', 0); B.bandLabel.setAttribute('opacity', 0); }
 }
 
@@ -1020,13 +1047,13 @@ function showTipHTML(ev, html){
 }
 function showTip(ev, f, d){
   const n = noticeOf(d, f), col = C[f.campus || 'zgc'];
-  showTipHTML(ev, `<div class="h"><span class="d" style="background:${col}"></span>${esc(f.entity)} · ${esc(f.attr)}　<b>${esc(f.label)}</b></div>
-  <div class="r">来源 <b>${esc(n.short)}</b>（${n.pub} 发布）</div>
-  <div class="r">校区 <b>${f.campus ? CSHORT[f.campus] : '未注明'}</b>　来自 ${esc(f.cSrc)}</div>
-  <div class="r">有效期 <b>${esc(vLong(f))}</b></div>
-  ${f.ptype ? `<div class="r">周期 <b>${f.cycle} ${esc(f.ptype)}</b></div>` : ''}
+  showTipHTML(ev, `<div class="h"><span class="d" style="background:${col}"></span>${esc(dx(f.entity))} · ${esc(dx(f.attr))}　<b>${esc(dx(f.label))}</b></div>
+  <div class="r">${TR(`来源 <b>${esc(n.short)}</b>（${n.pub} 发布）`, `source <b>${esc(dx(n.short))}</b> (published ${n.pub})`)}</div>
+  <div class="r">${TR('校区', 'campus')} <b>${f.campus ? CSHORT_D[f.campus] : TR('未注明', 'not stated')}</b>　${TR('来自', 'from')} ${esc(dx(f.cSrc))}</div>
+  <div class="r">${TR('有效期', 'validity')} <b>${esc(vLong(f))}</b></div>
+  ${f.ptype ? `<div class="r">${TR('周期', 'cycle')} <b>${f.cycle} ${esc(dx(f.ptype))}</b></div>` : ''}
   <div class="q">“${esc(f.quote)}”</div>
-  ${f.err ? `<div class="w">⚠ ${esc(f.err)}</div>` : ''}
+  ${f.err ? `<div class="w">⚠ ${esc(dx(f.err))}</div>` : ''}
   <div class="id">${f.id}</div>`);
 }
 function hideTip(){ $('#tt').classList.remove('on'); }
@@ -1036,24 +1063,32 @@ function hideTip(){ $('#tt').classList.remove('on'); }
    ===================================================================== */
 function chainHTML(f){
   const c = f.campus, heads = [...f.path];              // deepest first
-  const steps = ['事实本身', ...heads, '通知', '地名表'];
+  const steps = [TR(`事实本身`, `the fact itself`), ...heads, TR(`通知`, `notice`), TR(`地名表`, `gazetteer`)];
   const hitIdx = {campus: 1 + heads.indexOf(CAMPUS[c]), aud: steps.length - 2, valid: steps.length - 2};
   const row = (label, hit, val, cls, noGaz) => {
     let h = '', delay = 0;
     steps.forEach((s, i) => {
       if(noGaz && i === steps.length - 1) return;
       const state = i < hit ? 'miss' : (i === hit ? 'hit ' + cls : 'skip');
-      const sub = i === 0 && i < hit ? '<small>引文没写</small>' : (i === hit ? `<small>${esc(val)}</small>` : '');
-      h += `<span class="cs ${state}" style="animation-delay:${delay}ms">${esc(s)}${sub}</span>`;
+      const sub = i === 0 && i < hit ? `<small>${TR('引文没写', 'not in the quote')}</small>` : (i === hit ? `<small>${esc(val)}</small>` : '');
+      h += `<span class="cs ${state}" style="animation-delay:${delay}ms">${esc(dx(s))}${sub}</span>`;
       delay += 140;
       if(i < steps.length - (noGaz ? 2 : 1)) h += `<span class="carr" style="animation-delay:${delay-70}ms">▷</span>`;
     });
     return `<div class="crow"><div class="clabel">${label}</div><div class="csteps">${h}</div></div>`;
   };
-  return `<div class="chain">${row('校区', hitIdx.campus, CSHORT[c], c, false)}${row('人群', hitIdx.aud, f.aud, 'grey', true)}${row('有效期', hitIdx.valid, vShort(f), 'time', true)}</div>`;
+  return `<div class="chain">${row(TR('校区', 'campus'), hitIdx.campus, CSHORT_D[c], c, false)}${row(TR('人群', 'audience'), hitIdx.aud, dx(f.aud), 'grey', true)}${row(TR('有效期', 'validity'), hitIdx.valid, vShort(f), 'time', true)}</div>`;
 }
 const P = {};
-P[1] = () => `
+P[1] = () => EN ? `
+  <div class="kicker">STEP 1 · NOTICE</div>
+  <h2>One notice: the campus is stated once, in a heading</h2>
+  <p>This is the winter-break notice that the General Services Department published on <b>7 January 2026</b> (a 14-page PDF). 「中关村校区」 (Zhongguancun campus) and 「通州校区」 (Tongzhou campus) are top-level headings; the dozens of services listed below each belong to it, and <b>the campus is written only once</b>.</p>
+  <p>The canvas shows the “sports venues” tables of both campuses as they appear in the PDF (colors added for readability).</p>
+  <div class="callout red"><b>Chunking loses conditions.</b> The deployed RAG assistant cuts notices into 600-character chunks. The chunk in the red frame contains 「田径场、多功能球场　8:00—22:00」 (track field and multi-purpose courts, 8:00–22:00) but not the word 「通州」 (Tongzhou): the heading 「通州校区」 stayed in the previous chunk. A Zhongguancun student who retrieves this chunk gets the Tongzhou hours.</div>
+  <div class="quote"><div class="qh">The text of this chunk (excerpt, as extracted from the PDF)</div>…物物业业服服务务 电费业务… 校校内内基基础础设设施施 体体育育场场馆馆 正常开放 田径场、多功能球场 开放时间：<span class="hl">8:00—22:00</span> 2月10日—2月24日暂停开放，1月12日—2月9日期间根据学生锻炼需 健身房、乒乓球室 求动态调整开放时间 …</div>
+  <p class="muted">Bold headings are extracted with every character doubled, like 「体体育育场场馆馆」, so keyword search cannot match them either (32% of the campus words come out garbled).</p>
+  <div class="callout violet">The evidence graph attaches the condition “Tongzhou campus” back onto every fact.</div>` : `
   <div class="kicker">STEP 1 · 原文</div>
   <h2>一篇通知：校区只在标题里写一次</h2>
   <p>这是总务处 <b>2026 年 1 月 7 日</b>发布的寒假通知（PDF 共 14 页）。「中关村校区」「通州校区」各是一个大标题，下面几十条服务都归它管，<b>校区只写了一次</b>。</p>
@@ -1062,7 +1097,19 @@ P[1] = () => `
   <div class="quote"><div class="qh">这一块的原文（节选，PDF 转文字后的样子）</div>…物物业业服服务务 电费业务… 校校内内基基础础设设施施 体体育育场场馆馆 正常开放 田径场、多功能球场 开放时间：<span class="hl">8:00—22:00</span> 2月10日—2月24日暂停开放，1月12日—2月9日期间根据学生锻炼需 健身房、乒乓球室 求动态调整开放时间 …</div>
   <p class="muted">加粗的标题被导出成了「体体育育场场馆馆」这样的叠字，关键词检索也认不出来（论文 C1：32% 的校区词是乱码）。</p>
   <div class="callout violet">证据图要做的，就是把「通州校区」这个条件重新挂回每一条事实上。</div>`;
-P[2] = () => `
+P[2] = () => EN ? `
+  <div class="kicker">STEP 2 · HEADING TREE</div>
+  <h2>Heading tree: any heading may state a condition</h2>
+  <p>The compiler’s <b>first LLM call</b> reads the whole notice, lists every heading in order with its level (<b>23</b> in this notice) and writes down the <b>condition each heading introduces</b>, σ(n).</p>
+  <ul class="kv">
+    <li><span class="chip zgc">campus = Zhongguancun</span>from the level-1 heading 「中关村校区」</li>
+    <li><span class="chip tz">campus = Tongzhou</span>from the level-1 heading 「通州校区」</li>
+    <li><span class="chip time">1/12–3/1</span>sub-headings such as 「水电暖收费」 (utility fees) and 「开水房」 (boiled water) carry dates</li>
+    <li><span class="chip grey">none</span>most headings (property services, sports venues, …) introduce no condition</li>
+  </ul>
+  <p>The notice itself has conditions too, <b>σ(d)</b>: <span class="chip time">2026 winter break</span> <span class="chip time">1/12–3/1</span> <span class="chip grey">students &amp; staff on campus</span> (top of the canvas).</p>
+  <p class="muted">Highlighted are the two paths down to 「体育场馆」 (sports venues); the track-field facts of step 3 hang below them.</p>
+  <div class="file">📄 File: the notice’s <code>outline</code> (each item: level, heading, campus, audience, start and end date) and <code>doc</code> fields in <code>data/compiled_deepseek.jsonl</code></div>` : `
   <div class="kicker">STEP 2 · 标题树</div>
   <h2>标题树：每个标题都可能带条件</h2>
   <p>编译时的<b>第一次 LLM 调用</b>：通读全文，按顺序列出所有标题和层级（这篇共 <b>23</b> 个），并写下每个标题<b>引入的条件</b> σ(n)。</p>
@@ -1074,24 +1121,46 @@ P[2] = () => `
   </ul>
   <p>通知本身也有条件 <b>σ(d)</b>：<span class="chip time">2026 寒假</span> <span class="chip time">1/12–3/1</span> <span class="chip grey">留校师生</span>（画布顶部）。</p>
   <p class="muted">亮起来的是通往「体育场馆」的两条路径，第 3 步的田径场事实就挂在它们下面。</p>
-  <div class="file">📄 对应文件：<code>compiled_wb.jsonl</code> 里这篇通知的 <code>outline</code>（每项：层级、标题、校区、人群、起止日期）和 <code>doc</code> 字段</div>`;
+  <div class="file">📄 对应文件：<code>data/compiled_deepseek.jsonl</code> 里这篇通知的 <code>outline</code>（每项：层级、标题、校区、人群、起止日期）和 <code>doc</code> 字段</div>`;
+
 P[3] = () => {
   const f = fact(S.sel) || fact('b28eb1484c#62');
   const sw = ['b28eb1484c#62','b28eb1484c#44','b28eb1484c#45','b28eb1484c#61'].map(id => { const x = fact(id);
-    return `<button data-sel="${id}" class="${id === f.id ? 'on' : ''}">${CSHORT[x.campus]} ${esc(x.label)}${x.err ? ' ⚠' : ''}</button>`; }).join('');
+    return `<button data-sel="${id}" class="${id === f.id ? 'on' : ''}">${CSHORT_D[x.campus]} ${esc(dx(x.label))}${x.err ? ' ⚠' : ''}</button>`; }).join('');
   return `
-  <div class="kicker">STEP 3 · 事实</div>
-  <h2>事实：从标题继承条件</h2>
-  <p><b>第二类 LLM 调用</b>把正文拆成一条条事实：<b>服务点 · 属性 · 取值 · 原文引文</b>。提示词要求 LLM <b>不判断校区</b>。</p>
-  <p>之后全是代码：按引文在原文里的位置把事实挂到标题下，再对每个维度<b>沿路径往上找，取第一个有值的</b>（论文式 1 的 ▷）。画布上流动的点就是这个过程。</p>
+  <div class="kicker">STEP 3 · ${TR(`事实`, `FACTS`)}</div>
+  <h2>${TR(`事实：从标题继承条件`, `Facts: conditions inherited from headings`)}</h2>
+  <p>${TR(`<b>第二类 LLM 调用</b>把正文拆成一条条事实：<b>服务点 · 属性 · 取值 · 原文引文</b>。提示词要求 LLM <b>不判断校区</b>。`, `The <b>second kind of LLM call</b> splits the text into facts: <b>service point · attribute · value · verbatim quote</b>. The prompt tells the LLM <b>not to decide the campus</b>.`)}</p>
+  <p>${TR(`之后全是代码：按引文在原文里的位置把事实挂到标题下，再对每个维度<b>沿路径往上找，取第一个有值的</b>（论文 2.2 节）。画布上流动的点就是这个过程。`, `Everything after that is code: each fact is placed under the headings by the position of its quote, and for each dimension the <b>first value found going up the path</b> wins (Section 2.2 of the paper). The dots moving on the canvas show this.`)}</p>
   <div class="fgrid" id="fsw">${sw}</div>
   ${chainHTML(f)}
-  ${f.err ? `<div class="callout amber"><b>⚠ 这条是抽取错误。</b>${esc(f.err)}</div>` :
-    `<div class="callout blue">结果：<b>${esc(f.entity)} · ${esc(f.attr)} · ${esc(f.label)}</b>，校区 <b>${CSHORT[f.campus]}</b>（${esc(f.cSrc)}），有效期 <b>${vShort(f)}</b>（${esc(f.vSrc)}），人群 <b>${esc(f.aud)}</b>。</div>`}
-  <p class="muted">⚠ 两张卡片是 PDF 表格错行造成的抽取错误（原文里左栏的场地名垂直居中，转文字时被插进了右栏两行字中间）。点右上角「按 PDF 原文更正」可以把它们去掉。</p>
-  <div class="file">📄 这一步的结果不单独存文件：<code>graph.py</code> 每次加载时从 <code>compiled_wb.jsonl</code> 现算（约 4 秒），所以每个环节都能单独关掉做消融。</div>`;
+  ${f.err ? `<div class="callout amber"><b>${TR(`⚠ 这条是抽取错误。`, `⚠ This fact is an extraction error. `)}</b>${esc(dx(f.err))}</div>` :
+    `<div class="callout blue">${TR(`结果：<b>${esc(f.entity)} · ${esc(f.attr)} · ${esc(f.label)}</b>，校区 <b>${CSHORT[f.campus]}</b>（${esc(f.cSrc)}），有效期 <b>${vShort(f)}</b>（${esc(f.vSrc)}），人群 <b>${esc(f.aud)}</b>。`, `Result: <b>${esc(dx(f.entity))} · ${esc(dx(f.attr))} · ${esc(dx(f.label))}</b>, campus <b>${CSHORT_D[f.campus]}</b> (from ${esc(dx(f.cSrc))}), validity <b>${vShort(f)}</b> (from ${esc(dx(f.vSrc))}), audience <b>${esc(dx(f.aud))}</b>.`)}</div>`}
+  <p class="muted">${TR(`⚠ 两张卡片是 PDF 表格错行造成的抽取错误（原文里左栏的场地名垂直居中，转文字时被插进了右栏两行字中间）。点右上角「按 PDF 原文更正」可以把它们去掉。`, `⚠ The two hatched cards are extraction errors caused by a shifted PDF table row (the venue names in the left column are vertically centered and were inserted between the two lines of the right column). “Correct by the PDF” (top right) removes them.`)}</p>
+  <div class="file">${TR(`📄 这一步的结果不单独存文件：<code>campusscope/graph.py</code> 每次加载时从 <code>data/compiled_deepseek.jsonl</code> 现算（几秒钟），所以每个环节都能单独关掉做消融。`, `📄 This step is not stored: <code>campusscope/graph.py</code> computes it from <code>data/compiled_deepseek.jsonl</code> on every load (a few seconds), so every component can be switched off for ablation.`)}</div>`;
 };
-P[4] = () => S.ds === 'track' ? `
+P[4] = () => EN ? (S.ds === 'track' ? `
+  <div class="kicker">STEP 4 · GRAPH</div>
+  <h2>Graph: linking the same thing across notices</h2>
+  <p>All facts about “<b>track field · availability</b>” from every notice, together: <b>time runs left to right</b>, <b>one lane per campus</b> (the lane is the inherited σ*), the bar under each fact is its <b>validity V</b>, and ◆ is the publication date τ.</p>
+  <div class="stat"><span><b>${DATA.track.facts.length}</b> facts</span><span><b>${DATA.track.notices.length}</b> notices</span><span>rec <b>${Object.values(DATA.track.rec).flat().length}</b></span><span>rev <b>${Object.values(DATA.track.rev).flat().length}</b></span></div>
+  <div class="ed rec"><svg width="26" height="12"><path d="M1,10 C8,0 18,0 25,10" stroke="${C.rec}" stroke-width="2.2" fill="none"/></svg><div><b style="color:#5B3FD9">rec · earlier cycle</b>: the same service point, the same kind of break, an earlier year. This winter’s facts point to last winter’s. When this cycle’s notice is not out yet, rec gives last cycle’s arrangement for reference. rec ignores the campus; the answer filters by campus.</div></div>
+  <div class="ed rev"><svg width="26" height="12"><path d="M1,2 C8,12 18,12 25,2" stroke="${C.rev}" stroke-width="2.2" stroke-dasharray="5 3" fill="none"/></svg><div><b style="color:#C0262D">rev · revised</b>: a later notice replaces an old value <b>within its own validity</b>. The track field’s revision edges all point to long-expired facts and change no answer, so they are hidden by default; switch to “East bathhouse” (top right) to see a revision that matters.</div></div>
+  <p class="muted">The solid purple arcs show only the latest cycle; “Show all edges” adds the older rec edges and all rev edges.</p>
+  <div class="callout violet">This is all that is stored: <b>nodes with conditions + two kinds of edges</b>. It is not a graph database, just a list of facts in Python, an index by service point and two lookup tables.</div>` : `
+  <div class="kicker">STEP 4 · GRAPH (REVISION EDGES)</div>
+  <h2>East bathhouse: a revision applies only within the new notice’s validity</h2>
+  <p>The 9 facts about the East bathhouse (Zhongguancun) from July 2025 to March 2026. The red dashed arcs are <b>rev</b>: a later notice rewrites an earlier arrangement.</p>
+  <ul class="tl">
+    <li class="base"><b>7/4 summer guide</b>: summer break 12:00–14:00</li>
+    <li class="base"><b>8/21 freshman housing guide</b>: 12:00–23:00 (no end date)</li>
+    <li><b>9/11 morning slot added</b> 7:00–8:00 (no end date)</li>
+    <li><b>National Day 10/1–10/8</b>: open as usual → overrides the morning slot during the holiday only</li>
+    <li><b>Morning slot suspended from 1/12</b> (until further notice) → the morning slot no longer applies</li>
+    <li><b>Winter break</b>: 12:00–23:00, New Year’s Eve 12:00–20:00, closed on the first three days of the Spring Festival</li>
+  </ul>
+  <div class="callout amber">⚠ Granularity: the key is (service point, attribute group). The September “morning slot added” and the regular “12:00–23:00” share a key, so the former counts as a revision of the latter, and the regular hours no longer appear after September.</div>
+  <p class="muted">Next, drag “today” and see how the same question is answered in September, at National Day, on October 9, in the winter break and on March 9.</p>`) : (S.ds === 'track' ? `
   <div class="kicker">STEP 4 · 连成图</div>
   <h2>连成图：把不同通知里的同一件事连起来</h2>
   <p>把所有通知里「<b>田径场 · 开放情况</b>」的事实放在一起：<b>横轴是时间</b>，<b>两条泳道是两个校区</b>（泳道就是继承来的 σ*），每条事实下面的细条是它的<b>有效期 V</b>，◆ 是发布日期 τ。</p>
@@ -1112,75 +1181,76 @@ P[4] = () => S.ds === 'track' ? `
     <li><b>寒假</b>：12:00–23:00，除夕 12:00–20:00，初一至初三全天暂停</li>
   </ul>
   <div class="callout amber">⚠ 粒度问题：键是（服务点, 属性组），9 月「增加早场」和常规「12:00–23:00」同属一个键，被算成了改写，所以 9 月之后常规时段不再出现。</div>
-  <p class="muted">下一步拖动「今天」，看同一个问题在 9 月、国庆、10 月 9 日、寒假、3 月 9 日分别怎么答。</p>`;
+  <p class="muted">下一步拖动「今天」，看同一个问题在 9 月、国庆、10 月 9 日、寒假、3 月 9 日分别怎么答。</p>`);
 P[5] = () => {
   const d = ds(), pr = PRESETS[S.ds], bath = S.ds === 'bath';
   const days = Math.round((toMs(d.window[1]) - toMs(d.window[0]))/DAY), val = Math.round((toMs(S.t) - toMs(d.window[0]))/DAY);
-  const qtext = bath ? '东区浴室今天几点开？' : (S.q === 'today' ? '今天田径场几点开？' : '今年寒假田径场开吗？');
+  const qtext = bath ? TR(`东区浴室今天几点开？`, `When does the East bathhouse open today?`) : (S.q === 'today' ? TR(`今天田径场几点开？`, `When is the track field open today?`) : TR(`今年寒假田径场开吗？`, `Is the track field open this winter break?`));
   return `
-  <div class="kicker">STEP 5 · 提问　<span style="color:var(--ink3);letter-spacing:0;font-weight:700">同一张图，日期和校区一变，答案就变</span></div>
+  <div class="kicker">STEP 5 · ${TR(`提问`, `ASK`)}　<span style="color:var(--ink3);letter-spacing:0;font-weight:700">${TR(`同一张图，日期和校区一变，答案就变`, `one graph: change the date or the campus and the answer changes`)}</span></div>
   <div class="qcard"><div class="qt">“${qtext}”</div>
-    <div class="qm"><span class="chip grey">今天 ${S.t}</span><span class="chip ${S.campus || 'grey'}">${bath ? '校区：中关村（由地名「东区浴室」推出）' : '校区：' + (S.campus ? CSHORT[S.campus] : '没说')}</span></div></div>
-  ${bath ? '' : `<div class="ctrl"><label>问法</label><div class="seg" id="cQ"><button data-v="today" class="${S.q === 'today' ? 'on' : ''}">今天几点开</button><button data-v="寒假" class="${S.q === '寒假' ? 'on' : ''}">今年寒假开吗</button></div></div>
-  <div class="ctrl"><label>校区</label><div class="seg" id="cC"><button data-v="" class="${!S.campus ? 'on' : ''}">没说</button><button data-v="zgc" class="${S.campus === 'zgc' ? 'on' : ''}">中关村</button><button data-v="tz" class="${S.campus === 'tz' ? 'on' : ''}">通州</button></div></div>`}
-  <div class="ctrl"><label>今天</label><div class="daterow"><b id="cDate">${S.t}</b><input type="range" id="cT" min="0" max="${days}" value="${val}"></div></div>
+    <div class="qm"><span class="chip grey">${TR(`今天 ${S.t}`, `today ${S.t}`)}</span><span class="chip ${S.campus || 'grey'}">${bath ? TR(`校区：中关村（由地名「东区浴室」推出）`, `campus: Zhongguancun (gazetteer: 「东区浴室」)`) : TR(`校区：`, `campus: `) + (S.campus ? CSHORT_D[S.campus] : TR(`没说`, `not stated`))}</span></div></div>
+  ${bath ? '' : `<div class="ctrl"><label>${TR(`问法`, `Question`)}</label><div class="seg" id="cQ"><button data-v="today" class="${S.q === 'today' ? 'on' : ''}">${TR(`今天几点开`, `open today?`)}</button><button data-v="寒假" class="${S.q === '寒假' ? 'on' : ''}">${TR(`今年寒假开吗`, `open this winter break?`)}</button></div></div>
+  <div class="ctrl"><label>${TR(`校区`, `Campus`)}</label><div class="seg" id="cC"><button data-v="" class="${!S.campus ? 'on' : ''}">${TR(`没说`, `not stated`)}</button><button data-v="zgc" class="${S.campus === 'zgc' ? 'on' : ''}">${CSHORT_D.zgc}</button><button data-v="tz" class="${S.campus === 'tz' ? 'on' : ''}">${CSHORT_D.tz}</button></div></div>`}
+  <div class="ctrl"><label>${TR(`今天`, `Today`)}</label><div class="daterow"><b id="cDate">${S.t}</b><input type="range" id="cT" min="0" max="${days}" value="${val}"></div></div>
   <div class="presets">${pr.map((p, i) => `<button class="preset ${S.preset === i ? 'on' : ''}" data-i="${i}">${esc(p.label)}</button>`).join('')}</div>
   <div id="res"></div>
   <div id="insp"></div>
-  <div class="conds-h">适用的四个条件（论文式 4，点画布上任一事实可逐条检查）</div>
+  <div class="conds-h">${TR(`适用的四个条件（论文式 1，点画布上任一事实可逐条检查）`, `The four conditions of applicability (Eq. 1 in the paper; click any fact on the canvas to check them one by one)`)}</div>
   <div class="conds">
-    <div class="cond"><span class="ci">1</span><div>校区对得上<small>σ*(f) ⊨ x</small></div></div>
-    <div class="cond"><span class="ci">2</span><div>今天之前已发布<small>τ(f) ≤ t</small></div></div>
-    <div class="cond"><span class="ci">3</span><div>有效期盖住所问时段<small>V(f) ∩ T ≠ ∅</small></div></div>
-    <div class="cond"><span class="ci">4</span><div>没被新通知改写<small>∄ rev(f′,f)，τ(f′) ≤ t</small></div></div>
+    <div class="cond"><span class="ci">1</span><div>${TR(`校区对得上`, `campus matches`)}<small>σ*(f) ⊨ x</small></div></div>
+    <div class="cond"><span class="ci">2</span><div>${TR(`今天之前已发布`, `published by today`)}<small>τ(f) ≤ t</small></div></div>
+    <div class="cond"><span class="ci">3</span><div>${TR(`有效期盖住所问时段`, `validity covers the asked period`)}<small>V(f) ∩ T ≠ ∅</small></div></div>
+    <div class="cond"><span class="ci">4</span><div>${TR(`没被新通知改写`, `not revised by a newer notice`)}<small>∄ rev(f′,f)，τ(f′) ≤ t</small></div></div>
   </div>`;
 };
 function resultHTML(){
   const d = ds(), r = B.r || engine(d, activeFacts(), S.t, S.campus, S.q), facts = activeFacts();
   const cnt = k => facts.filter(f => r.st[f.id] === k).length;
-  const lab = fs => [...new Set(fs.map(f => f.label))].join('、') || '—';
+  const lab = fs => [...new Set(fs.map(f => dx(f.label)))].join(TR('、', ', ')) || '—';
   const tags = [
-    `<span class="tag ok">适用 ${r.dropped ? 0 : r.cur.length}</span>`,
-    r.hist.length ? `<span class="tag rec">往年候选 ${r.hist.length}</span>` : '',
-    `<span class="tag">还没发布 ${cnt('future')}</span>`,
-    `<span class="tag rev">被改写 ${r.rev.length}</span>`,
-    `<span class="tag">不在所问时段 ${cnt('out') + cnt('hist-old')}</span>`,
-    cnt('dropped') ? `<span class="tag">常设安排 ${cnt('dropped')}（不回答假期）</span>` : '',
+    `<span class="tag ok">${TR(`适用`, `applicable`)} ${r.dropped ? 0 : r.cur.length}</span>`,
+    r.hist.length ? `<span class="tag rec">${TR(`往年候选`, `earlier-cycle candidates`)} ${r.hist.length}</span>` : '',
+    `<span class="tag">${TR(`还没发布`, `not yet published`)} ${cnt('future')}</span>`,
+    `<span class="tag rev">${TR(`被改写`, `revised`)} ${r.rev.length}</span>`,
+    `<span class="tag">${TR(`不在所问时段`, `outside the asked period`)} ${cnt('out') + cnt('hist-old')}</span>`,
+    cnt('dropped') ? `<span class="tag">${TR(`常设安排 ${cnt('dropped')}（不回答假期）`, `standing arrangements ${cnt('dropped')} (not used for a break)`)}</span>` : '',
   ].join('');
-  const T = r.cycle ? `${r.cycle[1]} 年寒假（${md(r.lo)}—${md(r.hi)}）` : `今天 ${S.t}`;
+  const T = r.cycle ? TR(`${r.cycle[1]} 年寒假（${md(r.lo)}—${md(r.hi)}）`, `${r.cycle[1]} winter break (${md(r.lo)}–${md(r.hi)})`) : TR(`今天 ${S.t}`, `today ${S.t}`);
   // branches
   const bkeys = Object.keys(r.branches);
   let br = '';
   if(bkeys.length){
     br = '<div class="br">' + ['zgc','tz','all'].filter(k => r.branches[k]).map(k =>
-      `<div class="brc ${k} ${r.use && r.use[k] && r.mode !== 'history' ? 'pick' : ''}"><div class="bh">${k === 'all' ? '两校区通用' : CAMPUS[k]}</div>${esc(lab(r.branches[k]))}</div>`).join('') + '</div>';
+      `<div class="brc ${k} ${r.use && r.use[k] && r.mode !== 'history' ? 'pick' : ''}"><div class="bh">${k === 'all' ? TR('两校区通用', 'both campuses') : CAMPUS_D[k]}</div>${esc(lab(r.branches[k]))}</div>`).join('') + '</div>';
   }
   let decide = '';
   if(r.costs){
     const pr = d.prior, mx = Math.max(...Object.values(r.costs)) * 1.12;
     const row = (k, name, f) => `<div class="cost ${r.action === k ? 'win' : ''}"><span>${name}</span><div class="track"><div class="fill" style="width:${(r.costs[k]/mx*100).toFixed(1)}%"></div></div><span class="v">${r.costs[k].toFixed(2)}</span></div>`;
     const extra = Object.values(r.branches).flat().length - (r.branches[r.best] || []).length;
-    decide = `<div class="rt">两个校区答案不同 → 缺的条件 <b>校区</b> 进入 frontier，按代价三选一：</div>
-      <div class="costs">${row('assume', `猜${CSHORT[r.best]}`)}${row('enumerate', '列出两校区')}${row('ask', '追问校区')}</div>
-      <div class="formula">猜 = λ·(1−P) = ${DATA.lam}×(1−${pr[r.best].toFixed(3)})　列 = β·多读 ${extra} 条 = ${DATA.beta}×${extra}　问 = 1<br>P(校区 | ${esc(d.etype)})：中关村 ${pr.zgc.toFixed(3)} · 通州 ${pr.tz.toFixed(3)}（来自 27,683 条工单）</div>`;
+    decide = `<div class="rt">${TR(`两个校区答案不同 → 缺的条件 <b>校区</b> 进入 frontier，按代价三选一：`, `The two campuses give different answers → the missing condition <b>campus</b> enters the frontier; take the cheapest of three:`)}</div>
+      <div class="costs">${row('assume', TR(`猜${CSHORT[r.best]}`, `guess ${CSHORT_D[r.best]}`))}${row('enumerate', TR('列出两校区', 'list both campuses'))}${row('ask', TR('追问校区', 'ask for the campus'))}</div>
+      <div class="formula">${TR(`猜 = λ·(1−P) = ${DATA.lam}×(1−${pr[r.best].toFixed(3)})　列 = β·多读 ${extra} 条 = ${DATA.beta}×${extra}　问 = 1<br>P(校区 | ${esc(d.etype)})：中关村 ${pr.zgc.toFixed(3)} · 通州 ${pr.tz.toFixed(3)}（来自 27,683 条工单）`, `guess = λ·(1−P) = ${DATA.lam}×(1−${pr[r.best].toFixed(3)})　list = β·${extra} extra facts = ${DATA.beta}×${extra}　ask = 1<br>P(campus | ${esc(dx(d.etype))}): Zhongguancun ${pr.zgc.toFixed(3)} · Tongzhou ${pr.tz.toFixed(3)} (from 27,683 service tickets)`)}</div>`;
   } else if(r.mode === 'history'){
-    decide = `<div class="rt">${r.cycle ? `所问的 <b>${r.cycle[1]} 年寒假</b>还没有任何事实（通知没发）→` : '今天没有现行的事实 →'} 沿 <b style="color:#5B3FD9">rec</b> 找最近一期同类事实，作为<b>往年参考</b>，不当承诺。</div>`;
+    decide = `<div class="rt">${TR(`${r.cycle ? `所问的 <b>${r.cycle[1]} 年寒假</b>还没有任何事实（通知没发）→` : '今天没有现行的事实 →'} 沿 <b style="color:#5B3FD9">rec</b> 找最近一期同类事实，作为<b>往年参考</b>，不当承诺。`, `${r.cycle ? `The asked <b>${r.cycle[1]} winter break</b> has no facts yet (its notice is not out) →` : 'No current fact today →'} follow <b style="color:#5B3FD9">rec</b> to the latest earlier cycle and give it <b>for reference</b>, not as a promise.`)}</div>`;
   } else if(r.mode === 'answer'){
-    decide = `<div class="rt">${S.campus ? `已知校区 <b>${CSHORT[S.campus]}</b>${S.ds === 'bath' ? '（地名表）' : ''} → 只看这一支，不用猜也不用问。` : (bkeys.length === 1 ? '只有一个校区有适用事实 → 直接回答。' : '两个校区答案相同 → 直接回答，不追问。')}</div>`;
+    decide = `<div class="rt">${TR(`${S.campus ? `已知校区 <b>${CSHORT[S.campus]}</b>${S.ds === 'bath' ? '（地名表）' : ''} → 只看这一支，不用猜也不用问。` : (bkeys.length === 1 ? '只有一个校区有适用事实 → 直接回答。' : '两个校区答案相同 → 直接回答，不追问。')}`, `${S.campus ? `Campus known: <b>${CSHORT_D[S.campus]}</b>${S.ds === 'bath' ? ' (gazetteer)' : ''} → only this branch; no need to guess or ask.` : (bkeys.length === 1 ? 'Only one campus has applicable facts → answer directly.' : 'Both campuses give the same answer → answer directly, without asking.')}`)}</div>`;
   } else if(r.mode === 'abstain'){
-    decide = `<div class="rt">没有适用事实，也没有往年参考 → 拒答。</div>`;
+    decide = `<div class="rt">${TR(`没有适用事实，也没有往年参考 → 拒答。`, `No applicable fact and no earlier cycle → no answer.`)}</div>`;
   }
-  if(r.dropped) decide = `<div class="rt muted" style="color:#667085">（有常设安排覆盖这段时间，但它们回答不了「假期期间」，所以不用。）</div>` + decide;
+  if(r.dropped) decide = `<div class="rt muted" style="color:#667085">${TR(`（有常设安排覆盖这段时间，但它们回答不了「假期期间」，所以不用。）`, `(Standing arrangements cover this period, but they cannot answer a question about the break, so they are not used.)`)}</div>` + decide;
   const staleRev = r.rev.filter(f => f.end && f.end < r.lo);
-  if(staleRev.length) decide += `<div class="formula" style="font-family:var(--font);font-size:11.5px">注：${staleRev.length} 条「被改写」的事实本来就已过期。它们被算作改写，是因为键只到（服务点, 属性组）这一级，粒度偏粗，不影响这次的答复。</div>`;
+  if(staleRev.length) decide += `<div class="formula" style="font-family:var(--font);font-size:11.5px">${TR(`注：${staleRev.length} 条「被改写」的事实本来就已过期。它们被算作改写，是因为键只到（服务点, 属性组）这一级，粒度偏粗，不影响这次的答复。`, `Note: ${staleRev.length} “revised” facts had already expired. They count as revised because the key stops at (service point, attribute group), which is coarse; this does not affect the answer.`)}</div>`;
   const ans = answerText(d, r);
   return `
-   <div class="rs"><span class="rn">1</span><div class="rt">找候选：同一服务点的 <b>${facts.length}</b> 条事实（键：${esc(d.key)}）；所问时段 T = <b>${T}</b></div></div>
-   <div class="rs"><span class="rn">2</span><div class="rt">逐条过四个条件（①校区 ②已发布 ③有效期 ④没被改写）：<div class="tags">${tags}</div></div></div>
-   <div class="rs"><span class="rn">3</span><div class="rt">${bkeys.length ? '按校区分组：' + br : ''}${decide}</div></div>
-   <div class="rs"><span class="rn">4</span><div class="rt">答复（示意，真实系统由 LLM 按同样的证据写）：<div class="bubble">${esc(ans)}</div></div></div>`;
+   <div class="rs"><span class="rn">1</span><div class="rt">${TR(`找候选：同一服务点的 <b>${facts.length}</b> 条事实（键：${esc(d.key)}）；所问时段 T = <b>${T}</b>`, `Candidates: the <b>${facts.length}</b> facts of the same service point (key: ${esc(dx(d.key))}); asked period T = <b>${T}</b>`)}</div></div>
+   <div class="rs"><span class="rn">2</span><div class="rt">${TR(`逐条过四个条件（①校区 ②已发布 ③有效期 ④没被改写）：`, `Check the four conditions for every fact (① campus ② published ③ validity ④ not revised):`)}<div class="tags">${tags}</div></div></div>
+   <div class="rs"><span class="rn">3</span><div class="rt">${bkeys.length ? TR('按校区分组：', 'Grouped by campus: ') + br : ''}${decide}</div></div>
+   <div class="rs"><span class="rn">4</span><div class="rt">${TR(`答复（示意，真实系统由 LLM 按同样的证据写）：`, `Answer (illustrative; the real system has the LLM write it from the same evidence):`)}<div class="bubble">${esc(ans)}</div></div></div>`;
 }
 function answerText(d, r){
+  if(EN) return answerTextEn(d, r);
   const nm = d.name, lab = fs => [...new Set(fs.map(f => f.label))].join('，');
   const byC = fs => { const o = {}; for(const f of fs){ const k = f.campus || 'all'; (o[k] = o[k] || []).push(f); } return o; };
   const src = fs => [...new Set(fs.map(f => noticeOf(d, f).short))].join('、');
@@ -1197,32 +1267,49 @@ function answerText(d, r){
   if(r.mode === 'assume') return `按${CAMPUS[r.best]}回答：${lab(r.used)}。另一个校区的安排不同。`;
   return `${Object.keys(g).map(part).join('；')}。\n（${when(r.used)}；来源：${src(r.used)}）`;
 }
+function answerTextEn(d, r){
+  const nm = dx(d.name), lab = fs => [...new Set(fs.map(f => dx(f.label)))].join(', ');
+  const byC = fs => { const o = {}; for(const f of fs){ const k = f.campus || 'all'; (o[k] = o[k] || []).push(f); } return o; };
+  const src = fs => [...new Set(fs.map(f => dx(noticeOf(d, f).short)))].join(', ');
+  const when = fs => { const s = [...new Set(fs.map(vShort))]; return s.length === 1 ? s[0] : 'validity per item: see the evidence'; };
+  if(r.mode === 'ask') return `Which campus are you on, Zhongguancun or Tongzhou? The ${nm} arrangements differ between the two campuses.`;
+  if(r.mode === 'abstain') return 'No arrangement in the current notices applies to your situation; please ask the service department.';
+  const g = byC(r.used);
+  const part = k => `${k === 'all' ? 'Both campuses' : CAMPUS_D[k]}, ${nm}: ${lab(g[k])}`;
+  if(r.mode === 'history'){
+    const head = r.cycle ? `No notice for the ${r.cycle[1]} winter break has been found yet. ` : 'No current arrangement applies today. ';
+    return head + Object.keys(g).map(k => `Last cycle (${g[k][0].cycle} ${dx(g[k][0].ptype) || ''}): ${part(k)}`).join('; ') + '. For reference only; the official notice prevails.';
+  }
+  if(r.mode === 'enumerate') return `The two campuses differ:\n${['zgc','tz'].filter(k => g[k]).map(part).join('\n')}\n(${when(r.used)}; source: ${src(r.used)})`;
+  if(r.mode === 'assume') return `For the ${CAMPUS_D[r.best]}: ${lab(r.used)}. The other campus differs.`;
+  return `${Object.keys(g).map(part).join('; ')}.\n(${when(r.used)}; source: ${src(r.used)})`;
+}
 function inspectHTML(){
   const d = ds(), f = d.facts.find(x => x.id === S.sel); if(!f) return '';
   const r = B.r; if(!r) return '';
   const s = r.st[f.id], used = r.used.some(x => x.id === f.id);
   const mark = v => v === true ? '<span class="m y">✓</span>' : (v === false ? '<span class="m n">✕</span>' : '<span class="m z">–</span>');
-  const Tt = r.cycle ? `${r.cycle[1]} 寒假` : `今天 ${md(S.t)}`;
+  const Tt = r.cycle ? TR(`${r.cycle[1]} 寒假`, `the ${r.cycle[1]} winter break`) : TR(`今天 ${md(S.t)}`, `today (${md(S.t)})`);
   const c1 = S.campus ? (!f.campus || f.campus === S.campus) : null;
   const c2 = f.pub <= S.t, c3 = covers(f, r.lo, r.hi), revs = r.revBy[f.id];
-  const revTxt = revs ? `被「${[...new Set(revs.map(id => d.facts.find(x => x.id === id).label))].join('、')}」改写（${[...new Set(revs.map(id => noticeOf(d, d.facts.find(x => x.id === id)).short))].join('、')}）` : '没有生效中的修订';
+  const revTxt = revs ? TR(`被「${[...new Set(revs.map(id => d.facts.find(x => x.id === id).label))].join('、')}」改写（${[...new Set(revs.map(id => noticeOf(d, d.facts.find(x => x.id === id)).short))].join('、')}）`, `revised by “${[...new Set(revs.map(id => dx(d.facts.find(x => x.id === id).label)))].join(', ')}” (${[...new Set(revs.map(id => dx(noticeOf(d, d.facts.find(x => x.id === id)).short)))].join(', ')})`) : TR(`没有生效中的修订`, `no revision in effect`);
   let verdict, vc;
-  if(S.fix && ERR.has(f.id)){ verdict = '已按原文更正去掉'; vc = 'n'; }
-  else if(used && r.mode === 'history'){ verdict = '作为往年参考被用上'; vc = 'h'; }
-  else if(used){ verdict = '适用，出现在答复里'; vc = 'y'; }
-  else if(r.mode === 'ask' && s === 'cur'){ verdict = '适用，但系统选择先追问校区'; vc = 'y'; }
-  else if(s === 'cur' && S.campus && f.campus && f.campus !== S.campus){ verdict = '属于另一个校区，不用'; vc = 'n'; }
-  else if(s === 'dropped'){ verdict = '常设安排，回答不了假期问题'; vc = 'n'; }
-  else if(s === 'hist'){ verdict = '往年候选（本期有事实，所以没用）'; vc = 'n'; }
-  else verdict = {future:'还没发布，看不见', revised:'已被新通知改写', out:'有效期不含所问时段', 'hist-old':'更早的往年，被更近的一期取代'}[s] || '不适用', vc = 'n';
-  return `<div class="insp"><div class="ih"><b>${esc(f.entity)} · ${esc(f.label)}</b><button class="x" id="inspX">×</button></div>
-    <div class="chk">${mark(c1)}<div>① 校区：${S.campus ? (c1 ? '对得上' : `属于${CSHORT[f.campus]}`) : '用户没说 → 两边都留下，按校区分组'}</div></div>
-    <div class="chk">${mark(c2)}<div>② 发布于 ${f.pub}${c2 ? '，在今天之前' : '，今天还没发布'}</div></div>
-    <div class="chk">${mark(c3)}<div>③ 有效期 ${esc(vShort(f))} ${c3 ? '盖住' : '不含'} ${Tt}</div></div>
+  if(S.fix && ERR.has(f.id)){ verdict = TR(`已按原文更正去掉`, `removed by the correction from the PDF`); vc = 'n'; }
+  else if(used && r.mode === 'history'){ verdict = TR(`作为往年参考被用上`, `used as the earlier-cycle reference`); vc = 'h'; }
+  else if(used){ verdict = TR(`适用，出现在答复里`, `applicable, used in the answer`); vc = 'y'; }
+  else if(r.mode === 'ask' && s === 'cur'){ verdict = TR(`适用，但系统选择先追问校区`, `applicable, but the system asks for the campus first`); vc = 'y'; }
+  else if(s === 'cur' && S.campus && f.campus && f.campus !== S.campus){ verdict = TR(`属于另一个校区，不用`, `belongs to the other campus, not used`); vc = 'n'; }
+  else if(s === 'dropped'){ verdict = TR(`常设安排，回答不了假期问题`, `standing arrangement, cannot answer a question about the break`); vc = 'n'; }
+  else if(s === 'hist'){ verdict = TR(`往年候选（本期有事实，所以没用）`, `earlier-cycle candidate (this cycle has facts, so not used)`); vc = 'n'; }
+  else verdict = (EN ? {future:'not yet published, invisible today', revised:'revised by a newer notice', out:'validity does not cover the asked period', 'hist-old':'an older cycle, superseded by a more recent one'} : {future:'还没发布，看不见', revised:'已被新通知改写', out:'有效期不含所问时段', 'hist-old':'更早的往年，被更近的一期取代'})[s] || TR('不适用', 'not applicable'), vc = 'n';
+  return `<div class="insp"><div class="ih"><b>${esc(dx(f.entity))} · ${esc(dx(f.label))}</b><button class="x" id="inspX">×</button></div>
+    <div class="chk">${mark(c1)}<div>${TR(`① 校区：${S.campus ? (c1 ? '对得上' : `属于${CSHORT[f.campus]}`) : '用户没说 → 两边都留下，按校区分组'}`, `① campus: ${S.campus ? (c1 ? 'matches' : `belongs to ${CSHORT_D[f.campus]}`) : 'not stated by the user → both kept, grouped by campus'}`)}</div></div>
+    <div class="chk">${mark(c2)}<div>${TR(`② 发布于 ${f.pub}${c2 ? '，在今天之前' : '，今天还没发布'}`, `② published ${f.pub}${c2 ? ', before today' : ', not yet published today'}`)}</div></div>
+    <div class="chk">${mark(c3)}<div>${TR(`③ 有效期 ${esc(vShort(f))} ${c3 ? '盖住' : '不含'} ${Tt}`, `③ validity ${esc(vShort(f))} ${c3 ? 'covers' : 'does not cover'} ${Tt}`)}</div></div>
     <div class="chk">${mark(!revs)}<div>④ ${esc(revTxt)}</div></div>
     <div class="verdict ${vc}">${verdict}</div>
-    <div class="kvs"><span>来源</span><span>${esc(noticeOf(d, f).title)}</span><span>引文</span><span>“${esc(f.quote)}”</span><span>校区来自</span><span>${esc(f.cSrc)}</span><span>编号</span><span style="font-family:var(--mono)">${f.id}</span></div>
-    ${f.err ? `<div class="callout amber" style="margin-top:8px">⚠ ${esc(f.err)}</div>` : ''}</div>`;
+    <div class="kvs"><span>${TR(`来源`, `source`)}</span><span>${esc(noticeOf(d, f).title)}</span><span>${TR(`引文`, `quote`)}</span><span>“${esc(f.quote)}”</span><span>${TR(`校区来自`, `campus from`)}</span><span>${esc(dx(f.cSrc))}</span><span>${TR(`编号`, `id`)}</span><span style="font-family:var(--mono)">${f.id}</span></div>
+    ${f.err ? `<div class="callout amber" style="margin-top:8px">⚠ ${esc(dx(f.err))}</div>` : ''}</div>`;
 }
 function renderPanel(onlyRes){
   const box = $('#panel');
@@ -1230,7 +1317,7 @@ function renderPanel(onlyRes){
     $('#res').innerHTML = resultHTML(); $('#insp').innerHTML = inspectHTML(); wireInsp();
     $('#cDate').textContent = S.t; const d = ds(); $('#cT').value = Math.round((toMs(S.t) - toMs(d.window[0]))/DAY);
     document.querySelectorAll('.preset').forEach(b => b.classList.toggle('on', +b.dataset.i === S.preset));
-    const qm = box.querySelector('.qm .chip'); if(qm) qm.textContent = `今天 ${S.t}`;
+    const qm = box.querySelector('.qm .chip'); if(qm) qm.textContent = TR(`今天 ${S.t}`, `today ${S.t}`);
     return;
   }
   box.innerHTML = P[S.step]();
@@ -1256,14 +1343,19 @@ function renderSteps(){
     <span class="n">${S.step > i+1 ? '✓' : i+1}</span><span style="min-width:0"><div class="t1">${s.t1}</div><div class="t2">${s.t2}</div></span><span class="bar"></span></button>`).join('');
   document.querySelectorAll('.step').forEach(b => b.onclick = () => go(+b.dataset.s));
   $('#dots').innerHTML = STEPS.map((_, i) => `<i class="${S.step === i+1 ? 'on' : ''}"></i>`).join('');
-  $('#prev').disabled = S.step === 1; $('#next').textContent = S.step === 5 ? '回到开头 ↺' : '下一步 →';
+  $('#prev').disabled = S.step === 1; $('#next').textContent = S.step === 5 ? TR('回到开头 ↺', 'Back to start ↺') : TR('下一步 →', 'Next →');
 }
 function stageTitle(){
-  const t = {1:['一篇通知的原文', '2026-01-07《寒假期间综合服务保障体系各单位营业时间》'],
+  const t = (EN ? {1:['The source notice', '2026-01-07 《寒假期间综合服务保障体系各单位营业时间》 (service hours in the winter break)'],
+             2:['Compiler, step 1: the heading tree (scope tree)', 'the LLM lists the headings and the condition each introduces'],
+             3:['Compiler, step 2: facts placed under headings inherit their conditions', 'click a card to switch facts'],
+             4:[S.ds === 'track' ? 'Track-field subgraph: time × campus' : 'East-bathhouse subgraph: revision edges', 'hover for details'],
+             5:[S.ds === 'track' ? 'Track-field subgraph: drag “today” and ask' : 'East bathhouse: drag “today” to see revisions take effect', 'drag the black handle at the bottom, or use the presets on the right']} :
+            {1:['一篇通知的原文', '2026-01-07《寒假期间综合服务保障体系各单位营业时间》'],
              2:['编译第一步：标题树（作用域树）', 'LLM 列出标题和每个标题引入的条件'],
              3:['编译第二步：事实挂到标题下，继承条件', '点卡片切换事实'],
              4:[S.ds === 'track' ? '田径场子图：时间 × 校区' : '东区浴室子图：修订边', '悬停看详情'],
-             5:[S.ds === 'track' ? '田径场子图：拖动「今天」提问' : '东区浴室：拖动「今天」看修订如何生效', '拖动底部黑色把手，或用右侧预设']}[S.step];
+             5:[S.ds === 'track' ? '田径场子图：拖动「今天」提问' : '东区浴室：拖动「今天」看修订如何生效', '拖动底部黑色把手，或用右侧预设']})[S.step];
   $('#stageTitle').innerHTML = `${t[0]}<small>${t[1]}</small>`;
   $('#dsSeg').style.display = S.step >= 4 ? '' : 'none';
   $('#swEdges').style.display = S.step >= 4 ? '' : 'none';
@@ -1299,6 +1391,12 @@ $('#swEdges').onclick = () => { S.allEdges = !S.allEdges; drawStaticEdges(); upd
    ===================================================================== */
 // deep links, e.g. ?step=5&ds=bath&t=2025-10-03  or  ?step=5&t=2025-12-28&q=寒假&campus=tz&fix=1&edges=1&sel=b28eb1484c%2362
 const QS = new URLSearchParams(location.search);
+// language: static texts, page title and the switch (which keeps every other parameter of the URL)
+document.documentElement.lang = EN ? 'en' : 'zh-CN';
+document.title = TR('证据图长什么样？· 以田径场为例 · CampusScope', 'Evidence graph walkthrough · CampusScope');
+if(EN) document.querySelectorAll('[data-en]').forEach(e => { e.innerHTML = e.dataset.en; });
+{ const u = new URLSearchParams(location.search); u.set('lang', EN ? 'zh' : 'en');
+  const a = $('#langSw'); a.href = '?' + u.toString(); a.textContent = EN ? '中文' : 'English'; }
 if(QS.get('ds') === 'bath') S.ds = 'bath';
 if(QS.get('fix') === '1') S.fix = true;
 if(QS.get('edges') === '1') S.allEdges = true;
@@ -1333,7 +1431,7 @@ async function selftest(){
 window.__selftest = selftest;
 if(location.search.includes('selftest')) selftest().then(res => {
   const div = document.createElement('div'); div.className = 'selftest';
-  div.textContent = res.map(r => `${r.name}: ${r.pass}/${r.total}`).join('   ·   ') + (res.every(r => r.pass === r.total) ? '   ✓ 与 Python 参考实现一致' : '   ✗ 有不一致');
+  div.textContent = res.map(r => `${r.name}: ${r.pass}/${r.total}`).join('   ·   ') + (res.every(r => r.pass === r.total) ? TR('   ✓ 与 Python 参考实现一致', '   ✓ matches the Python reference implementation') : TR('   ✗ 有不一致', '   ✗ mismatches'));
   document.body.appendChild(div); console.log('selftest', res);
 });
 </script>

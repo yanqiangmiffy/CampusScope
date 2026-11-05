@@ -48,7 +48,7 @@ export default function TopBar(p: Props) {
 
       <div className="right">
         <span className={"health " + state} title={label}><i />{state === "ok" ? T.ready : state === "warm" ? warmText : state === "degraded" ? "BM25" : state === "nollm" ? T.llmShort : T.offline}</span>
-        <a className="ghost" href={p.lang === "en" ? "/cseg_en.html" : "/cseg.html"} target="_blank" rel="noreferrer"><External />{T.walkthrough}</a>
+        <a className="ghost" href={`/cseg.html?lang=${p.lang}`} target="_blank" rel="noreferrer"><External />{T.walkthrough}</a>
         <button className="ghost" onClick={() => p.setLang(p.lang === "en" ? "zh" : "en")}><Globe />{p.lang === "en" ? "中文" : "English"}</button>
         <button className="primary-s" onClick={p.onNew}><Plus />{T.newChat}</button>
       </div>
