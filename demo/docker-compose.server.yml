@@ -1,0 +1,52 @@
+# CampusScope demo on a server that already runs Milvus for other applications.
+#
+#   cd demo && docker compose -f docker-compose.server.yml up -d --build
+#
+# No Milvus of its own: the backend joins the Docker network of the existing Milvus (MILVUS_NETWORK,
+# MILVUS_HOST) and keeps its collections in a database of its own (MILVUS_DB), so it never reads or drops
+# another application's collections. Settings: demo/.env (see .env.example).
+
+name: campusscope
+
+services:
+  backend:
+    build:
+      context: ./backend
+      additional_contexts:
+        code: ../campusscope
+        data: ../data
+      args:
+        PIP_INDEX_URL: ${PIP_INDEX_URL:-https://pypi.org/simple}
+    env_file:
+      - path: ../.env            # model endpoints (DEEPSEEK_*, EMBEDDING_*)
+        required: false
+    environment:
+      MILVUS_URI: http://${MILVUS_HOST:-milvus-standalone}:19530
+      MILVUS_DB: ${MILVUS_DB:-campusscope}
+      HOST_ALIAS: host.docker.internal
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+      TZ: ${TZ:-Asia/Shanghai}
+    volumes:
+      - ../cache:/srv/campusscope/cache
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - "127.0.0.1:${BACKEND_PORT:-8796}:8000"
+    networks: [default, milvus]
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        NPM_REGISTRY: ${NPM_REGISTRY:-https://registry.npmjs.org}
+    ports:
+      - "${FRONTEND_PORT:-8084}:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+networks:
+  milvus:
+    name: ${MILVUS_NETWORK:-candor-net}
+    external: true

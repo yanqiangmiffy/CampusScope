@@ -1,0 +1,131 @@
+# CampusScope demo: one command starts everything (React + FastAPI with SSE + its own Milvus).
+#
+#   cd demo && docker compose up -d --build
+#
+#   demo              http://localhost:8795
+#   API docs          http://localhost:8796/docs   (bound to 127.0.0.1)
+#   Milvus UI         docker compose --profile tools up -d attu -> http://localhost:8011
+#
+# The system (../campusscope) and its data (../data) are built into the backend image, the model endpoints
+# are read from ../.env, and the cache (../cache: LLM replies and embeddings) is mounted, so cached questions
+# replay instantly and the index builds without an embedding endpoint. On the first start the backend builds
+# the Milvus collections from ../data (about a minute); they are kept in named volumes.
+# Settings of this file (ports, mirrors): demo/.env (see .env.example).
+# On a server whose Milvus is shared with other applications, use docker-compose.server.yml instead.
+
+name: campusscope
+
+services:
+  # ------------------------------------------------ vector store: Milvus standalone = etcd + MinIO + milvus
+  etcd:
+    image: quay.io/coreos/etcd:v3.5.25
+    environment:
+      - ETCD_AUTO_COMPACTION_MODE=revision
+      - ETCD_AUTO_COMPACTION_RETENTION=1000
+      - ETCD_QUOTA_BACKEND_BYTES=4294967296
+      - ETCD_SNAPSHOT_COUNT=50000
+    volumes:
+      - etcd:/etcd
+    command: etcd -advertise-client-urls=http://etcd:2379 -listen-client-urls http://0.0.0.0:2379 --data-dir /etcd
+    healthcheck:
+      test: ["CMD", "etcdctl", "endpoint", "health"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+    restart: unless-stopped
+
+  minio:
+    image: minio/minio:RELEASE.2024-12-18T13-15-44Z
+    environment:
+      # Milvus' default credentials; the ports stay inside the compose network
+      MINIO_ACCESS_KEY: minioadmin
+      MINIO_SECRET_KEY: minioadmin
+    volumes:
+      - minio:/minio_data
+    command: minio server /minio_data --console-address ":9001"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+    restart: unless-stopped
+
+  milvus:
+    image: milvusdb/milvus:v3.0.1
+    command: ["milvus", "run", "standalone"]
+    security_opt:
+      - seccomp:unconfined
+    environment:
+      ETCD_ENDPOINTS: etcd:2379
+      MINIO_ADDRESS: minio:9000
+      MQ_TYPE: woodpecker
+    volumes:
+      - milvus:/var/lib/milvus
+    ports:
+      # host port 19531, so it never clashes with another Milvus; scripts/ can use it too
+      - "127.0.0.1:${MILVUS_PORT:-19531}:19530"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9091/healthz"]
+      interval: 15s
+      start_period: 90s
+      timeout: 20s
+      retries: 5
+    depends_on:
+      - etcd
+      - minio
+    restart: unless-stopped
+
+  # ------------------------------------------------ application
+  backend:
+    build:
+      context: ./backend
+      additional_contexts:
+        code: ../campusscope     # the system
+        data: ../data            # notices, compiled notices, gazetteer, campus prior
+      args:
+        PIP_INDEX_URL: ${PIP_INDEX_URL:-https://pypi.org/simple}
+    env_file:
+      - path: ../.env            # model endpoints (DEEPSEEK_*, EMBEDDING_*)
+        required: false
+    environment:
+      MILVUS_URI: http://milvus:19530
+      HOST_ALIAS: host.docker.internal   # endpoints on localhost / 127.0.0.1 are reached through the host
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+      TZ: ${TZ:-Asia/Shanghai}
+    volumes:
+      - ../cache:/srv/campusscope/cache   # LLM / embedding cache (shared with scripts/)
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - "127.0.0.1:${BACKEND_PORT:-8796}:8000" # Swagger and local frontend development
+    depends_on:
+      milvus:
+        condition: service_healthy
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        NPM_REGISTRY: ${NPM_REGISTRY:-https://registry.npmjs.org}
+    ports:
+      - "${FRONTEND_PORT:-8795}:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+  # ------------------------------------------------ optional: Milvus UI
+  attu:
+    image: zilliz/attu:v2.5
+    profiles: ["tools"]
+    environment:
+      MILVUS_URL: milvus:19530
+    ports:
+      - "127.0.0.1:8011:3000"
+    depends_on:
+      - milvus
+
+volumes:
+  etcd:
+  minio:
+  milvus:

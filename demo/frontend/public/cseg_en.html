@@ -1,0 +1,1341 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>证据图长什么样？· 以田径场为例 · CampusScope</title>
+<style>
+:root{
+  --bg:#F4F5FA; --ink:#101828; --ink2:#344054; --ink3:#667085; --ink4:#98A2B3; --line:#E4E7EC; --card:#fff;
+  --zgc:#2E6BE6; --zgc-bg:#EAF1FE; --zgc-bd:#B9CFFB; --zgc-ink:#1D4ED8;
+  --tz:#E8772E; --tz-bg:#FFF1E7; --tz-bd:#FDCBA6; --tz-ink:#C2410C;
+  --rec:#7C5CFA; --rec-bg:#F1EDFF; --rev:#E5484D; --rev-bg:#FFEEEE;
+  --ok:#12B76A; --ok-bg:#E7F8EF; --time:#0891B2; --time-bg:#E3F5FA; --warn:#F59E0B; --warn-bg:#FFF6E5;
+  --brand:#5B47F0;
+  --shadow:0 1px 2px rgba(16,24,40,.05),0 10px 30px rgba(16,24,40,.07);
+  --font:"Inter","PingFang SC","Microsoft YaHei","Noto Sans SC","Source Han Sans SC",system-ui,sans-serif;
+  --mono:ui-monospace,"SFMono-Regular","Cascadia Mono",Consolas,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{font-family:var(--font);color:var(--ink);-webkit-font-smoothing:antialiased;
+  background:radial-gradient(1100px 520px at 0% -8%,#ECEEFF 0%,rgba(236,238,255,0) 60%),
+             radial-gradient(900px 480px at 105% 0%,#FFF1E6 0%,rgba(255,241,230,0) 55%),var(--bg)}
+.app{max-width:1600px;margin:0 auto;padding:16px 22px 14px;display:flex;flex-direction:column;gap:12px;height:100vh;min-height:720px}
+/* ---------- header ---------- */
+.top{display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{display:flex;gap:14px;align-items:center;min-width:0}
+.logo{flex:none;width:46px;height:46px;border-radius:14px;display:grid;place-items:center;
+  background:linear-gradient(135deg,#4338CA 0%,#7C5CFA 55%,#F08A3E 100%);box-shadow:0 8px 22px rgba(91,71,240,.32)}
+h1{margin:0;font-size:22px;letter-spacing:.3px;white-space:nowrap}
+h1 em{font-style:normal;background:linear-gradient(90deg,#4338CA,#7C5CFA 60%,#E8772E);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{margin-top:3px;color:var(--ink3);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.legend{display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end}
+.lg{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:999px;background:rgba(255,255,255,.85);
+  border:1px solid var(--line);font-size:12px;color:var(--ink2);white-space:nowrap}
+.lg i{display:inline-block}
+.sw{width:10px;height:10px;border-radius:3px}
+.ln{width:22px;height:0;border-top:2.5px solid}
+.ln.rec{border-color:var(--rec)} .ln.rev{border-color:var(--rev);border-top-style:dashed}
+/* ---------- stepper ---------- */
+.steps{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.step{position:relative;display:flex;gap:10px;align-items:center;padding:9px 12px;border-radius:14px;cursor:pointer;
+  background:rgba(255,255,255,.62);border:1px solid var(--line);transition:all .25s ease;text-align:left;font:inherit;color:inherit}
+.step:hover{background:#fff;transform:translateY(-1px)}
+.step .n{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:13px;
+  background:#EEF0F5;color:var(--ink3);transition:all .25s}
+.step .t1{font-weight:700;font-size:14px;line-height:1.2}
+.step .t2{font-size:12px;color:var(--ink3);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.step.active{background:#fff;border-color:transparent;box-shadow:0 0 0 2px var(--brand) inset,0 8px 24px rgba(91,71,240,.14)}
+.step.active .n{background:linear-gradient(135deg,#4338CA,#7C5CFA);color:#fff;box-shadow:0 4px 12px rgba(91,71,240,.35)}
+.step.done .n{background:#E6E2FF;color:var(--brand)}
+.step .bar{position:absolute;left:14px;right:14px;bottom:-1px;height:3px;border-radius:3px;background:transparent}
+.step.active .bar{background:linear-gradient(90deg,#4338CA,#7C5CFA,#E8772E)}
+/* ---------- main ---------- */
+.main{display:grid;grid-template-columns:minmax(0,1fr) 400px;gap:14px;flex:1;min-height:0}
+.stage{background:#fff;border-radius:22px;box-shadow:var(--shadow);border:1px solid rgba(228,231,236,.9);display:flex;flex-direction:column;min-height:0;overflow:hidden}
+.stage-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px 2px;min-height:48px}
+.stage-title{font-weight:800;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stage-title small{font-weight:500;color:var(--ink3);margin-left:8px;font-size:12px}
+.tools{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+.seg{display:inline-flex;background:#F2F4F7;border-radius:11px;padding:3px;gap:2px}
+.seg button{border:0;background:transparent;padding:6px 11px;border-radius:9px;font:inherit;font-size:12.5px;color:var(--ink3);cursor:pointer;white-space:nowrap;transition:all .2s}
+.seg button:hover{color:var(--ink)}
+.seg button.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(16,24,40,.14);font-weight:700}
+.seg button:disabled{opacity:.45;cursor:not-allowed}
+.switch{display:inline-flex;gap:8px;align-items:center;font-size:12.5px;color:var(--ink2);cursor:pointer;user-select:none;white-space:nowrap;background:none;border:0;font-family:inherit;padding:0}
+.switch i{width:34px;height:20px;border-radius:999px;background:#D0D5DD;position:relative;transition:.2s;flex:none}
+.switch i::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.25);transition:.2s}
+.switch.on i{background:var(--ok)} .switch.on i::after{left:16px}
+.switch.hide{display:none}
+.canvas{flex:1;position:relative;min-height:0}
+.canvas svg{position:absolute;inset:0;width:100%;height:100%;transition:opacity .5s ease}
+.canvas svg.off{opacity:0;pointer-events:none}
+svg text{font-family:var(--font)}
+.layer{transition:opacity .5s ease}
+.layer.off{opacity:0;pointer-events:none}
+.rise{animation:rise .55s cubic-bezier(.2,.8,.2,1) both;transform-box:fill-box}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.draw{stroke-dasharray:var(--len);stroke-dashoffset:var(--len);animation:draw 1s ease forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.flowdash{stroke-dasharray:6 7;animation:flow 1.1s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-26}}
+.pulse{animation:pulse 1.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes pulse{0%,100%{opacity:.25}50%{opacity:.7}}
+.pill{cursor:pointer;transition:opacity .35s ease}
+.pill .pbody{transition:stroke .3s,fill .3s}
+.pill.st-future{opacity:.14}
+.pill.st-out,.pill.st-hist-old{opacity:.38}
+.pill.st-cur,.pill.st-dropped,.pill.st-hist{opacity:.55}
+.pill.st-revised{opacity:.62}
+.pill .strike{opacity:0;transition:opacity .3s}
+.pill.st-revised .strike{opacity:1}
+.pill:hover .pbody{stroke-width:2.2}
+.pill.sel .pbody{stroke-width:2.6}
+.lane-dim{transition:opacity .35s}
+.edge{transition:opacity .35s}
+.fact-card{cursor:pointer}
+.fact-card.ghost{opacity:.35}
+.fact-card .sel-ring{opacity:0;transition:opacity .25s}
+.fact-card.sel .sel-ring{opacity:1}
+/* ---------- tooltip ---------- */
+.tt{position:absolute;z-index:20;pointer-events:none;min-width:230px;max-width:330px;background:rgba(16,24,40,.96);color:#fff;border-radius:12px;
+  padding:10px 12px;font-size:12px;line-height:1.6;box-shadow:0 12px 30px rgba(16,24,40,.28);opacity:0;transform:translateY(4px);transition:opacity .15s,transform .15s}
+.tt.on{opacity:1;transform:none}
+.tt .h{font-weight:700;font-size:13px;margin-bottom:4px;display:flex;gap:6px;align-items:center}
+.tt .d{width:8px;height:8px;border-radius:50%;flex:none}
+.tt .r{color:#D0D5DD} .tt .r b{color:#fff;font-weight:600}
+.tt .q{margin-top:6px;padding-top:6px;border-top:1px solid rgba(255,255,255,.14);color:#EAECF0;font-style:italic}
+.tt .id{margin-top:4px;font-family:var(--mono);color:#98A2B3;font-size:11px}
+.tt .w{margin-top:6px;color:#FEC84B}
+/* ---------- panel ---------- */
+.panel{background:#fff;border-radius:22px;box-shadow:var(--shadow);border:1px solid rgba(228,231,236,.9);display:flex;flex-direction:column;min-height:0}
+.pbody-wrap{flex:1;overflow:auto;padding:18px 20px 8px;scrollbar-width:thin}
+.pnav{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 16px 14px;border-top:1px solid var(--line)}
+.btn{border:1px solid var(--line);background:#fff;border-radius:11px;padding:8px 14px;font:inherit;font-size:13px;font-weight:600;color:var(--ink2);cursor:pointer;transition:all .2s}
+.btn:hover{border-color:#C7CCD6;background:#FAFAFC}
+.btn.primary{background:linear-gradient(135deg,#4338CA,#7C5CFA);color:#fff;border-color:transparent;box-shadow:0 6px 16px rgba(91,71,240,.3)}
+.btn.primary:hover{filter:brightness(1.06)}
+.btn:disabled{opacity:.35;cursor:default}
+.dots{display:flex;gap:6px}
+.dots i{width:7px;height:7px;border-radius:50%;background:#D0D5DD;transition:all .25s}
+.dots i.on{width:20px;border-radius:4px;background:var(--brand)}
+.kicker{font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--brand)}
+.panel h2{font-size:19px;line-height:1.4;margin:6px 0 8px}
+.panel p{font-size:13.5px;line-height:1.78;color:var(--ink2);margin:8px 0}
+.panel p.muted{color:var(--ink3);font-size:12.5px}
+.panel b{color:var(--ink)}
+.chip{display:inline-flex;align-items:center;gap:4px;padding:1px 8px;border-radius:999px;font-size:12px;font-weight:700;white-space:nowrap;vertical-align:1px;line-height:1.7}
+.chip.zgc{background:var(--zgc-bg);color:var(--zgc-ink)} .chip.tz{background:var(--tz-bg);color:var(--tz-ink)}
+.chip.time{background:var(--time-bg);color:#0E7490} .chip.grey{background:#F2F4F7;color:#475467}
+.chip.rec{background:var(--rec-bg);color:#5B3FD9} .chip.rev{background:var(--rev-bg);color:#C0262D}
+.chip.ok{background:var(--ok-bg);color:#067647} .chip.warn{background:var(--warn-bg);color:#B54708}
+.callout{border-radius:13px;padding:10px 12px;font-size:13px;line-height:1.72;margin:10px 0}
+.callout.red{background:#FFF3F3;color:#8F1D22;border:1px solid #FCD4D4}
+.callout.amber{background:#FFF8EB;color:#8A4B0B;border:1px solid #FDE3B0}
+.callout.violet{background:#F6F3FF;color:#4A34B8;border:1px solid #E2DBFF}
+.callout.blue{background:#F3F7FF;color:#1E4FB8;border:1px solid #D7E4FD}
+.callout b{color:inherit}
+.quote{font-family:var(--mono);font-size:11.5px;background:#F8F9FB;border:1px dashed #D0D5DD;border-radius:11px;padding:8px 10px;color:#475467;line-height:1.65;margin:8px 0}
+.quote .hl{background:#FFE4E4;color:#B42318;border-radius:3px;padding:0 2px}
+.quote .hl2{background:#FFF0C2;border-radius:3px;padding:0 2px}
+.qh{font-family:var(--font);font-size:11.5px;color:var(--ink3);margin-bottom:4px;font-weight:600}
+.file{font-size:12px;color:var(--ink3);background:#F8F9FB;border-radius:11px;padding:8px 10px;margin:10px 0 4px;line-height:1.6}
+code{font-family:var(--mono);background:#EEF0F5;padding:1px 5px;border-radius:5px;font-size:11.5px;color:#344054}
+ul.kv{list-style:none;padding:0;margin:8px 0}
+ul.kv li{display:flex;gap:8px;align-items:baseline;font-size:13px;color:var(--ink2);padding:5px 0;border-bottom:1px dashed #EEF0F3;line-height:1.55}
+ul.kv li:last-child{border-bottom:0}
+ul.kv li .chip{flex:none}
+.ed{display:flex;gap:10px;align-items:flex-start;font-size:13px;line-height:1.7;color:var(--ink2);padding:9px 11px;border-radius:13px;margin:8px 0;border:1px solid var(--line)}
+.ed svg{flex:none;margin-top:5px}
+.ed.rec{background:#FAF8FF;border-color:#E6E0FF} .ed.rev{background:#FFF8F8;border-color:#FBDADA}
+.stat{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+.stat span{background:#F5F6FA;border-radius:9px;padding:4px 9px;font-size:12px;color:var(--ink2)}
+.stat b{font-size:13px}
+.tl{list-style:none;padding:0;margin:8px 0;border-left:2px solid #EDEBFF}
+.tl li{position:relative;padding:3px 0 3px 14px;font-size:12.8px;color:var(--ink2);line-height:1.6}
+.tl li::before{content:"";position:absolute;left:-6px;top:10px;width:9px;height:9px;border-radius:50%;background:#fff;border:2px solid var(--rev)}
+.tl li.base::before{border-color:var(--zgc)}
+.tl li b{font-weight:700}
+/* inheritance chain */
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:3px;background:#F2F4F7;border-radius:12px;padding:3px;margin:10px 0 6px}
+.fgrid button{border:0;background:transparent;padding:7px 9px;border-radius:9px;font:inherit;font-size:12.5px;color:var(--ink3);cursor:pointer;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fgrid button:hover{color:var(--ink)}
+.fgrid button.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(16,24,40,.14);font-weight:700}
+.chain{margin:6px 0 4px;display:flex;flex-direction:column;gap:9px}
+.crow{display:grid;grid-template-columns:44px 1fr;gap:6px;align-items:start}
+.clabel{font-size:12px;font-weight:800;color:var(--ink3);padding-top:4px}
+.csteps{display:flex;flex-wrap:wrap;gap:3px 2px;align-items:center}
+.cs{font-size:11.5px;padding:3px 7px;border-radius:8px;background:#F2F4F7;color:#98A2B3;opacity:0;transform:translateY(5px);animation:pop .35s forwards;line-height:1.35;text-align:center}
+.cs small{display:block;font-size:10px;font-weight:500;opacity:.9}
+.cs.hit{font-weight:800;box-shadow:0 0 0 1.5px currentColor inset}
+.cs.hit.zgc{background:var(--zgc-bg);color:var(--zgc-ink)} .cs.hit.tz{background:var(--tz-bg);color:var(--tz-ink)}
+.cs.hit.time{background:var(--time-bg);color:#0E7490} .cs.hit.grey{background:#EEF0F5;color:#344054}
+.cs.skip{background:transparent;color:#C8CDD6;text-decoration:line-through}
+.carr{color:#C0C6D2;font-size:11px;opacity:0;animation:pop .35s forwards}
+@keyframes pop{to{opacity:1;transform:none}}
+/* step 5 controls */
+.qcard{border-radius:15px;padding:10px 13px;background:linear-gradient(135deg,#F5F3FF,#FFF6EE);border:1px solid #ECE8FF;margin:6px 0 8px}
+.qcard .qt{font-size:16px;font-weight:800;color:var(--ink)}
+.qcard .qm{margin-top:6px;display:flex;gap:6px;flex-wrap:wrap}
+.ctrl{display:grid;grid-template-columns:40px 1fr;gap:8px;align-items:center;margin:5px 0}
+.ctrl>label{font-size:12px;font-weight:800;color:var(--ink3)}
+.ctrl .seg{justify-self:start}
+.daterow{display:flex;align-items:center;gap:10px}
+.daterow b{font-family:var(--mono);font-size:13px;min-width:86px}
+input[type=range]{width:100%;accent-color:var(--brand)}
+.presets{display:flex;flex-wrap:nowrap;gap:6px;margin:6px -20px 4px;padding:2px 20px 6px;overflow-x:auto;scrollbar-width:thin;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 18px,#000 calc(100% - 28px),transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 18px,#000 calc(100% - 28px),transparent 100%)}
+.preset{flex:none}
+.preset{border:1px solid var(--line);background:#fff;border-radius:999px;padding:4px 10px;font:inherit;font-size:12px;color:var(--ink2);cursor:pointer;transition:all .2s}
+.preset:hover{border-color:#B8AEFF;color:var(--brand)}
+.preset.on{background:#F1EEFF;border-color:#B8AEFF;color:#4A34B8;font-weight:700}
+.conds{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:6px 0 10px}
+.conds-h{font-size:12px;font-weight:800;color:var(--ink3);margin-top:14px}
+.cond{display:flex;gap:7px;align-items:flex-start;background:#F8F9FB;border-radius:11px;padding:7px 9px;font-size:12px;line-height:1.45;color:var(--ink2)}
+.cond .ci{flex:none;width:19px;height:19px;border-radius:50%;background:#fff;border:1.5px solid #D0D5DD;display:grid;place-items:center;font-size:11px;font-weight:800;color:var(--ink3)}
+.cond small{display:block;color:var(--ink4);font-family:var(--mono);font-size:10.5px}
+.rs{display:grid;grid-template-columns:22px 1fr;gap:8px;margin:8px 0;align-items:start}
+.rn{width:22px;height:22px;border-radius:50%;background:#EEF0F5;color:var(--ink3);font-size:12px;font-weight:800;display:grid;place-items:center}
+.rt{font-size:13px;line-height:1.7;color:var(--ink2)}
+.tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:4px}
+.tag{font-size:11.5px;border-radius:8px;padding:2px 8px;background:#F2F4F7;color:#475467;font-weight:600}
+.tag.ok{background:var(--ok-bg);color:#067647} .tag.rec{background:var(--rec-bg);color:#5B3FD9} .tag.rev{background:var(--rev-bg);color:#C0262D}
+.br{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px}
+.brc{border-radius:11px;padding:7px 9px;font-size:12px;line-height:1.55;border:1px solid}
+.brc.zgc{background:#F5F8FF;border-color:#D7E4FD} .brc.tz{background:#FFF8F2;border-color:#FDDCC4} .brc.all{background:#F8F9FB;border-color:#E4E7EC}
+.brc .bh{font-weight:800;font-size:11.5px;margin-bottom:2px}
+.brc.zgc .bh{color:var(--zgc-ink)} .brc.tz .bh{color:var(--tz-ink)}
+.brc.pick{box-shadow:0 0 0 2px var(--ok) inset}
+.costs{margin-top:8px;display:flex;flex-direction:column;gap:6px}
+.cost{display:grid;grid-template-columns:78px 1fr 44px;gap:8px;align-items:center;font-size:12px;color:var(--ink2)}
+.cost .track{height:10px;border-radius:6px;background:#F2F4F7;overflow:hidden}
+.cost .fill{height:100%;border-radius:6px;background:#C9CED8;transition:width .5s cubic-bezier(.2,.8,.2,1)}
+.cost.win .fill{background:linear-gradient(90deg,#12B76A,#32D583)}
+.cost.win{font-weight:800;color:#067647}
+.cost .v{font-family:var(--mono);text-align:right}
+.formula{font-family:var(--mono);font-size:11px;color:var(--ink4);margin-top:4px;line-height:1.6}
+.bubble{position:relative;margin-top:6px;border-radius:14px 14px 14px 4px;background:#101828;color:#fff;padding:11px 13px;font-size:13px;line-height:1.75;white-space:pre-line;box-shadow:0 10px 24px rgba(16,24,40,.18)}
+.bubble .bh2{font-size:11px;color:#98A2B3;margin-bottom:3px;font-weight:600}
+.insp{margin-top:12px;border-radius:15px;border:1px solid var(--line);padding:11px 12px;background:#FCFCFD}
+.insp .ih{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px}
+.insp .ih b{font-size:13.5px}
+.insp .x{border:0;background:#F2F4F7;border-radius:8px;width:24px;height:24px;cursor:pointer;color:var(--ink3);font-size:14px}
+.chk{display:grid;grid-template-columns:22px 1fr;gap:6px;font-size:12.5px;line-height:1.55;padding:3px 0;color:var(--ink2)}
+.chk .m{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:900;color:#fff;margin-top:1px}
+.chk .m.y{background:var(--ok)} .chk .m.n{background:#F04438} .chk .m.z{background:#98A2B3}
+.verdict{margin-top:6px;font-size:12.5px;font-weight:800;padding:6px 9px;border-radius:9px}
+.verdict.y{background:var(--ok-bg);color:#067647} .verdict.n{background:#F2F4F7;color:#475467} .verdict.h{background:var(--rec-bg);color:#5B3FD9}
+.kvs{display:grid;grid-template-columns:62px 1fr;gap:3px 8px;font-size:12px;line-height:1.55;margin-top:6px;color:var(--ink2)}
+.kvs span:nth-child(odd){color:var(--ink4);font-weight:600}
+.foot{font-size:11.5px;color:var(--ink4);display:flex;justify-content:space-between;gap:16px}
+.foot code{font-size:11px}
+.selftest{position:fixed;right:16px;bottom:16px;background:#101828;color:#fff;padding:10px 14px;border-radius:12px;font-size:12px;font-family:var(--mono);z-index:50;box-shadow:0 10px 30px rgba(0,0,0,.3)}
+@media (max-width:1180px){
+  .app{height:auto}
+  .main{grid-template-columns:1fr}
+  .canvas{flex:none;height:auto;aspect-ratio:1100/700;min-height:0}
+  .stage-bar{flex-wrap:wrap}
+  .step .t2{display:none}
+  .legend{display:none}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="brand">
+      <div class="logo">
+        <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+          <circle cx="6" cy="7" r="3.2" fill="#fff"/><circle cx="20" cy="6" r="2.6" fill="#fff" opacity=".85"/>
+          <circle cx="13" cy="19" r="3.6" fill="#fff"/><circle cx="21.5" cy="18" r="2.2" fill="#fff" opacity=".75"/>
+          <path d="M6 7L13 19M20 6L13 19M20 6L21.5 18M6 7L20 6" stroke="#fff" stroke-width="1.4" opacity=".8"/>
+        </svg>
+      </div>
+      <div style="min-width:0">
+        <h1>条件作用域证据图，<em>一步步看懂</em></h1>
+        <div class="sub">以「田径场」为例：通知 → 标题树 → 带条件的事实 → 连成图 → 回答问题 · 全部来自 CampusScope v10 的真实编译结果</div>
+      </div>
+    </div>
+    <div class="legend">
+      <span class="lg"><i class="sw" style="background:var(--zgc)"></i>中关村校区</span>
+      <span class="lg"><i class="sw" style="background:var(--tz)"></i>通州校区</span>
+      <span class="lg"><i class="sw" style="background:var(--time)"></i>有效期</span>
+      <span class="lg"><i class="ln rec"></i>rec 往年同期</span>
+      <span class="lg"><i class="ln rev"></i>rev 被修订</span>
+      <span class="lg"><i class="sw" style="background:var(--ok)"></i>适用</span>
+      <span class="lg"><i class="sw" style="background:var(--warn)"></i>抽取错误</span>
+    </div>
+  </header>
+
+  <nav class="steps" id="steps"></nav>
+
+  <div class="main">
+    <section class="stage">
+      <div class="stage-bar">
+        <div class="stage-title" id="stageTitle"></div>
+        <div class="tools">
+          <div class="seg" id="dsSeg" style="display:none">
+            <button data-ds="track" class="on">田径场</button><button data-ds="bath">东区浴室（修订边）</button>
+          </div>
+          <button class="switch" id="swEdges" style="display:none"><i></i>显示全部边</button>
+          <button class="switch" id="swFix" style="display:none"><i></i>按 PDF 原文更正</button>
+        </div>
+      </div>
+      <div class="canvas" id="canvas">
+        <svg id="viewA" viewBox="0 0 1100 700" preserveAspectRatio="xMidYMid meet"></svg>
+        <svg id="viewB" viewBox="0 0 1100 700" preserveAspectRatio="xMidYMid meet" class="off"></svg>
+        <div class="tt" id="tt"></div>
+      </div>
+    </section>
+    <aside class="panel">
+      <div class="pbody-wrap" id="panel"></div>
+      <div class="pnav">
+        <button class="btn" id="prev">← 上一步</button>
+        <div class="dots" id="dots"></div>
+        <button class="btn primary" id="next">下一步 →</button>
+      </div>
+    </aside>
+  </div>
+  <div class="foot">
+    <span>数据：<code>paper/v10/data/compiled_wb.jsonl</code> 经 <code>candor/graph.py</code> 构建（与论文实验同一份）；回答逻辑复刻 <code>candor_agent.respond</code>（不含检索段落和 LLM 写作，答复文字为示意）。</span>
+    <span>← → 键切换步骤</span>
+  </div>
+</div>
+
+<script>
+const DATA = {"track": {"name": "田径场", "etype": "田径球场", "key": "田径场 · 开放情况", "window": ["2025-01-01", "2026-04-15"], "fixedCampus": null, "prior": {"zgc": 0.8291144122897887, "tz": 0.17088558771021137}, "notices": [{"id": "f5ee1a0669", "title": "关于寒假期间校内各类服务营业时间的通知", "pub": "2025-01-10", "short": "2025 寒假通知", "kind": "Winter", "ptype": "寒假"}, {"id": "ce87af9599", "title": "暑期留校指南丨综合服务保障体系各单位营业时间一览！", "pub": "2025-07-04", "short": "2025 暑期指南", "kind": "Summer", "ptype": "暑假"}, {"id": "f574e3c17b", "title": "国庆、中秋期间综合服务保障体系各单位营业时间", "pub": "2025-09-30", "short": "2025 国庆通知", "kind": "Nat. Day", "ptype": "国庆"}, {"id": "b28eb1484c", "title": "寒假期间综合服务保障体系各单位营业时间", "pub": "2026-01-07", "short": "2026 寒假通知", "kind": "Winter", "ptype": "寒假"}, {"id": "34de5426b3", "title": "「转」RUCers早知道丨关于中关村校区田径场跑道使用的通知", "pub": "2026-03-09", "short": "田径场跑道使用通知", "kind": "Track use", "ptype": "春季学期"}], "facts": [{"id": "f5ee1a0669#29", "doc": "f5ee1a0669", "entity": "田径场", "attr": "开放状态", "value": "open as usual", "quote": "田径场、品园篮球场正常开放", "campus": "zgc", "src": "doc", "cSrc": "通知整体", "vSrc": "通知整体", "aSrc": "—", "aud": null, "start": "2025-01-15", "end": "2025-02-13", "pub": "2025-01-10", "ptype": "寒假", "cycle": 2025, "path": ["体育场馆", "公共服务"], "label": "open as usual", "err": null, "note": null}, {"id": "ce87af9599#156", "doc": "ce87af9599", "entity": "田径场", "attr": "开放时间", "value": "6:00-22:00", "quote": "田径场 6:00-22:00 正常营业健身房 12:00-21:00", "campus": "tz", "src": "section", "cSrc": "标题「通州校区」", "vSrc": "通知整体", "aSrc": "通知整体", "aud": "暑期留校学生", "start": "2025-07-07", "end": "2025-09-04", "pub": "2025-07-04", "ptype": "暑假", "cycle": 2025, "path": ["体育场馆", "校内基础设施", "通州校区"], "label": "6:00–22:00", "err": null, "note": null}, {"id": "f574e3c17b#104", "doc": "f574e3c17b", "entity": "田径场", "attr": "开放状态", "value": "open as usual", "quote": "世纪馆球类场地、世纪馆器械健身房、游泳馆、拳道馆主馆（篮球厅）、北园羽毛球馆、田径正常开放", "campus": "zgc", "src": "section", "cSrc": "标题「体育场馆」", "vSrc": "通知整体", "aSrc": "通知整体", "aud": "综合服务保障体系各单位服务对象（含师生、教职工、校友及家属区住户等）", "start": "2025-10-01", "end": "2025-10-08", "pub": "2025-09-30", "ptype": "国庆", "cycle": 2025, "path": ["体育场馆", "校内基础设施", "中关村校区"], "label": "open as usual", "err": null, "note": null}, {"id": "b28eb1484c#44", "doc": "b28eb1484c", "entity": "田径场", "attr": "开放状态", "value": "open as usual", "quote": "体育场馆田径场、品园篮球场正常开放", "campus": "zgc", "src": "section", "cSrc": "标题「中关村校区」", "vSrc": "通知整体", "aSrc": "通知整体", "aud": "留校师生", "start": "2026-01-12", "end": "2026-03-01", "pub": "2026-01-07", "ptype": "寒假", "cycle": 2026, "path": ["体育场馆", "校内基础设施", "物业服务", "中关村校区"], "label": "open as usual", "err": null, "note": null}, {"id": "b28eb1484c#45", "doc": "b28eb1484c", "entity": "田径场", "attr": "开放时间", "value": "10:00—18:00", "quote": "开放时间调整为10:00—18:00", "campus": "zgc", "src": "section", "cSrc": "标题「中关村校区」", "vSrc": "通知整体", "aSrc": "通知整体", "aud": "留校师生", "start": "2026-01-12", "end": "2026-03-01", "pub": "2026-01-07", "ptype": "寒假", "cycle": 2026, "path": ["体育场馆", "校内基础设施", "物业服务", "中关村校区"], "label": "10:00–18:00", "err": null, "note": null}, {"id": "b28eb1484c#61", "doc": "b28eb1484c", "entity": "田径场", "attr": "开放状态", "value": "2月10日—2月24日暂停开放，1月12日—2月9日期间根据学生锻炼需求动态调整开放时间；校内基础设施体育场馆正常开放", "quote": "田径场、多功能球场开放时间：8:00—22:00 2月10日—2月24日暂停开放，1月12日—2月9日期间根据学生锻炼需", "campus": "tz", "src": "section", "cSrc": "标题「通州校区」", "vSrc": "通知整体", "aSrc": "通知整体", "aud": "留校师生", "start": "2026-01-12", "end": "2026-03-01", "pub": "2026-01-07", "ptype": "寒假", "cycle": 2026, "path": ["体育场馆", "校内基础设施", "物业服务", "通州校区"], "label": "closed 10–24 Feb", "err": null, "note": null}, {"id": "b28eb1484c#62", "doc": "b28eb1484c", "entity": "田径场", "attr": "开放时间", "value": "8:00—22:00", "quote": "田径场、多功能球场开放时间：8:00—22:00", "campus": "tz", "src": "section", "cSrc": "标题「通州校区」", "vSrc": "通知整体", "aSrc": "通知整体", "aud": "留校师生", "start": "2026-01-12", "end": "2026-03-01", "pub": "2026-01-07", "ptype": "寒假", "cycle": 2026, "path": ["体育场馆", "校内基础设施", "物业服务", "通州校区"], "label": "8:00–22:00", "err": null, "note": null}, {"id": "34de5426b3#0", "doc": "34de5426b3", "entity": "田径场", "attr": "开放时间", "value": "每周一至周五16:00-18:30开展高水平运动队训练", "quote": "田径场每周一至周五16:00-18:30开展高水平运动队训练", "campus": "zgc", "src": "doc", "cSrc": "通知整体", "vSrc": "—", "aSrc": "通知整体", "aud": "师生", "start": null, "end": null, "pub": "2026-03-09", "ptype": "春季学期", "cycle": 2026, "path": [], "label": "16:00–18:30 training", "err": null, "note": null}, {"id": "34de5426b3#1", "doc": "34de5426b3", "entity": "田径场", "attr": "开放时间", "value": "每周一至周五19:40-21:10开设有氧健身跑提高课", "quote": "19:40-21:10开设有氧健身跑提高课", "campus": "zgc", "src": "doc", "cSrc": "通知整体", "vSrc": "—", "aSrc": "通知整体", "aud": "师生", "start": null, "end": null, "pub": "2026-03-09", "ptype": "春季学期", "cycle": 2026, "path": [], "label": "19:40–21:10 class", "err": null, "note": null}, {"id": "34de5426b3#2", "doc": "34de5426b3", "entity": "田径场", "attr": "开放时间", "value": "每周六9:30-12:00开展高水平运动队训练", "quote": "每周六9:30-12:00开展高水平运动队训练", "campus": "zgc", "src": "doc", "cSrc": "通知整体", "vSrc": "—", "aSrc": "通知整体", "aud": "师生", "start": null, "end": null, "pub": "2026-03-09", "ptype": "春季学期", "cycle": 2026, "path": [], "label": "Sat 9:30–12:00 training", "err": null, "note": null}], "rev": {"f5ee1a0669#29": ["34de5426b3#0", "34de5426b3#1", "34de5426b3#2"], "f574e3c17b#104": ["34de5426b3#0", "34de5426b3#1", "34de5426b3#2"], "b28eb1484c#44": ["34de5426b3#0", "34de5426b3#1", "34de5426b3#2"], "b28eb1484c#45": ["34de5426b3#0", "34de5426b3#1", "34de5426b3#2"]}, "rec": {"b28eb1484c#44": ["f5ee1a0669#29"], "b28eb1484c#45": ["f5ee1a0669#29"], "b28eb1484c#61": ["f5ee1a0669#29"], "b28eb1484c#62": ["f5ee1a0669#29"]}}, "bath": {"name": "东区浴室", "etype": "浴室", "key": "东区浴室 · 开放情况", "window": ["2025-07-10", "2026-03-31"], "fixedCampus": "zgc", "prior": {"zgc": 0.6737938048081091, "tz": 0.3262061951918909}, "notices": [{"id": "ce87af9599", "title": "暑期留校指南丨综合服务保障体系各单位营业时间一览！", "pub": "2025-07-04", "short": "2025 暑期指南", "kind": "Summer", "ptype": "暑假"}, {"id": "e22b73149a", "title": "RUC迎新特辑丨中关村校区新生住宿攻略来啦！", "pub": "2025-08-21", "short": "2025 新生住宿攻略", "kind": "Freshmen", "ptype": "秋季学期"}, {"id": "f18b8688dd", "title": "中关村校区公共浴室增加早间开放时段", "pub": "2025-09-11", "short": "浴室增加早场", "kind": "Early slot", "ptype": null}, {"id": "f574e3c17b", "title": "国庆、中秋期间综合服务保障体系各单位营业时间", "pub": "2025-09-30", "short": "2025 国庆通知", "kind": "Nat. Day", "ptype": "国庆"}, {"id": "b28eb1484c", "title": "寒假期间综合服务保障体系各单位营业时间", "pub": "2026-01-07", "short": "2026 寒假通知", "kind": "Winter", "ptype": "寒假"}], "facts": [{"id": "ce87af9599#111", "doc": "ce87af9599", "entity": "东区浴室", "attr": "开放时间", "value": "每日12:00-14:00", "quote": "东区浴室其他时间正常营业每日12:00-14:00", "campus": "zgc", "src": "section", "cSrc": "标题「中关村校区」", "vSrc": "通知整体", "aSrc": "通知整体", "aud": "暑期留校学生", "start": "2025-07-07", "end": "2025-09-04", "pub": "2025-07-04", "ptype": "暑假", "cycle": 2025, "path": ["浴室", "物业服务", "中关村校区"], "label": "12:00–14:00", "err": null, "note": null}, {"id": "e22b73149a#19", "doc": "e22b73149a", "entity": "东区浴室", "attr": "开放时间", "value": "12:00—23:00", "quote": "东区浴室红3楼东侧 12:00—23:00", "campus": "zgc", "src": "section", "cSrc": "标题「中关村校区」", "vSrc": "—", "aSrc": "标题「中关村校区」", "aud": "2025级新生", "start": null, "end": null, "pub": "2025-08-21", "ptype": "秋季学期", "cycle": 2025, "path": ["浴室及开水房运行服务", "中关村校区"], "label": "12:00–23:00", "err": null, "note": null}, {"id": "f18b8688dd#0", "doc": "f18b8688dd", "entity": "东区浴室", "attr": "开放时间", "value": "7:00—8:00", "quote": "从9月11日起，中关村校区三个集中公共浴室（东区浴室、西区浴室、北园浴室）和两处学生公寓楼内浴室（知行区、东风1楼），增加早间开放时段（7:00—8:00）", "campus": "zgc", "src": "fact", "cSrc": "引文本身", "vSrc": "引文本身", "aSrc": "标题「中关村校区公共浴室增加早间开放时段」", "aud": "学生", "start": "2025-09-11", "end": null, "pub": "2025-09-11", "ptype": null, "cycle": 2025, "path": ["中关村校区公共浴室增加早间开放时段"], "label": "+ early slot 7:00–8:00", "err": null, "note": null}, {"id": "f574e3c17b#92", "doc": "f574e3c17b", "entity": "东区浴室", "attr": "开放状态", "value": "open as usual", "quote": "东区浴室假期期间正常开放", "campus": "zgc", "src": "section", "cSrc": "标题「浴室」", "vSrc": "通知整体", "aSrc": "通知整体", "aud": "综合服务保障体系各单位服务对象（含师生、教职工、校友及家属区住户等）", "start": "2025-10-01", "end": "2025-10-08", "pub": "2025-09-30", "ptype": "国庆", "cycle": 2025, "path": ["浴室", "物业服务", "中关村校区"], "label": "open as usual", "err": null, "note": null}, {"id": "b28eb1484c#12", "doc": "b28eb1484c", "entity": "东区浴室", "attr": "开放时间", "value": "12:00至20:00", "quote": "2026年2月16日（除夕）开放时间为12:00至20:00", "campus": "zgc", "src": "section", "cSrc": "标题「中关村校区」", "vSrc": "引文本身", "aSrc": "通知整体", "aud": "留校师生", "start": "2026-02-16", "end": "2026-02-16", "pub": "2026-01-07", "ptype": "寒假", "cycle": 2026, "path": ["浴室", "物业服务", "中关村校区"], "label": "NYE 12:00–20:00", "err": null, "note": null}, {"id": "b28eb1484c#16", "doc": "b28eb1484c", "entity": "东区浴室", "attr": "开放状态", "value": "全天暂停开放", "quote": "2026年2月17日至2月19日（初一至初三）西区浴室、东区浴室、北园区浴室全天暂停开放", "campus": "zgc", "src": "section", "cSrc": "标题「中关村校区」", "vSrc": "引文本身", "aSrc": "通知整体", "aud": "留校师生", "start": "2026-02-17", "end": "2026-02-19", "pub": "2026-01-07", "ptype": "寒假", "cycle": 2026, "path": ["浴室", "物业服务", "中关村校区"], "label": "closed all day", "err": null, "note": null}, {"id": "b28eb1484c#3", "doc": "b28eb1484c", "entity": "东区浴室", "attr": "开放状态", "value": "2026年1月12日起暂停每日7:00至8:00早间开放，恢复时间另行通知", "quote": "东区浴室、西区浴室、北园区浴室开放时间： 1.2026年1月12日起暂停每日7:00至8:00早间开放", "campus": "zgc", "src": "section", "cSrc": "标题「中关村校区」", "vSrc": "引文本身", "aSrc": "通知整体", "aud": "留校师生", "start": "2026-01-12", "end": null, "pub": "2026-01-07", "ptype": "寒假", "cycle": 2026, "path": ["浴室", "物业服务", "中关村校区"], "label": "early slot suspended", "err": null, "note": "引文写着「恢复时间另行通知」，所以不设结束日期"}, {"id": "b28eb1484c#6", "doc": "b28eb1484c", "entity": "东区浴室", "attr": "开放时间", "value": "12:00至23:00", "quote": "2026年1月12日至2月15日及2月20日至3月1日每日开放时间为12:00至23:00", "campus": "zgc", "src": "section", "cSrc": "标题「中关村校区」", "vSrc": "引文本身", "aSrc": "通知整体", "aud": "留校师生", "start": "2026-01-12", "end": "2026-02-15", "pub": "2026-01-07", "ptype": "寒假", "cycle": 2026, "path": ["浴室", "物业服务", "中关村校区"], "label": "12:00–23:00", "err": null, "note": null}, {"id": "b28eb1484c#9", "doc": "b28eb1484c", "entity": "东区浴室", "attr": "开放时间", "value": "12:00至23:00", "quote": "2026年1月12日至2月15日及2月20日至3月1日每日开放时间为12:00至23:00", "campus": "zgc", "src": "section", "cSrc": "标题「中关村校区」", "vSrc": "引文本身", "aSrc": "通知整体", "aud": "留校师生", "start": "2026-02-20", "end": "2026-03-01", "pub": "2026-01-07", "ptype": "寒假", "cycle": 2026, "path": ["浴室", "物业服务", "中关村校区"], "label": "12:00–23:00", "err": null, "note": null}], "rev": {"ce87af9599#111": ["e22b73149a#19"], "e22b73149a#19": ["f18b8688dd#0", "f574e3c17b#92", "b28eb1484c#3", "b28eb1484c#6", "b28eb1484c#9", "b28eb1484c#12", "b28eb1484c#16"], "f18b8688dd#0": ["f574e3c17b#92", "b28eb1484c#3", "b28eb1484c#6", "b28eb1484c#9", "b28eb1484c#12", "b28eb1484c#16"]}, "rec": {}}, "anatomy": {"doc_id": "b28eb1484c", "title": "寒假期间综合服务保障体系各单位营业时间", "pub": "2026-01-07", "doc": {"campus": "both", "audience": "留校师生", "period": "2026寒假", "start": "2026-01-12", "end": "2026-03-01"}, "outline": [[1, "中关村校区", "zgc", null, null, null], [2, "餐饮服务", null, null, null, null], [2, "商贸服务", null, null, null, null], [2, "物业服务", null, null, null, null], [3, "水电暖收费", null, null, "2026-01-12", "2026-03-01"], [3, "浴室", null, null, null, null], [3, "开水房", null, null, "2026-01-12", "2026-03-01"], [3, "电梯维修", null, null, null, null], [3, "校内基础设施", null, null, null, null], [4, "公共教学楼", null, null, null, null], [4, "体育场馆", null, null, null, null], [2, "住宿服务", null, null, null, null], [2, "其他服务", null, null, null, null], [1, "通州校区", "tz", null, null, null], [2, "餐饮服务", null, null, null, null], [2, "商贸服务", null, null, null, null], [2, "物业服务", null, null, null, null], [3, "电费业务", null, null, null, null], [3, "校内基础设施", null, null, null, null], [4, "体育场馆", null, null, null, null], [2, "住宿服务", null, null, null, null], [2, "报修服务", null, null, null, null], [3, "一键报修", null, null, null, null]], "calls": 4, "n_facts": 67}, "stats": {"notices": 342, "facts_extracted": 4089, "facts_grounded": 4031, "grounded_rate": 0.9858156028368794, "campus_scoped": 3336, "campus_source": {"gazetteer": 298, "none": 662, "fact": 203, "section": 2314, "doc": 554}, "with_validity": 2459, "keys": 2126, "revised_facts": 706, "revises_edges": 1964, "recurs_edges": 627, "passages": 1947, "passages_scoped": 1267, "split_keys": 67}, "lam": 10.0, "beta": 0.4};
+/* =====================================================================
+   0. constants & helpers
+   ===================================================================== */
+const NS = 'http://www.w3.org/2000/svg';
+const FONT = getComputedStyle(document.documentElement).getPropertyValue('--font');
+const C = {zgc:'#2E6BE6',zgcBg:'#EAF1FE',zgcBd:'#B9CFFB',zgcInk:'#1D4ED8',tz:'#E8772E',tzBg:'#FFF1E7',tzBd:'#FDCBA6',tzInk:'#C2410C',
+  rec:'#7C5CFA',rev:'#E5484D',ok:'#12B76A',time:'#0891B2',timeBg:'#E3F5FA',warn:'#F59E0B',warnBg:'#FFF6E5',
+  ink:'#101828',ink2:'#344054',ink3:'#667085',ink4:'#98A2B3',line:'#E4E7EC'};
+const CAMPUS = {zgc:'Zhongguancun campus', tz:'Tongzhou campus'};
+const CSHORT = {zgc:'Zhongguancun', tz:'Tongzhou'};
+const ERR = new Set(['b28eb1484c#45','b28eb1484c#61']);
+const DAY = 86400000, MAXD = '9999-12-31';
+const $ = s => document.querySelector(s);
+const toMs = s => Date.UTC(+s.slice(0,4), +s.slice(5,7)-1, +s.slice(8,10));
+const fromMs = ms => new Date(ms).toISOString().slice(0,10);
+const md = s => `${+s.slice(5,7)}月${+s.slice(8,10)}日`;
+const ymd = s => `${+s.slice(0,4)}年${+s.slice(5,7)}月${+s.slice(8,10)}日`;
+const mdShort = s => `${+s.slice(5,7)}/${+s.slice(8,10)}`;
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function el(tag, attrs, parent){ const e = document.createElementNS(NS, tag);
+  if(attrs) for(const k in attrs){ if(attrs[k] !== null && attrs[k] !== undefined) e.setAttribute(k, attrs[k]); }
+  if(parent) parent.appendChild(e); return e; }
+function tx(parent, x, y, s, attrs){ const t = el('text', Object.assign({x, y}, attrs||{}), parent); t.textContent = s; return t; }
+const mctx = document.createElement('canvas').getContext('2d');
+function tw(s, size=12, weight=400){ mctx.font = `${weight} ${size}px ${FONT}`; return mctx.measureText(s).width; }
+function vShort(f){
+  if(!f.start && !f.end) return `自${md(f.pub)}起长期`;
+  if(f.start && !f.end) return `${md(f.start)}起，未定结束`;
+  if(f.start === f.end) return md(f.start);
+  return `${md(f.start)}—${md(f.end)}`;
+}
+function vLong(f){
+  if(!f.start && !f.end) return `无起止日期 → 自发布日 ${f.pub} 起一直有效`;
+  if(f.start && !f.end) return `${f.start} → 未定结束`;
+  return `${f.start} → ${f.end}`;
+}
+function noticeOf(ds, f){ return ds.notices.find(n => n.id === f.doc); }
+
+/* =====================================================================
+   1. answer engine (mirrors graph.status + candor_agent.respond)
+   ===================================================================== */
+const PER = {'寒假':[1,12,2,28]};
+const iso3 = (y,m,d) => `${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+function covers(f, lo, hi){ const b = f.start || f.pub, e = f.end || MAXD; return b <= hi && lo <= e; }
+function squash(v){ return String(v||'').replace(/\s+/g,'').replace(/：/g,':').replace(/[—–~～]/g,'-')
+  .replace(/[，,。．.、；;（）()【】\[\]“”"'《》!！?？]/g,''); }
+function engine(ds, facts, t, campus, q){
+  const byId = Object.fromEntries(facts.map(f => [f.id, f]));
+  let lo, hi, cycle = null;
+  if(q === 'today'){ lo = hi = t; }
+  else {
+    const [m0,d0,m1,d1] = PER[q], ty = +t.slice(0,4);
+    const year = t <= iso3(ty,m1,d1) ? ty : ty + 1;
+    const same = facts.filter(f => f.ptype === q && f.cycle === year && f.start);
+    if(same.length){ lo = same.map(f => f.start).sort()[0]; hi = same.map(f => f.end || f.start).sort().slice(-1)[0]; }
+    else { lo = iso3(year,m0,d0); hi = iso3(year,m1,d1); }
+    cycle = [q, year];
+  }
+  const st = {}, cur = [], rev = [], histAll = [], revBy = {};
+  for(const f of facts) st[f.id] = f.pub > t ? 'future' : null;
+  for(const f of facts){
+    if(f.pub > t) continue;
+    const rs = (ds.rev[f.id] || []).map(id => byId[id]).filter(n => n && n.pub <= t && covers(n, lo, hi));
+    if(rs.length){ rev.push(f); revBy[f.id] = rs.map(n => n.id); st[f.id] = 'revised'; continue; }
+    if(covers(f, lo, hi)){ cur.push(f); st[f.id] = 'cur'; }
+    else if(f.end && f.end < lo && (!cycle || (f.ptype === cycle[0] && (f.cycle||0) < cycle[1]))){ histAll.push(f); st[f.id] = 'hist'; }
+    else st[f.id] = 'out';
+  }
+  let branches = {};
+  for(const f of cur){ const k = f.campus || 'all'; (branches[k] = branches[k] || []).push(f); }
+  let hist = histAll;
+  if(hist.length){
+    const best = {};
+    for(const f of hist){ const k = f.campus || '_'; if(!(k in best) || (f.cycle||0) > (best[k].cycle||0)) best[k] = f; }
+    hist = hist.filter(f => (f.cycle||0) === (best[f.campus || '_'].cycle||0));
+    for(const f of histAll) if(!hist.includes(f)) st[f.id] = 'hist-old';
+  }
+  let dropped = false;
+  if(cycle){
+    const ofCycle = cur.filter(f => f.ptype === cycle[0] && f.cycle === cycle[1]);
+    if(!ofCycle.length && hist.length){ branches = {}; dropped = cur.length > 0; for(const f of cur) st[f.id] = 'dropped'; }
+  }
+  const r = {lo, hi, cycle, branches, cur, rev, revBy, hist, st, costs:null, best:null, mode:null, used:[], use:{}, dropped};
+  let use = {}, mode = null;
+  if(campus){
+    const u = [...(branches[campus]||[]), ...(branches.all||[])];
+    if(u.length){ use[campus] = u; mode = 'answer'; }
+  } else {
+    const keys = Object.keys(branches).filter(k => k === 'zgc' || k === 'tz');
+    const sig = k => [...new Set(branches[k].map(f => squash(f.value)))].sort().join('|');
+    const differs = new Set(keys.map(sig)).size > 1;
+    if(keys.length >= 2 && differs){
+      const pr = ds.prior; let best = keys[0];
+      for(const k of keys) if((pr[k]||0) > (pr[best]||0)) best = k;
+      const total = keys.reduce((s,k) => s + branches[k].length, 0);
+      const costs = {assume: DATA.lam * (1 - (pr[best]||0)), enumerate: DATA.beta * (total - branches[best].length), ask: 1};
+      let action = 'enumerate';
+      for(const a of ['enumerate','ask','assume']) if(costs[a] < costs[action] - 1e-12) action = a;
+      Object.assign(r, {costs, best, action});
+      if(action === 'ask'){ r.mode = 'ask'; return r; }
+      const common = branches.all || [];
+      if(action === 'assume') use[best] = branches[best].concat(common);
+      else for(const k of keys) use[k] = branches[k].concat(common);
+      mode = action;
+    } else {
+      for(const k of Object.keys(branches)) if(branches[k].length) use[k] = branches[k];
+      mode = Object.keys(use).length ? 'answer' : null;
+    }
+  }
+  const used = mode ? Object.values(use).flat() : [];
+  if(!used.length){
+    const h = hist.filter(f => !campus || f.campus === campus || f.campus == null);
+    if(h.length){ r.mode = 'history'; r.used = h; for(const f of h){ const k = f.campus || 'all'; (r.use[k] = r.use[k] || []).push(f); } return r; }
+    r.mode = 'abstain'; return r;
+  }
+  r.mode = mode; r.used = used; r.use = use; return r;
+}
+
+/* =====================================================================
+   2. state
+   ===================================================================== */
+const S = {step:1, ds:'track', fix:false, allEdges:false, t:'2026-01-20', campus:null, q:'today', sel:'b28eb1484c#62', preset:0};
+const PRESETS = {
+  track:[
+    {label:'Q1 · 1月20日 · 没说校区', t:'2026-01-20', campus:null, q:'today'},
+    {label:'通州同学 · 1月20日', t:'2026-01-20', campus:'tz', q:'today'},
+    {label:'Q3 · 12月28日 · 问寒假', t:'2025-12-28', campus:null, q:'寒假'},
+    {label:'去年寒假 · 2025年2月1日', t:'2025-02-01', campus:null, q:'today'},
+    {label:'寒假结束后 · 3月10日', t:'2026-03-10', campus:null, q:'today'},
+  ],
+  bath:[
+    {label:'8月25日 · 常规时段', t:'2025-08-25', campus:'zgc', q:'today'},
+    {label:'9月13日 · 早场刚增加', t:'2025-09-13', campus:'zgc', q:'today'},
+    {label:'10月3日 · 国庆', t:'2025-10-03', campus:'zgc', q:'today'},
+    {label:'10月9日 · 国庆后', t:'2025-10-09', campus:'zgc', q:'today'},
+    {label:'1月20日 · 寒假', t:'2026-01-20', campus:'zgc', q:'today'},
+    {label:'3月9日 · 论文 S2', t:'2026-03-09', campus:'zgc', q:'today'},
+  ]};
+const STEPS = [
+  {t1:'原文', t2:'校区只在标题里写一次'},
+  {t1:'标题树', t2:'每个标题都可能带条件'},
+  {t1:'事实', t2:'从标题继承条件'},
+  {t1:'连成图', t2:'跨通知的两种边'},
+  {t1:'提问', t2:'同一张图，不同答案'},
+];
+function ds(){ return DATA[S.ds]; }
+function activeFacts(){ const d = ds(); return d.facts.filter(f => !(S.fix && ERR.has(f.id))); }
+function fact(id){ return DATA.track.facts.find(f => f.id === id) || DATA.bath.facts.find(f => f.id === id); }
+
+/* =====================================================================
+   3. shared SVG defs
+   ===================================================================== */
+function defs(svg, pre){
+  const d = el('defs', null, svg);
+  const sh = el('filter', {id:pre+'sh', x:'-20%', y:'-25%', width:'140%', height:'170%'}, d);
+  el('feDropShadow', {dx:0, dy:2, stdDeviation:3, 'flood-color':'#101828', 'flood-opacity':.07}, sh);
+  const sh2 = el('filter', {id:pre+'sh2', x:'-20%', y:'-30%', width:'140%', height:'190%'}, d);
+  el('feDropShadow', {dx:0, dy:8, stdDeviation:10, 'flood-color':'#101828', 'flood-opacity':.10}, sh2);
+  for(const [id, col, sd, op] of [['gOk',C.ok,4,.6],['gRec',C.rec,4,.55],['gRev',C.rev,3,.45],['gSel','#101828',3,.25]]){
+    const f = el('filter', {id:pre+id, x:'-50%', y:'-100%', width:'200%', height:'300%'}, d);
+    el('feDropShadow', {dx:0, dy:0, stdDeviation:sd, 'flood-color':col, 'flood-opacity':op}, f);
+  }
+  for(const [id, col] of [['aRec',C.rec],['aRev',C.rev],['aInk','#667085'],['aZgc',C.zgc],['aTz',C.tz]]){
+    const m = el('marker', {id:pre+id, viewBox:'0 0 10 10', refX:8.5, refY:5, markerWidth:7, markerHeight:7, orient:'auto-start-reverse'}, d);
+    el('path', {d:'M0,1 L9,5 L0,9 z', fill:col}, m);
+  }
+  const hp = el('pattern', {id:pre+'hatch', width:7, height:7, patternUnits:'userSpaceOnUse', patternTransform:'rotate(45)'}, d);
+  el('rect', {width:7, height:7, fill:'#FFFBF1'}, hp); el('line', {x1:0, y1:0, x2:0, y2:7, stroke:'#FCE3B4', 'stroke-width':3}, hp);
+  const gp = el('pattern', {id:pre+'grid', width:24, height:24, patternUnits:'userSpaceOnUse'}, d);
+  el('circle', {cx:1.2, cy:1.2, r:1.1, fill:'#E9ECF2'}, gp);
+  const lg = el('linearGradient', {id:pre+'band', x1:0, x2:0, y1:0, y2:1}, d);
+  el('stop', {offset:0, 'stop-color':C.time, 'stop-opacity':.13}, lg); el('stop', {offset:1, 'stop-color':C.time, 'stop-opacity':.04}, lg);
+}
+function docIcon(g, x, y, s=1, col='#6366F1'){
+  const gi = el('g', {transform:`translate(${x},${y}) scale(${s})`}, g);
+  el('path', {d:'M3 0h11l6 6v19a3 3 0 0 1-3 3H3a3 3 0 0 1-3-3V3a3 3 0 0 1 3-3z', fill:'#EEF2FF', stroke:col, 'stroke-width':1.3}, gi);
+  el('path', {d:'M14 0v6h6', fill:'none', stroke:col, 'stroke-width':1.3}, gi);
+  for(const yy of [11,15.5,20]) el('line', {x1:4.5, y1:yy, x2:yy===20?11:15.5, y2:yy, stroke:col, 'stroke-width':1.3, 'stroke-linecap':'round', opacity:.8}, gi);
+  return gi;
+}
+function chip(g, x, y, text, {bg, fg, size=11.5, weight=700, h=20, px=8, stroke=null, id=null}={}){
+  const w = tw(text, size, weight) + px*2;
+  const cg = el('g', {id}, g);
+  el('rect', {x, y, width:w, height:h, rx:h/2, fill:bg, stroke}, cg);
+  tx(cg, x + w/2, y + h/2 + size*0.36, text, {'text-anchor':'middle', 'font-size':size, 'font-weight':weight, fill:fg});
+  return {g:cg, w, x, y, h, cx:x + w/2, cy:y + h/2};
+}
+
+/* =====================================================================
+   4. VIEW A — anatomy of one notice (steps 1–3)
+   ===================================================================== */
+const A = {};
+function buildA(){
+  const svg = $('#viewA'); svg.innerHTML = ''; defs(svg, 'A');
+  el('rect', {x:0, y:0, width:1100, height:700, fill:'url(#Agrid)'}, svg);
+  A.doc = el('g', {class:'layer'}, svg);
+  A.tree = el('g', {class:'layer'}, svg);
+  A.links = el('g', {class:'layer'}, svg);
+  A.facts = el('g', {class:'layer'}, svg);
+  A.flow = el('g', {class:'layer'}, svg);
+  A.root = el('g', null, svg);
+  // ---------- root notice card ----------
+  const an = DATA.anatomy;
+  el('rect', {x:318, y:12, width:464, height:98, rx:18, fill:'#fff', stroke:'#E4E7EC', filter:'url(#Ash2)'}, A.root);
+  docIcon(A.root, 340, 30, 1.25);
+  tx(A.root, 380, 43, an.title, {'font-size':16.5, 'font-weight':800, fill:C.ink});
+  tx(A.root, 380, 64, `${an.pub} 发布 · 23 个标题 · ${an.n_facts} 条原始事实 · 编译调用 LLM ${an.calls} 次`, {'font-size':12, fill:C.ink3});
+  A.sigmaD = el('g', {class:'layer off'}, A.root);
+  tx(A.sigmaD, 380, 91, 'σ(d)', {'font-size':12, 'font-style':'italic', 'font-weight':700, fill:C.ink3});
+  let cx = 414;
+  A.dChips = {};
+  for(const [k, text, bg, fg] of [['per','2026 寒假',C.timeBg,'#0E7490'],['v','1/12–3/1',C.timeBg,'#0E7490'],['aud','留校师生','#F2F4F7','#475467']]){
+    const c = chip(A.sigmaD, cx, 77, text, {bg, fg, size:11.5, h:20});
+    A.dChips[k] = c; cx += c.w + 6;
+  }
+  buildDoc(); buildTree(); buildFacts();
+}
+function buildDoc(){
+  const g = A.doc;
+  el('rect', {x:150, y:124, width:800, height:560, rx:18, fill:'#fff', stroke:'#E4E7EC', filter:'url(#Ash)'}, g);
+  const it = (x, y, s, a) => tx(g, x, y, s, Object.assign({'font-size':12.5, fill:C.ink4, 'font-style':'italic'}, a||{}));
+  it(550, 152, '⋯ 前面是 餐饮服务 · 商贸服务 · 物业服务（水电暖、浴室、开水房……）⋯', {'text-anchor':'middle'});
+  // ZGC banner
+  el('rect', {x:184, y:166, width:132, height:34, rx:17, fill:C.zgc}, g);
+  tx(g, 250, 188, '中关村校区', {'text-anchor':'middle', 'font-size':15, 'font-weight':800, fill:'#fff'});
+  tx(g, 330, 188, '一级标题：下面几十条服务都属于中关村', {'font-size':12, fill:C.zgcInk, 'font-weight':600});
+  const sub = (y, s) => { el('rect', {x:184, y:y-12, width:3.5, height:15, rx:1.7, fill:C.ink4}, g); tx(g, 194, y, s, {'font-size':12.5, 'font-weight':700, fill:C.ink2}); };
+  sub(228, '校内基础设施 › 体育场馆');
+  const table = (y, rows) => {
+    let yy = y;
+    for(const r of rows){
+      el('rect', {x:184, y:yy, width:732, height:r.h, fill:r.fill || '#FAFBFC', stroke:'#D0D5DD', 'stroke-width':1}, g);
+      el('line', {x1:404, y1:yy, x2:404, y2:yy + r.h, stroke:'#D0D5DD'}, g);
+      if(r.note){ tx(g, 198, yy + r.h/2 + 5, r.note, {'font-size':12.5, fill:C.ink4, 'font-style':'italic'}); yy += r.h; continue; }
+      tx(g, 198, yy + r.h/2 + 5, r.a, {'font-size':13.5, fill:C.ink, 'font-weight':600});
+      const n = r.b.length;
+      r.b.forEach((line, i) => {
+        const ty = yy + r.h/2 + 5 + (i - (n-1)/2) * 22;
+        if(r.mark && r.mark[i]){ const w = tw(r.mark[i][1], 13.5); const x0 = 418 + tw(r.mark[i][0], 13.5);
+          el('rect', {x:x0-2, y:ty-15, width:w+4, height:20, rx:4, fill:'#FFF0C2'}, g); }
+        tx(g, 418, ty, line, {'font-size':13.5, fill:C.ink2});
+      });
+      yy += r.h;
+    }
+    return yy;
+  };
+  table(238, [
+    {a:'田径场、品园篮球场', b:['正常开放'], h:40},
+    {a:'北区足球场', b:['寒假期间正常开放，开放时间调整为10:00—18:00，其中2月16','日（除夕）暂停开放'], h:58, fill:'#FFF6F0'},
+    {note:'⋯ 世纪馆、游泳馆、羽毛球馆等 6 行', h:30},
+  ]);
+  it(550, 392, '⋯ 住宿服务 · 其他服务 ⋯', {'text-anchor':'middle'});
+  el('rect', {x:184, y:406, width:112, height:34, rx:17, fill:C.tz}, g);
+  tx(g, 240, 428, '通州校区', {'text-anchor':'middle', 'font-size':15, 'font-weight':800, fill:'#fff'});
+  tx(g, 310, 428, '← 这个标题落在了上一个切块里', {'font-size':12.5, fill:C.rev, 'font-weight':700});
+  it(194, 470, '⋯ 餐饮服务 · 商贸服务 · 物业服务（电费业务）⋯');
+  sub(496, '校内基础设施 › 体育场馆');
+  table(506, [
+    {a:'田径场、多功能球场', b:['正常开放','开放时间：8:00—22:00'], h:58, mark:[null, ['开放时间：','8:00—22:00']]},
+    {a:'健身房、乒乓球室', b:['2月10日—2月24日暂停开放，1月12日—2月9日期间根据学生锻炼需','求动态调整开放时间'], h:58, fill:'#FFF6F0'},
+  ]);
+  it(550, 660, '⋯ 住宿服务 · 报修服务 ⋯', {'text-anchor':'middle'});
+  // chunk overlay
+  el('rect', {x:168, y:452, width:764, height:182, rx:13, fill:'rgba(229,72,77,.045)', stroke:C.rev, 'stroke-width':1.8, 'stroke-dasharray':'7 5'}, g);
+  el('rect', {x:716, y:440, width:204, height:25, rx:12.5, fill:C.rev}, g);
+  tx(g, 818, 457, '线上 RAG 的一个 600 字切块', {'text-anchor':'middle', 'font-size':12, 'font-weight':800, fill:'#fff'});
+  tx(g, 916, 624, '块里没有「通州」', {'text-anchor':'end', 'font-size':12, 'font-weight':800, fill:C.rev});
+}
+function outlineGroups(){
+  const ol = DATA.anatomy.outline.map(o => ({L:o[0], name:o[1], campus:o[2], aud:o[3], start:o[4], end:o[5]}));
+  const groups = [];
+  for(const n of ol){ if(n.L === 1) groups.push([]); groups[groups.length-1].push(n); }
+  for(const gr of groups){
+    gr.forEach((n, i) => { n.parent = null; for(let j = i-1; j >= 0; j--) if(gr[j].L < n.L){ n.parent = j; break; } });
+    let k = gr.map(n => n.name).lastIndexOf('体育场馆'); const lit = new Set();
+    while(k != null && k >= 0){ lit.add(k); k = gr[k].parent; }
+    gr.lit = lit;
+  }
+  return groups;
+}
+function buildTree(){
+  const g = A.tree, groups = outlineGroups();
+  A.nodes = {};
+  const conf = [{c:'zgc', x0:40, px:18}, {c:'tz', x0:580, px:558}];
+  groups.forEach((gr, gi) => {
+    const {c, x0, px} = conf[gi], col = C[c], bg = c === 'zgc' ? '#F6F9FF' : '#FFF9F4', bd = c === 'zgc' ? '#DCE7FD' : '#FDE3CF';
+    el('rect', {x:px, y:122, width:524, height:566, rx:20, fill:bg, stroke:bd}, g);
+    tx(g, px + 506, 676, c === 'zgc' ? '中关村校区这一支 · 13 个标题' : '通州校区这一支 · 10 个标题', {'text-anchor':'end', 'font-size':11.5, fill:C.ink4, 'font-weight':600});
+    const pos = gr.map((n, i) => ({x:x0 + (n.L-1)*22 + 6, y:164 + i*30}));
+    const lines = el('g', null, g), litLines = el('g', null, g), rows = el('g', null, g);
+    gr.forEach((n, i) => {
+      if(n.parent == null) return;
+      const p = pos[n.parent], q = pos[i], isLit = gr.lit.has(i) && gr.lit.has(n.parent);
+      el('path', {d:`M${p.x},${p.y+6} V${q.y} H${q.x-6}`, fill:'none', stroke:isLit ? col : '#D5DAE3', 'stroke-width':isLit ? 2.4 : 1.2, 'stroke-linecap':'round'}, isLit ? litLines : lines);
+    });
+    gr.forEach((n, i) => {
+      const p = pos[i], isLit = gr.lit.has(i), row = el('g', {class:'rise', style:`animation-delay:${60 + i*35}ms`}, rows);
+      el('circle', {cx:p.x, cy:p.y, r:n.L === 1 ? 5.5 : 4, fill:isLit ? col : '#fff', stroke:isLit ? col : '#B7BFCC', 'stroke-width':1.6}, row);
+      const size = n.L === 1 ? 15.5 : 13, w = n.L === 1 ? 800 : (isLit ? 700 : 400);
+      tx(row, p.x + 11, p.y + size*0.36, n.name, {'font-size':size, 'font-weight':w, fill:isLit ? (n.L === 1 ? col : C.ink) : C.ink3});
+      let cx = p.x + 11 + tw(n.name, size, w) + 8;
+      const node = {x:p.x, y:p.y, textEnd:cx - 8};
+      if(n.campus === 'zgc' || n.campus === 'tz'){
+        const c1 = chip(row, cx, p.y - 10.5, `σ(n) 校区 = ${CSHORT[n.campus]}`, {bg:C[n.campus], fg:'#fff', size:11.5, h:21});
+        node.chip = c1; cx += c1.w + 6;
+      }
+      if(n.start || n.end){
+        const c2 = chip(row, cx, p.y - 9.5, `${mdShort(n.start)}–${mdShort(n.end)}`, {bg:C.timeBg, fg:'#0E7490', size:11, h:19});
+        cx += c2.w + 6;
+      }
+      A.nodes[`${c}:${i}`] = node;
+    });
+    A.nodes[c] = {pos, gr};
+  });
+  // root -> level-1 connectors
+  const r1 = A.nodes['zgc:0'], r2 = A.nodes['tz:0'];
+  el('path', {d:`M440,110 C440,136 ${r1.x},${r1.y-46} ${r1.x},${r1.y-9}`, fill:'none', stroke:C.zgc, 'stroke-width':2, opacity:.5, 'marker-end':'url(#AaZgc)'}, g);
+  el('path', {d:`M660,110 C660,136 ${r2.x},${r2.y-46} ${r2.x},${r2.y-9}`, fill:'none', stroke:C.tz, 'stroke-width':2, opacity:.5, 'marker-end':'url(#AaTz)'}, g);
+}
+const CARD = {w:236, h:154};
+const CARDPOS = {'b28eb1484c#44':{x:292, y:314, c:'zgc'}, 'b28eb1484c#45':{x:292, y:484, c:'zgc'},
+                 'b28eb1484c#62':{x:832, y:236, c:'tz'}, 'b28eb1484c#61':{x:832, y:406, c:'tz'}};
+function buildFacts(){
+  const g = A.facts, gl = A.links; A.cards = {};
+  for(const c of ['zgc','tz']){
+    const n = A.nodes[c], i = n.gr.map(x => x.name).lastIndexOf('体育场馆'), p = n.pos[i];
+    const sx = p.x + 11 + tw('体育场馆', 13, 700) + 6;
+    for(const [id, cp] of Object.entries(CARDPOS)) if(cp.c === c){
+      const ty = cp.y + CARD.h/2;
+      el('path', {d:`M${sx},${p.y} C${sx+60},${p.y} ${cp.x-60},${ty} ${cp.x-4},${ty}`, fill:'none', stroke:C[c], 'stroke-width':1.8, opacity:.55, 'stroke-dasharray':'2 4', 'stroke-linecap':'round'}, gl);
+    }
+    A.nodes[c].sport = {x:p.x, y:p.y, sx};
+  }
+  for(const [id, cp] of Object.entries(CARDPOS)){
+    const f = fact(id), c = cp.c, x = cp.x, y = cp.y, err = !!f.err;
+    const cg = el('g', {class:'fact-card', 'data-id':id}, g);
+    el('rect', {class:'sel-ring', x:x-4, y:y-4, width:CARD.w+8, height:CARD.h+8, rx:18, fill:'none', stroke:'#101828', 'stroke-width':2, opacity:0}, cg);
+    el('rect', {x, y, width:CARD.w, height:CARD.h, rx:15, fill:err ? `url(#Ahatch)` : '#fff', stroke:err ? '#F7B955' : (c === 'zgc' ? C.zgcBd : C.tzBd), 'stroke-width':1.4, filter:'url(#Ash)'}, cg);
+    el('rect', {x:x+14, y:y, width:42, height:4, rx:2, fill:C[c]}, cg);
+    tx(cg, x+14, y+22, id, {'font-size':10.5, fill:C.ink4, 'font-family':'Consolas,monospace'});
+    if(err){ el('rect', {x:x+CARD.w-86, y:y+9, width:74, height:19, rx:9.5, fill:C.warn}, cg);
+      tx(cg, x+CARD.w-49, y+22.5, '⚠ 抽取错误', {'text-anchor':'middle', 'font-size':11, 'font-weight':800, fill:'#fff'}); }
+    const t1 = tx(cg, x+14, y+46, f.entity, {'font-size':15, 'font-weight':800, fill:C.ink});
+    const ts = el('tspan', {'font-size':12, 'font-weight':500, fill:C.ink3}, t1); ts.textContent = `  ·  ${f.attr}`;
+    tx(cg, x+14, y+74, f.label, {'font-size':err ? 17 : 20, 'font-weight':800, fill:c === 'zgc' ? C.zgcInk : C.tzInk, class:'val'});
+    const stamps = [
+      ['校区', CSHORT[c], c === 'zgc' ? C.zgcBg : C.tzBg, c === 'zgc' ? C.zgcInk : C.tzInk, `← 标题「${CAMPUS[c]}」`],
+      ['有效期', '1/12–3/1', C.timeBg, '#0E7490', '← 通知'],
+      ['人群', '留校师生', '#F2F4F7', '#475467', '← 通知'],
+    ];
+    const pts = {};
+    stamps.forEach((s, k) => {
+      const yy = y + 88 + k*21;
+      const cc = chip(cg, x+14, yy, `${s[0]} ${s[1]}`, {bg:s[2], fg:s[3], size:11, h:18, px:7});
+      tx(cg, x+14+cc.w+6, yy+12.5, s[4], {'font-size':10.5, fill:C.ink4});
+      pts[k] = {x:x+14, y:yy+9, cx:cc.cx, w:cc.w, end:x+14+cc.w+6+tw(s[4], 10.5)+8};
+    });
+    // ghost overlay (used when "按原文更正" is on)
+    const gh = el('g', {class:'ghostnote', opacity:0}, cg);
+    el('rect', {x:x+8, y:y+54, width:CARD.w-16, height:26, rx:8, fill:'#fff', stroke:'#F7B955'}, gh);
+    tx(gh, x+CARD.w/2, y+71, id.endsWith('#45') ? '原文属于「北区足球场」' : '原文属于「健身房、乒乓球室」', {'text-anchor':'middle', 'font-size':12, 'font-weight':800, fill:'#B54708'});
+    A.cards[id] = {g:cg, x, y, c, pts, err};
+    cg.addEventListener('click', () => { S.sel = id; updateA(true); renderPanel(); });
+    cg.addEventListener('mouseenter', ev => showTip(ev, f, DATA.track));
+    cg.addEventListener('mouseleave', hideTip);
+  }
+}
+let flowTimer = null;
+function drawFlows(){
+  const g = A.flow; g.innerHTML = '';
+  if(flowTimer){ cancelAnimationFrame(flowTimer); flowTimer = null; }
+  const card = A.cards[S.sel]; if(!card) return;
+  const c = card.c, n = A.nodes[c], lit = [...n.gr.lit].sort((a,b) => a-b);
+  const head = A.nodes[`${c}:0`];
+  // campus flow: chip -> level-1 dot -> down the lit path -> 体育场馆 -> card stamp
+  let d = `M${head.chip.cx},${head.chip.cy} L${head.x+8},${head.y}`;
+  for(let k = 1; k < lit.length; k++){ const q = n.pos[lit[k]]; d += ` L${n.pos[lit[k-1]].x},${q.y} L${q.x},${q.y}`; }
+  const sp = n.sport, st0 = card.pts[0];
+  const lastP = n.pos[lit[lit.length-1]], yb = lastP.y + 11;          // run just under the「体育场馆」label
+  d += ` L${lastP.x},${yb} L${sp.sx},${yb} C${sp.sx+60},${yb} ${st0.x-70},${st0.y} ${st0.x},${st0.y}`;
+  const col = C[c];
+  const mk = (path, color) => {
+    el('path', {d:path, fill:'none', stroke:color, 'stroke-width':9, opacity:.13, 'stroke-linecap':'round', 'stroke-linejoin':'round'}, g);
+    return el('path', {d:path, fill:'none', stroke:color, 'stroke-width':2.6, class:'flowdash', 'stroke-linecap':'round', 'stroke-linejoin':'round'}, g);
+  };
+  const p1 = mk(d, col);
+  // notice-level conditions travel through channels outside the two tree panels (no crossings)
+  const ortho = (pts, r = 12) => { let s = `M${pts[0][0]},${pts[0][1]}`;
+    for(let i = 1; i < pts.length - 1; i++){ const [x0,y0] = pts[i-1], [x1,y1] = pts[i], [x2,y2] = pts[i+1];
+      const d1 = Math.hypot(x1-x0, y1-y0), d2 = Math.hypot(x2-x1, y2-y1), rr = Math.min(r, d1/2, d2/2);
+      s += ` L${x1 - (x1-x0)/d1*rr},${y1 - (y1-y0)/d1*rr} Q${x1},${y1} ${x1 + (x2-x1)/d2*rr},${y1 + (y2-y1)/d2*rr}`; }
+    const L = pts[pts.length-1]; return s + ` L${L[0]},${L[1]}`; };
+  const vc = A.dChips.v, ac = A.dChips.aud, s1 = card.pts[1], s2 = card.pts[2], right = c === 'tz';
+  const chV = right ? 1086 : 546, chA = right ? 1092 : 553;
+  const p2 = mk(ortho([[vc.cx, vc.y+vc.h], [vc.cx, 118], [chV, 118], [chV, s1.y], [s1.end, s1.y]]), C.time);
+  const p3 = mk(ortho([[ac.cx, ac.y+ac.h], [ac.cx, 113], [chA, 113], [chA, s2.y], [s2.end, s2.y]]), '#667085');
+  const dots = [[p1,col],[p2,C.time],[p3,'#667085']].map(([p, color]) => ({p, L:p.getTotalLength(),
+    c:el('circle', {r:5.5, fill:color, stroke:'#fff', 'stroke-width':2, filter:'url(#AgSel)'}, g)}));
+  const t0 = performance.now();
+  const tick = now => {
+    dots.forEach((o, k) => { const u = ((now - t0)/2400 - k*0.18) % 1; const v = u < 0 ? 0 : u; const pt = o.p.getPointAtLength(v*o.L);
+      o.c.setAttribute('cx', pt.x); o.c.setAttribute('cy', pt.y); o.c.setAttribute('opacity', u < 0 ? 0 : Math.min(1, (1-v)*6)); });
+    flowTimer = requestAnimationFrame(tick);
+  };
+  flowTimer = requestAnimationFrame(tick);
+}
+function updateA(reflow){
+  const s = S.step;
+  A.doc.classList.toggle('off', s !== 1);
+  A.tree.classList.toggle('off', s < 2);
+  A.links.classList.toggle('off', s < 3);
+  A.facts.classList.toggle('off', s < 3);
+  A.flow.classList.toggle('off', s < 3);
+  A.sigmaD.classList.toggle('off', s < 2);
+  for(const [id, cd] of Object.entries(A.cards)){
+    cd.g.classList.toggle('sel', id === S.sel);
+    const ghost = S.fix && cd.err;
+    cd.g.classList.toggle('ghost', ghost);
+    cd.g.querySelector('.ghostnote').setAttribute('opacity', ghost ? 1 : 0);
+    cd.g.querySelector('.val').setAttribute('opacity', ghost ? .15 : 1);
+  }
+  if(s === 3 && (reflow || !A.flow.childNodes.length)) drawFlows();
+  if(s !== 3 && flowTimer){ cancelAnimationFrame(flowTimer); flowTimer = null; A.flow.innerHTML = ''; }
+}
+
+/* =====================================================================
+   5. VIEW B — the subgraph on time × campus (steps 4–5)
+   ===================================================================== */
+const B = {};
+function buildB(){
+  const svg = $('#viewB'); svg.innerHTML = ''; defs(svg, 'B');
+  el('rect', {x:0, y:0, width:1100, height:700, fill:'url(#Bgrid)'}, svg);
+  const d = ds(), all = d.facts;
+  // ----- one column per notice, in publication order; widths fit their widest fact -----
+  const X0 = 128, X1 = +(new URLSearchParams(location.search).get('x1') || 1074), lead = 18, tailMin = 132, gapMin = 8;
+  const notices = [...d.notices].sort((a, b) => a.pub.localeCompare(b.pub));
+  const pillW = f => Math.ceil(tw(f.label, 12.5, 700)) + (f.err ? 46 : 30);
+  const colW = notices.map(n => Math.max(...all.filter(f => f.doc === n.id).map(pillW)));
+  const nN = notices.length, lastW = Math.max(colW[nN-1], tailMin);
+  const sumW = colW.slice(0, -1).reduce((s, w) => s + w, 0);
+  const g = Math.max(gapMin, (X1 - X0 - lead - sumW - lastW) / Math.max(1, nN - 1));
+  const cols = {}; let cx = X0 + lead;
+  notices.forEach((n, i) => { cols[n.id] = {x:cx, w:colW[i], n, i}; cx += colW[i] + g; });
+  // ----- piecewise-linear time axis: every notice's date sits exactly at its column -----
+  const anchors = notices.map(n => [toMs(n.pub), cols[n.id].x]);
+  if(toMs(d.window[0]) < anchors[0][0]) anchors.unshift([toMs(d.window[0]), X0]);
+  anchors.push([Math.max(toMs(d.window[1]), anchors[anchors.length-1][0] + DAY), X1]);
+  const X = s => { const m = toMs(s); if(m <= anchors[0][0]) return anchors[0][1];
+    for(let i = 1; i < anchors.length; i++){ const [m0, x0] = anchors[i-1], [m1, x1] = anchors[i];
+      if(m <= m1) return m1 === m0 ? x1 : x0 + (m - m0)/(m1 - m0)*(x1 - x0); }
+    return anchors[anchors.length-1][1]; };
+  const INV = xq => { let out = d.window[1];
+    if(xq <= anchors[0][1]) out = fromMs(anchors[0][0]);
+    else for(let i = 1; i < anchors.length; i++){ const [m0, x0] = anchors[i-1], [m1, x1] = anchors[i];
+      if(xq <= x1){ out = fromMs(Math.round((m0 + (x1 === x0 ? 0 : (xq - x0)/(x1 - x0))*(m1 - m0))/DAY)*DAY); break; } }
+    return out < d.window[0] ? d.window[0] : (out > d.window[1] ? d.window[1] : out); };
+  Object.assign(B, {X, INV, X0, X1, svg, cols});
+  // ----- facts: placed in their notice's column, packed into rows inside their campus lane -----
+  const items = all.map(f => { const c = cols[f.doc], w = pillW(f), bx0 = X(f.start || f.pub);
+    return {f, w, x:c.x, col:c.i, bx0, bx1:Math.max(f.end ? X(f.end) : X1, bx0 + 4), lane:f.campus || 'zgc'}; });
+  const lanes = ['zgc','tz'].map(c => ({c, items:items.filter(i => i.lane === c)
+    .sort((a, b) => a.col - b.col || (a.f.start || a.f.pub).localeCompare(b.f.start || b.f.pub) || a.f.id.localeCompare(b.f.id))}));
+  for(const L of lanes){
+    const ends = [];
+    for(const it of L.items){
+      let r = ends.findIndex(e => e <= it.x); if(r < 0){ r = ends.length; ends.push(0); }
+      ends[r] = Math.max(it.x + it.w, it.bx1) + Math.min(6, g - 2); it.row = r;
+    }
+    L.rows = ends.length;
+  }
+  const top = 118, bottom = 622, gapL = 14, slim = 48;
+  const rowsTotal = lanes.reduce((s, L) => s + L.rows, 0);
+  const avail = bottom - top - gapL - lanes.filter(L => !L.rows).length*slim - lanes.filter(L => L.rows).length*22;
+  const RH = Math.max(46, Math.min(72, avail / Math.max(1, rowsTotal)));
+  let y = top;
+  for(const L of lanes){ L.y = y; L.h = L.rows ? L.rows*RH + 22 : slim; y += L.h + gapL; }
+  B.lanes = lanes; B.bottom = y - gapL; B.items = Object.fromEntries(items.map(i => [i.f.id, i]));
+  for(const L of lanes) for(const it of L.items) it.y = L.y + 11 + it.row*RH + (RH - 40)/2;
+  // ----- layers (z-order) -----
+  const gHead = el('g', null, svg), gAxis = el('g', null, svg), gL = el('g', null, svg);
+  B.gBand = el('g', null, svg); B.gEdges = el('g', null, svg); B.gActive = el('g', null, svg);
+  B.gPills = el('g', null, svg); B.gToday = el('g', null, svg); B.gHint = el('g', null, svg);
+  // ----- column headers: notice icon, kind, date -----
+  for(const n of notices){
+    const c = cols[n.id], gg = el('g', {style:'cursor:default'}, gHead);
+    el('rect', {x:c.x - 5, y:40, width:Math.max(c.w, 86) + 4, height:34, rx:9, fill:'rgba(255,255,255,.001)'}, gg);
+    docIcon(gg, c.x, 43, .78, '#6366F1');
+    tx(gg, c.x + 21, 54, n.kind, {'font-size':12, 'font-weight':800, fill:C.ink2});
+    tx(gg, c.x + 21, 68, n.pub, {'font-size':10.5, fill:C.ink4, 'font-family':'Consolas,monospace'});
+    gg.addEventListener('mouseenter', ev => showTipHTML(ev, `<div class="h">${esc(n.title)}</div><div class="r">发布 <b>${n.pub}</b>${n.ptype ? `　周期 <b>${esc(n.ptype)}</b>` : ''}</div>
+      <div class="r">其中「${esc(d.name)}」的事实 <b>${all.filter(f => f.doc === n.id).length}</b> 条</div><div class="id">${n.id}</div>`));
+    gg.addEventListener('mouseleave', hideTip);
+  }
+  // ----- axis: notice ticks + year boundaries -----
+  el('line', {x1:X0, y1:84, x2:X1, y2:84, stroke:'#98A2B3', 'stroke-width':1.2}, gAxis);
+  el('path', {d:`M${X1},80 l7,4 l-7,4 z`, fill:'#98A2B3'}, gAxis);
+  for(const n of notices){ const x = cols[n.id].x; el('line', {x1:x, y1:80, x2:x, y2:88, stroke:'#667085', 'stroke-width':1.4}, gAxis); }
+  for(let yy = +d.window[0].slice(0,4) + 1; yy <= +d.window[1].slice(0,4); yy++){
+    const x = X(`${yy}-01-01`);
+    el('line', {x1:x, y1:88, x2:x, y2:y - gapL + 4, stroke:'#C9CED8', 'stroke-dasharray':'2 5'}, gAxis);
+    const w = tw(`${yy}`, 11, 800) + 12;
+    el('rect', {x:x - w/2, y:92, width:w, height:17, rx:8.5, fill:'#F2F4F7'}, gAxis);
+    tx(gAxis, x, 104.5, `${yy}`, {'text-anchor':'middle', 'font-size':11, 'font-weight':800, fill:C.ink3});
+  }
+  tx(gAxis, X1 + 2, 100, 'time', {'text-anchor':'end', 'font-size':10.5, fill:C.ink4});
+  // ----- campus lanes -----
+  for(const L of lanes){
+    const c = L.c, fill = c === 'zgc' ? 'rgba(46,107,230,.045)' : 'rgba(232,119,46,.05)', stroke = c === 'zgc' ? '#DCE7FD' : '#FDE3CF';
+    const lg = el('g', {class:'lane-dim', 'data-lane':c}, gL);
+    el('rect', {x:14, y:L.y, width:Math.max(B.X1 + 12, ...items.map(i => i.x + i.w + 12)) - 14, height:L.h, rx:16, fill, stroke}, lg);
+    el('rect', {x:24, y:L.y + L.h/2 - 18, width:4, height:36, rx:2, fill:C[c]}, lg);
+    tx(lg, 38, L.y + L.h/2 - 3, CSHORT[c], {'font-size':15.5, 'font-weight':800, fill:C[c]});
+    tx(lg, 38, L.y + L.h/2 + 15, 'campus lane σ*', {'font-size':11, fill:C.ink4, 'font-weight':600});
+    if(!L.rows) tx(lg, X0 + 18, L.y + L.h/2 + 4, d.fixedCampus ? 'the East bathhouse is on the Zhongguancun campus (gazetteer), so this lane is empty' : '（无）', {'font-size':12, fill:C.ink4, 'font-style':'italic'});
+  }
+  // ----- fact pills -----
+  B.pills = {};
+  for(const it of items){
+    const f = it.f, c = it.lane, col = C[c], hidden = S.fix && ERR.has(f.id);
+    const pg = el('g', {class:'pill', 'data-id':f.id, style:hidden ? 'display:none' : null}, B.gPills);
+    const by = it.y + 33;
+    el('rect', {x:it.bx0, y:by, width:it.bx1 - it.bx0, height:5, rx:2.5, fill:col, opacity:.5}, pg);
+    if(!f.end) el('path', {d:`M${X1 - 1},${by - 3.5} l7,6 l-7,6 z`, fill:col, opacity:.6}, pg);
+    const px = X(f.pub);
+    el('path', {d:`M${px},${by - 2} l4,4.5 l-4,4.5 l-4,-4.5 z`, fill:'#344054'}, pg);
+    const body = el('rect', {class:'pbody', x:it.x, y:it.y, width:it.w, height:26, rx:13, fill:f.err ? '#FFFBF1' : '#fff', stroke:f.err ? C.warn : col, 'stroke-width':1.4, filter:'url(#Bsh)'}, pg);
+    el('circle', {cx:it.x + 13, cy:it.y + 13, r:4, fill:col}, pg);
+    tx(pg, it.x + 23, it.y + 17.5, f.label, {'font-size':12.5, 'font-weight':700, fill:C.ink});
+    if(f.err){ el('circle', {cx:it.x + it.w - 14, cy:it.y + 13, r:8, fill:C.warn}, pg);
+      tx(pg, it.x + it.w - 14, it.y + 17, '!', {'text-anchor':'middle', 'font-size':11.5, 'font-weight':900, fill:'#fff'}); }
+    el('line', {class:'strike', x1:it.x + 6, y1:it.y + 13, x2:it.x + it.w - 6, y2:it.y + 13, stroke:C.rev, 'stroke-width':2}, pg);
+    const badge = el('g', {class:'badge', opacity:0}, pg);
+    B.pills[f.id] = {g:pg, body, badge, it};
+    pg.addEventListener('mouseenter', ev => showTip(ev, f, d));
+    pg.addEventListener('mouseleave', hideTip);
+    pg.addEventListener('click', () => { S.sel = f.id; if(S.step === 5) updateB(); else markSel(); renderPanel(); });
+  }
+  drawStaticEdges();
+  // ----- asked-period band + "today" line (step 5) -----
+  B.band = el('rect', {x:0, y:top - 6, width:0, height:B.bottom - top + 12, rx:10, fill:'url(#Bband)', stroke:C.time, 'stroke-dasharray':'5 4', opacity:0}, B.gBand);
+  B.bandLabel = tx(B.gBand, 0, top + 7, '', {'font-size':11.5, 'font-weight':800, fill:'#0E7490', opacity:0});
+  const gt = B.gToday;
+  // the line sits under the pills (so labels stay readable); only the handle is on top
+  B.tLine = el('line', {x1:0, y1:78, x2:0, y2:B.bottom + 6, stroke:'#101828', 'stroke-width':1.6}, B.gBand);
+  B.tTop = el('path', {d:'', fill:'#101828'}, B.gBand);
+  B.tHandle = el('g', {style:'cursor:ew-resize'}, gt);
+  el('rect', {x:-80, y:0, width:160, height:30, rx:15, fill:'#101828', filter:'url(#Bsh2)'}, B.tHandle);
+  B.tText = tx(B.tHandle, 0, 20, '', {'text-anchor':'middle', 'font-size':12.5, 'font-weight':800, fill:'#fff'});
+  tx(B.tHandle, -68, 20.5, '‹', {'font-size':16, 'font-weight':800, fill:'#98A2B3'}); tx(B.tHandle, 62, 20.5, '›', {'font-size':16, 'font-weight':800, fill:'#98A2B3'});
+  B.tHit = el('rect', {x:-6, y:78, width:12, height:36, fill:'transparent', style:'cursor:ew-resize'}, gt);
+  // drag the handle / the line top, or click anywhere on the time axis to jump to that day
+  const toSvg = ev => { const pt = svg.createSVGPoint(); pt.x = ev.clientX; pt.y = ev.clientY; return pt.matrixTransform(svg.getScreenCTM().inverse()); };
+  const setFrom = ev => { const t = INV(toSvg(ev).x); if(t === S.t) return; S.t = t; S.preset = -1; updateB(); renderPanel(true); };
+  const axisHit = el('rect', {x:X0, y:74, width:X1 - X0, height:38, fill:'transparent', style:'cursor:pointer'}, gAxis);
+  svg.onpointerdown = ev => {
+    if(S.step !== 5) return;
+    const onHandle = B.tHandle.contains(ev.target) || ev.target === B.tHit || ev.target === axisHit;
+    if(!onHandle) return;
+    ev.preventDefault(); B.dragging = true; setFrom(ev); hideTip();
+    const mv = e => { if(B.dragging) setFrom(e); };
+    const up = e => { if(B.dragging) setFrom(e); B.dragging = false; window.removeEventListener('pointermove', mv); window.removeEventListener('pointerup', up); };
+    window.addEventListener('pointermove', mv); window.addEventListener('pointerup', up);
+  };
+  B.hint = tx(B.gHint, 550, Math.min(B.bottom + 36, 690),
+    '横轴按通知先后排开（两篇通知之间按日期等分）　◆ 发布日期 τ　细条 = 有效期 V（▶ = 没有结束日期）　泳道 = 继承来的校区 σ*',
+    {'text-anchor':'middle', 'font-size':12, fill:C.ink3});
+  updateB();
+}
+function arc(x1, y1, x2, y2, up){
+  const dx = Math.abs(x2 - x1), h = Math.max(24, Math.min(80, 16 + dx*0.16));
+  const ym = up ? Math.min(y1, y2) - h : Math.max(y1, y2) + h, s = x1 > x2 ? -1 : 1;
+  return `M${x1},${y1} C${x1 + s*dx*0.22},${ym} ${x2 - s*dx*0.22},${ym} ${x2},${y2}`;
+}
+function recEdges(){
+  const d = ds(), out = [], ok = id => !(S.fix && ERR.has(id));
+  for(const [nid, olds] of Object.entries(d.rec)){
+    if(!ok(nid)) continue;
+    const olds2 = olds.filter(ok); if(!olds2.length) continue;
+    const maxC = Math.max(...olds2.map(o => fact(o).cycle || 0));
+    for(const o of olds2) out.push({from:nid, to:o, near:(fact(o).cycle || 0) === maxC});
+  }
+  return out;
+}
+function noticeRec(){
+  // every track-field fact of a notice shares one key, so the fact-level rec edges between two notices are
+  // complete; they are drawn once per notice pair, between the column headers
+  const pairs = new Map();
+  for(const e of recEdges()){
+    const a = fact(e.from), b = fact(e.to), k = a.doc + '>' + b.doc;
+    if(!pairs.has(k)) pairs.set(k, {from:a.doc, to:b.doc, ptype:a.ptype, near:e.near, n:0});
+    pairs.get(k).n++;
+  }
+  return [...pairs.values()];
+}
+function revEdgesBundled(pairs){
+  // pairs: [{reviser, revised}] -> one arc per (reviser notice, revised fact)
+  const seen = new Map();
+  for(const p of pairs){ const k = fact(p.reviser).doc + '|' + p.revised; if(!seen.has(k)) seen.set(k, {...p, n:0}); seen.get(k).n++; }
+  return [...seen.values()];
+}
+function drawRec(g, e, strong){
+  const a = B.items[e.from], b = B.items[e.to]; if(!a || !b) return;
+  el('path', {class:'edge', d:arc(a.x + 16, a.y - 1, b.x + b.w - 16, b.y - 1, true), fill:'none', stroke:C.rec, 'stroke-width':strong ? 2 : 1.2,
+    opacity:strong ? .7 : .3, 'stroke-dasharray':strong ? null : '3 4', 'marker-end':'url(#BaRec)'}, g);
+}
+function drawRev(g, e, strong){
+  const a = B.items[e.reviser], b = B.items[e.revised]; if(!a || !b) return;
+  el('path', {class:'edge', d:arc(a.x + 16, a.y + 27, b.x + b.w - 16, b.y + 27, false), fill:'none', stroke:C.rev,
+    'stroke-width':strong ? 2.2 : 1.3, opacity:strong ? .9 : .42, 'stroke-dasharray':'6 4', 'marker-end':'url(#BaRev)'}, g);
+}
+function drawStaticEdges(){
+  const g = B.gEdges; g.innerHTML = '';
+  // notice-level rec arcs above the column headers (winter chain higher than summer chain)
+  const H = {'寒假':30, '暑假':18};
+  for(const p of noticeRec()){
+    if(!p.near && !S.allEdges) continue;
+    const a = B.cols[p.from], b = B.cols[p.to], x1 = a.x + 8, x2 = b.x + 8, yb = 41, h = H[p.ptype] || 24;
+    el('path', {d:`M${x1},${yb} C${x1},${yb - h - 10} ${x2},${yb - h - 10} ${x2},${yb}`, fill:'none', stroke:C.rec,
+      'stroke-width':p.near ? 2.2 : 1.2, opacity:p.near ? .85 : .35, 'stroke-dasharray':p.near ? null : '3 4', 'marker-end':'url(#BaRec)'}, g);
+    if(p.near){
+      const mx = (x1 + x2)/2, my = yb - (h + 10)*0.75, lbl = `${({'寒假':'winter','暑假':'summer'})[p.ptype] || p.ptype} rec`, w = tw(lbl, 10.5, 800) + 12;
+      el('rect', {x:mx - w/2, y:my - 9, width:w, height:17, rx:8.5, fill:'#fff', stroke:C.rec, 'stroke-width':1}, g);
+      tx(g, mx, my + 3.6, lbl, {'text-anchor':'middle', 'font-size':10.5, 'font-weight':800, fill:'#5B3FD9'});
+    }
+  }
+  // fact-level edges: all of them on demand; the bathhouse shows its revisions in step 4
+  if(S.allEdges) for(const e of recEdges()) drawRec(g, e, false);
+  if(S.allEdges || (S.ds === 'bath' && S.step === 4)){
+    const d = ds(), pairs = [];
+    for(const [old, news] of Object.entries(d.rev)) for(const n of news){ if(S.fix && (ERR.has(old) || ERR.has(n))) continue; pairs.push({reviser:n, revised:old}); }
+    for(const e of revEdgesBundled(pairs)) drawRev(g, e, S.ds === 'bath');
+  }
+}
+function markSel(){ for(const [id, p] of Object.entries(B.pills)) p.g.classList.toggle('sel', id === S.sel); }
+function updateB(){
+  if(!B.pills) return;
+  const five = S.step === 5, d = ds();
+  B.gToday.style.display = five ? '' : 'none';
+  B.tLine.style.display = B.tTop.style.display = five ? '' : 'none';
+  B.hint.style.display = five ? 'none' : '';
+  B.gActive.innerHTML = '';
+  B.gEdges.setAttribute('opacity', five ? .55 : 1);
+  markSel();
+  for(const L of B.lanes){ const lg = B.svg.querySelector(`[data-lane="${L.c}"]`); if(lg) lg.style.opacity = (five && S.campus && S.campus !== L.c) ? .45 : 1; }
+  if(!five){
+    for(const p of Object.values(B.pills)){ p.g.setAttribute('class', 'pill' + (p.g.dataset.id === S.sel ? ' sel' : '')); p.badge.setAttribute('opacity', 0); p.body.removeAttribute('filter'); p.body.setAttribute('filter', 'url(#Bsh)'); }
+    B.band.setAttribute('opacity', 0); B.bandLabel.setAttribute('opacity', 0);
+    return;
+  }
+  const r = engine(d, activeFacts(), S.t, S.campus, S.q); B.r = r;
+  const used = new Set(r.used.map(f => f.id));
+  for(const [id, p] of Object.entries(B.pills)){
+    const s = r.st[id]; let cls = 'pill';
+    let badge = null;
+    if(s == null){ cls += ' st-out'; }
+    else if(used.has(id)){ cls += r.mode === 'history' ? ' st-hist-used' : ' st-used'; badge = r.mode === 'history' ? ['history', C.rec] : ['✓', C.ok]; }
+    else cls += ' st-' + s;
+    if(r.mode === 'ask' && s === 'cur') { cls = 'pill st-used'; badge = ['?', '#7A5AF8']; }
+    if(id === S.sel) cls += ' sel';
+    p.g.setAttribute('class', cls);
+    p.body.setAttribute('filter', badge ? (badge[0] === 'history' ? 'url(#BgRec)' : (badge[0] === '?' ? 'url(#BgRec)' : 'url(#BgOk)')) : 'url(#Bsh)');
+    p.body.setAttribute('stroke', badge ? badge[1] : (ds().facts.find(f => f.id === id).err ? C.warn : C[p.it.lane]));
+    p.badge.innerHTML = '';
+    if(badge){
+      const bw = Math.max(18, tw(badge[0], 10.5, 800) + 10), bx = p.it.x + p.it.w - bw + 6, byy = p.it.y - 9;
+      el('rect', {x:bx, y:byy, width:bw, height:17, rx:8.5, fill:badge[1], stroke:'#fff', 'stroke-width':1.5}, p.badge);
+      tx(p.badge, bx + bw/2, byy + 12.5, badge[0], {'text-anchor':'middle', 'font-size':10.5, 'font-weight':800, fill:'#fff'});
+      p.badge.setAttribute('opacity', 1);
+    } else if(s === 'revised'){
+      const bw = 30, bx = p.it.x + p.it.w - bw + 6, byy = p.it.y - 9;
+      el('rect', {x:bx, y:byy, width:bw, height:17, rx:8.5, fill:C.rev, stroke:'#fff', 'stroke-width':1.5}, p.badge);
+      tx(p.badge, bx + bw/2, byy + 12.5, 'rev', {'text-anchor':'middle', 'font-size':10.5, 'font-weight':800, fill:'#fff'});
+      p.badge.setAttribute('opacity', 1);
+    } else p.badge.setAttribute('opacity', 0);
+  }
+  // active revisions
+  const pairs = []; for(const f of r.rev) for(const n of r.revBy[f.id]) pairs.push({reviser:n, revised:f.id});
+  for(const e of revEdgesBundled(pairs)) drawRev(B.gActive, e, true);
+  // history via rec: from the asked period (band) to the history facts
+  if(r.mode === 'history'){
+    for(const f of r.used){
+      const b = B.items[f.id]; const x1 = r.cycle ? B.X(r.lo) : B.X(S.t), y1 = b.y + 13;
+      el('path', {d:arc(x1, y1 - 14, b.x + b.w - 14, b.y - 2, true), fill:'none', stroke:C.rec, 'stroke-width':2.4, 'stroke-dasharray':'6 5', class:'flowdash', 'marker-end':'url(#BaRec)'}, B.gActive);
+    }
+  }
+  // today line + handle
+  const x = B.X(S.t);
+  B.tLine.setAttribute('x1', x); B.tLine.setAttribute('x2', x);
+  B.tTop.setAttribute('d', `M${x-6},74 L${x+6},74 L${x},82 z`);
+  B.tHit.setAttribute('x', x - 6);
+  const hx = Math.max(B.X0 + 60, Math.min(B.X1 - 82, x));
+  B.tHandle.setAttribute('transform', `translate(${hx},${B.bottom + 10})`);
+  B.tText.textContent = `today ${S.t}`;
+  // asked period band
+  if(r.cycle){
+    const bx0 = B.X(r.lo), bx1 = B.X(r.hi);
+    B.band.setAttribute('x', bx0); B.band.setAttribute('width', Math.max(4, bx1 - bx0)); B.band.setAttribute('opacity', 1);
+    B.bandLabel.textContent = `asked period T: winter break ${r.cycle[1]}`; B.bandLabel.setAttribute('x', Math.min(bx0 + 6, B.X1 - 150)); B.bandLabel.setAttribute('opacity', 1);
+  } else { B.band.setAttribute('opacity', 0); B.bandLabel.setAttribute('opacity', 0); }
+}
+
+/* =====================================================================
+   6. tooltip
+   ===================================================================== */
+function showTipHTML(ev, html){
+  const tt = $('#tt'), cv = $('#canvas').getBoundingClientRect(), tg = ev.currentTarget.getBoundingClientRect();
+  tt.innerHTML = html; tt.classList.add('on');
+  const w = tt.offsetWidth, h = tt.offsetHeight;
+  let left = tg.left - cv.left + tg.width/2 - w/2, top = tg.top - cv.top - h - 10;
+  if(top < 6) top = tg.bottom - cv.top + 10;
+  left = Math.max(8, Math.min(cv.width - w - 8, left));
+  tt.style.left = left + 'px'; tt.style.top = top + 'px';
+}
+function showTip(ev, f, d){
+  const n = noticeOf(d, f), col = C[f.campus || 'zgc'];
+  showTipHTML(ev, `<div class="h"><span class="d" style="background:${col}"></span>${esc(f.entity)} · ${esc(f.attr)}　<b>${esc(f.label)}</b></div>
+  <div class="r">来源 <b>${esc(n.short)}</b>（${n.pub} 发布）</div>
+  <div class="r">校区 <b>${f.campus ? CSHORT[f.campus] : '未注明'}</b>　来自 ${esc(f.cSrc)}</div>
+  <div class="r">有效期 <b>${esc(vLong(f))}</b></div>
+  ${f.ptype ? `<div class="r">周期 <b>${f.cycle} ${esc(f.ptype)}</b></div>` : ''}
+  <div class="q">“${esc(f.quote)}”</div>
+  ${f.err ? `<div class="w">⚠ ${esc(f.err)}</div>` : ''}
+  <div class="id">${f.id}</div>`);
+}
+function hideTip(){ $('#tt').classList.remove('on'); }
+
+/* =====================================================================
+   7. side panel
+   ===================================================================== */
+function chainHTML(f){
+  const c = f.campus, heads = [...f.path];              // deepest first
+  const steps = ['事实本身', ...heads, '通知', '地名表'];
+  const hitIdx = {campus: 1 + heads.indexOf(CAMPUS[c]), aud: steps.length - 2, valid: steps.length - 2};
+  const row = (label, hit, val, cls, noGaz) => {
+    let h = '', delay = 0;
+    steps.forEach((s, i) => {
+      if(noGaz && i === steps.length - 1) return;
+      const state = i < hit ? 'miss' : (i === hit ? 'hit ' + cls : 'skip');
+      const sub = i === 0 && i < hit ? '<small>引文没写</small>' : (i === hit ? `<small>${esc(val)}</small>` : '');
+      h += `<span class="cs ${state}" style="animation-delay:${delay}ms">${esc(s)}${sub}</span>`;
+      delay += 140;
+      if(i < steps.length - (noGaz ? 2 : 1)) h += `<span class="carr" style="animation-delay:${delay-70}ms">▷</span>`;
+    });
+    return `<div class="crow"><div class="clabel">${label}</div><div class="csteps">${h}</div></div>`;
+  };
+  return `<div class="chain">${row('校区', hitIdx.campus, CSHORT[c], c, false)}${row('人群', hitIdx.aud, f.aud, 'grey', true)}${row('有效期', hitIdx.valid, vShort(f), 'time', true)}</div>`;
+}
+const P = {};
+P[1] = () => `
+  <div class="kicker">STEP 1 · 原文</div>
+  <h2>一篇通知：校区只在标题里写一次</h2>
+  <p>这是总务处 <b>2026 年 1 月 7 日</b>发布的寒假通知（PDF 共 14 页）。「中关村校区」「通州校区」各是一个大标题，下面几十条服务都归它管，<b>校区只写了一次</b>。</p>
+  <p>画布上摘出了两个校区「体育场馆」的表格（按 PDF 原样，颜色是为了看清加的）。</p>
+  <div class="callout red"><b>切块会丢条件。</b>线上 RAG 把通知按 600 字切块。红框这一块里有「田径场、多功能球场　8:00—22:00」，却没有「通州」两个字；「通州校区」这个标题留在了上一块。中关村的同学检索到它，就会拿到通州的时间。</div>
+  <div class="quote"><div class="qh">这一块的原文（节选，PDF 转文字后的样子）</div>…物物业业服服务务 电费业务… 校校内内基基础础设设施施 体体育育场场馆馆 正常开放 田径场、多功能球场 开放时间：<span class="hl">8:00—22:00</span> 2月10日—2月24日暂停开放，1月12日—2月9日期间根据学生锻炼需 健身房、乒乓球室 求动态调整开放时间 …</div>
+  <p class="muted">加粗的标题被导出成了「体体育育场场馆馆」这样的叠字，关键词检索也认不出来（论文 C1：32% 的校区词是乱码）。</p>
+  <div class="callout violet">证据图要做的，就是把「通州校区」这个条件重新挂回每一条事实上。</div>`;
+P[2] = () => `
+  <div class="kicker">STEP 2 · 标题树</div>
+  <h2>标题树：每个标题都可能带条件</h2>
+  <p>编译时的<b>第一次 LLM 调用</b>：通读全文，按顺序列出所有标题和层级（这篇共 <b>23</b> 个），并写下每个标题<b>引入的条件</b> σ(n)。</p>
+  <ul class="kv">
+    <li><span class="chip zgc">校区 = 中关村</span>来自一级标题「中关村校区」</li>
+    <li><span class="chip tz">校区 = 通州</span>来自一级标题「通州校区」</li>
+    <li><span class="chip time">1/12–3/1</span>「水电暖收费」「开水房」这种小标题带着日期</li>
+    <li><span class="chip grey">无</span>物业服务、体育场馆……大多数标题不引入条件</li>
+  </ul>
+  <p>通知本身也有条件 <b>σ(d)</b>：<span class="chip time">2026 寒假</span> <span class="chip time">1/12–3/1</span> <span class="chip grey">留校师生</span>（画布顶部）。</p>
+  <p class="muted">亮起来的是通往「体育场馆」的两条路径，第 3 步的田径场事实就挂在它们下面。</p>
+  <div class="file">📄 对应文件：<code>compiled_wb.jsonl</code> 里这篇通知的 <code>outline</code>（每项：层级、标题、校区、人群、起止日期）和 <code>doc</code> 字段</div>`;
+P[3] = () => {
+  const f = fact(S.sel) || fact('b28eb1484c#62');
+  const sw = ['b28eb1484c#62','b28eb1484c#44','b28eb1484c#45','b28eb1484c#61'].map(id => { const x = fact(id);
+    return `<button data-sel="${id}" class="${id === f.id ? 'on' : ''}">${CSHORT[x.campus]} ${esc(x.label)}${x.err ? ' ⚠' : ''}</button>`; }).join('');
+  return `
+  <div class="kicker">STEP 3 · 事实</div>
+  <h2>事实：从标题继承条件</h2>
+  <p><b>第二类 LLM 调用</b>把正文拆成一条条事实：<b>服务点 · 属性 · 取值 · 原文引文</b>。提示词要求 LLM <b>不判断校区</b>。</p>
+  <p>之后全是代码：按引文在原文里的位置把事实挂到标题下，再对每个维度<b>沿路径往上找，取第一个有值的</b>（论文式 1 的 ▷）。画布上流动的点就是这个过程。</p>
+  <div class="fgrid" id="fsw">${sw}</div>
+  ${chainHTML(f)}
+  ${f.err ? `<div class="callout amber"><b>⚠ 这条是抽取错误。</b>${esc(f.err)}</div>` :
+    `<div class="callout blue">结果：<b>${esc(f.entity)} · ${esc(f.attr)} · ${esc(f.label)}</b>，校区 <b>${CSHORT[f.campus]}</b>（${esc(f.cSrc)}），有效期 <b>${vShort(f)}</b>（${esc(f.vSrc)}），人群 <b>${esc(f.aud)}</b>。</div>`}
+  <p class="muted">⚠ 两张卡片是 PDF 表格错行造成的抽取错误（原文里左栏的场地名垂直居中，转文字时被插进了右栏两行字中间）。点右上角「按 PDF 原文更正」可以把它们去掉。</p>
+  <div class="file">📄 这一步的结果不单独存文件：<code>graph.py</code> 每次加载时从 <code>compiled_wb.jsonl</code> 现算（约 4 秒），所以每个环节都能单独关掉做消融。</div>`;
+};
+P[4] = () => S.ds === 'track' ? `
+  <div class="kicker">STEP 4 · 连成图</div>
+  <h2>连成图：把不同通知里的同一件事连起来</h2>
+  <p>把所有通知里「<b>田径场 · 开放情况</b>」的事实放在一起：<b>横轴是时间</b>，<b>两条泳道是两个校区</b>（泳道就是继承来的 σ*），每条事实下面的细条是它的<b>有效期 V</b>，◆ 是发布日期 τ。</p>
+  <div class="stat"><span><b>${DATA.track.facts.length}</b> 条事实</span><span><b>${DATA.track.notices.length}</b> 篇通知</span><span>rec <b>${Object.values(DATA.track.rec).flat().length}</b> 条</span><span>rev <b>${Object.values(DATA.track.rev).flat().length}</b> 条</span></div>
+  <div class="ed rec"><svg width="26" height="12"><path d="M1,10 C8,0 18,0 25,10" stroke="${C.rec}" stroke-width="2.2" fill="none"/></svg><div><b style="color:#5B3FD9">rec · 往年同期</b>：同一服务点、同一种假期、更早的一年。今年寒假的事实指向去年寒假。本期通知还没发时，靠它给出「往年参考」。rec 不看校区，回答时再按校区过滤。</div></div>
+  <div class="ed rev"><svg width="26" height="12"><path d="M1,2 C8,12 18,12 25,2" stroke="${C.rev}" stroke-width="2.2" stroke-dasharray="5 3" fill="none"/></svg><div><b style="color:#C0262D">rev · 被修订</b>：后发布的通知，在<b>自己的有效期内</b>替换旧值。田径场的修订边都指向早已过期的事实，不影响答案，默认不画；切到右上角「东区浴室」看一个真正起作用的修订。</div></div>
+  <p class="muted">实线紫弧只画「最近一期」，打开「显示全部边」可以看到隔年的 rec 和全部 rev。</p>
+  <div class="callout violet">存下来的就是这些：<b>带条件的节点 + 两种边</b>。它不是图数据库，就是 Python 里的事实列表、按服务点的索引和两张对照表。</div>` : `
+  <div class="kicker">STEP 4 · 连成图（修订边示例）</div>
+  <h2>东区浴室：修订只在新通知自己的有效期内生效</h2>
+  <p>东区浴室（中关村）2025 年 7 月到 2026 年 3 月的 9 条事实。红色虚线是 <b>rev</b>：后来的通知改写前面的安排。</p>
+  <ul class="tl">
+    <li class="base"><b>7/4 暑期指南</b>：暑假 12:00–14:00</li>
+    <li class="base"><b>8/21 新生住宿攻略</b>：12:00–23:00（没有结束日期）</li>
+    <li><b>9/11 增加早场</b> 7:00–8:00（没有结束日期）</li>
+    <li><b>国庆 10/1–10/8</b>：正常开放 → 只在国庆期间盖过早场</li>
+    <li><b>1/12 起暂停早场</b>（恢复时间另行通知）→ 从此早场失效</li>
+    <li><b>寒假</b>：12:00–23:00，除夕 12:00–20:00，初一至初三全天暂停</li>
+  </ul>
+  <div class="callout amber">⚠ 粒度问题：键是（服务点, 属性组），9 月「增加早场」和常规「12:00–23:00」同属一个键，被算成了改写，所以 9 月之后常规时段不再出现。</div>
+  <p class="muted">下一步拖动「今天」，看同一个问题在 9 月、国庆、10 月 9 日、寒假、3 月 9 日分别怎么答。</p>`;
+P[5] = () => {
+  const d = ds(), pr = PRESETS[S.ds], bath = S.ds === 'bath';
+  const days = Math.round((toMs(d.window[1]) - toMs(d.window[0]))/DAY), val = Math.round((toMs(S.t) - toMs(d.window[0]))/DAY);
+  const qtext = bath ? '东区浴室今天几点开？' : (S.q === 'today' ? '今天田径场几点开？' : '今年寒假田径场开吗？');
+  return `
+  <div class="kicker">STEP 5 · 提问　<span style="color:var(--ink3);letter-spacing:0;font-weight:700">同一张图，日期和校区一变，答案就变</span></div>
+  <div class="qcard"><div class="qt">“${qtext}”</div>
+    <div class="qm"><span class="chip grey">今天 ${S.t}</span><span class="chip ${S.campus || 'grey'}">${bath ? '校区：中关村（由地名「东区浴室」推出）' : '校区：' + (S.campus ? CSHORT[S.campus] : '没说')}</span></div></div>
+  ${bath ? '' : `<div class="ctrl"><label>问法</label><div class="seg" id="cQ"><button data-v="today" class="${S.q === 'today' ? 'on' : ''}">今天几点开</button><button data-v="寒假" class="${S.q === '寒假' ? 'on' : ''}">今年寒假开吗</button></div></div>
+  <div class="ctrl"><label>校区</label><div class="seg" id="cC"><button data-v="" class="${!S.campus ? 'on' : ''}">没说</button><button data-v="zgc" class="${S.campus === 'zgc' ? 'on' : ''}">中关村</button><button data-v="tz" class="${S.campus === 'tz' ? 'on' : ''}">通州</button></div></div>`}
+  <div class="ctrl"><label>今天</label><div class="daterow"><b id="cDate">${S.t}</b><input type="range" id="cT" min="0" max="${days}" value="${val}"></div></div>
+  <div class="presets">${pr.map((p, i) => `<button class="preset ${S.preset === i ? 'on' : ''}" data-i="${i}">${esc(p.label)}</button>`).join('')}</div>
+  <div id="res"></div>
+  <div id="insp"></div>
+  <div class="conds-h">适用的四个条件（论文式 4，点画布上任一事实可逐条检查）</div>
+  <div class="conds">
+    <div class="cond"><span class="ci">1</span><div>校区对得上<small>σ*(f) ⊨ x</small></div></div>
+    <div class="cond"><span class="ci">2</span><div>今天之前已发布<small>τ(f) ≤ t</small></div></div>
+    <div class="cond"><span class="ci">3</span><div>有效期盖住所问时段<small>V(f) ∩ T ≠ ∅</small></div></div>
+    <div class="cond"><span class="ci">4</span><div>没被新通知改写<small>∄ rev(f′,f)，τ(f′) ≤ t</small></div></div>
+  </div>`;
+};
+function resultHTML(){
+  const d = ds(), r = B.r || engine(d, activeFacts(), S.t, S.campus, S.q), facts = activeFacts();
+  const cnt = k => facts.filter(f => r.st[f.id] === k).length;
+  const lab = fs => [...new Set(fs.map(f => f.label))].join('、') || '—';
+  const tags = [
+    `<span class="tag ok">适用 ${r.dropped ? 0 : r.cur.length}</span>`,
+    r.hist.length ? `<span class="tag rec">往年候选 ${r.hist.length}</span>` : '',
+    `<span class="tag">还没发布 ${cnt('future')}</span>`,
+    `<span class="tag rev">被改写 ${r.rev.length}</span>`,
+    `<span class="tag">不在所问时段 ${cnt('out') + cnt('hist-old')}</span>`,
+    cnt('dropped') ? `<span class="tag">常设安排 ${cnt('dropped')}（不回答假期）</span>` : '',
+  ].join('');
+  const T = r.cycle ? `${r.cycle[1]} 年寒假（${md(r.lo)}—${md(r.hi)}）` : `今天 ${S.t}`;
+  // branches
+  const bkeys = Object.keys(r.branches);
+  let br = '';
+  if(bkeys.length){
+    br = '<div class="br">' + ['zgc','tz','all'].filter(k => r.branches[k]).map(k =>
+      `<div class="brc ${k} ${r.use && r.use[k] && r.mode !== 'history' ? 'pick' : ''}"><div class="bh">${k === 'all' ? '两校区通用' : CAMPUS[k]}</div>${esc(lab(r.branches[k]))}</div>`).join('') + '</div>';
+  }
+  let decide = '';
+  if(r.costs){
+    const pr = d.prior, mx = Math.max(...Object.values(r.costs)) * 1.12;
+    const row = (k, name, f) => `<div class="cost ${r.action === k ? 'win' : ''}"><span>${name}</span><div class="track"><div class="fill" style="width:${(r.costs[k]/mx*100).toFixed(1)}%"></div></div><span class="v">${r.costs[k].toFixed(2)}</span></div>`;
+    const extra = Object.values(r.branches).flat().length - (r.branches[r.best] || []).length;
+    decide = `<div class="rt">两个校区答案不同 → 缺的条件 <b>校区</b> 进入 frontier，按代价三选一：</div>
+      <div class="costs">${row('assume', `猜${CSHORT[r.best]}`)}${row('enumerate', '列出两校区')}${row('ask', '追问校区')}</div>
+      <div class="formula">猜 = λ·(1−P) = ${DATA.lam}×(1−${pr[r.best].toFixed(3)})　列 = β·多读 ${extra} 条 = ${DATA.beta}×${extra}　问 = 1<br>P(校区 | ${esc(d.etype)})：中关村 ${pr.zgc.toFixed(3)} · 通州 ${pr.tz.toFixed(3)}（来自 27,683 条工单）</div>`;
+  } else if(r.mode === 'history'){
+    decide = `<div class="rt">${r.cycle ? `所问的 <b>${r.cycle[1]} 年寒假</b>还没有任何事实（通知没发）→` : '今天没有现行的事实 →'} 沿 <b style="color:#5B3FD9">rec</b> 找最近一期同类事实，作为<b>往年参考</b>，不当承诺。</div>`;
+  } else if(r.mode === 'answer'){
+    decide = `<div class="rt">${S.campus ? `已知校区 <b>${CSHORT[S.campus]}</b>${S.ds === 'bath' ? '（地名表）' : ''} → 只看这一支，不用猜也不用问。` : (bkeys.length === 1 ? '只有一个校区有适用事实 → 直接回答。' : '两个校区答案相同 → 直接回答，不追问。')}</div>`;
+  } else if(r.mode === 'abstain'){
+    decide = `<div class="rt">没有适用事实，也没有往年参考 → 拒答。</div>`;
+  }
+  if(r.dropped) decide = `<div class="rt muted" style="color:#667085">（有常设安排覆盖这段时间，但它们回答不了「假期期间」，所以不用。）</div>` + decide;
+  const staleRev = r.rev.filter(f => f.end && f.end < r.lo);
+  if(staleRev.length) decide += `<div class="formula" style="font-family:var(--font);font-size:11.5px">注：${staleRev.length} 条「被改写」的事实本来就已过期。它们被算作改写，是因为键只到（服务点, 属性组）这一级，粒度偏粗，不影响这次的答复。</div>`;
+  const ans = answerText(d, r);
+  return `
+   <div class="rs"><span class="rn">1</span><div class="rt">找候选：同一服务点的 <b>${facts.length}</b> 条事实（键：${esc(d.key)}）；所问时段 T = <b>${T}</b></div></div>
+   <div class="rs"><span class="rn">2</span><div class="rt">逐条过四个条件（①校区 ②已发布 ③有效期 ④没被改写）：<div class="tags">${tags}</div></div></div>
+   <div class="rs"><span class="rn">3</span><div class="rt">${bkeys.length ? '按校区分组：' + br : ''}${decide}</div></div>
+   <div class="rs"><span class="rn">4</span><div class="rt">答复（示意，真实系统由 LLM 按同样的证据写）：<div class="bubble">${esc(ans)}</div></div></div>`;
+}
+function answerText(d, r){
+  const nm = d.name, lab = fs => [...new Set(fs.map(f => f.label))].join('，');
+  const byC = fs => { const o = {}; for(const f of fs){ const k = f.campus || 'all'; (o[k] = o[k] || []).push(f); } return o; };
+  const src = fs => [...new Set(fs.map(f => noticeOf(d, f).short))].join('、');
+  const when = fs => { const s = [...new Set(fs.map(vShort))]; return s.length === 1 ? s[0] : '各条有效期见证据'; };
+  if(r.mode === 'ask') return `请问您在哪个校区（中关村校区还是通州校区）？两个校区的${nm}安排不同。`;
+  if(r.mode === 'abstain') return '目前的通知里没有找到适用于您情况的安排，建议咨询相关服务部门。';
+  const g = byC(r.used);
+  const part = k => `${k === 'all' ? '两校区' : CAMPUS[k]}${nm}：${lab(g[k])}`;
+  if(r.mode === 'history'){
+    const head = r.cycle ? `目前还没有找到 ${r.cycle[1]} 年寒假的通知。` : '今天没有适用的现行安排。';
+    return head + Object.keys(g).map(k => `往年（${g[k][0].cycle} 年${g[k][0].ptype || ''}）${part(k)}`).join('；') + '。仅供参考，请以正式通知为准。';
+  }
+  if(r.mode === 'enumerate') return `两个校区安排不同：\n${['zgc','tz'].filter(k => g[k]).map(part).join('\n')}\n（${when(r.used)}；来源：${src(r.used)}）`;
+  if(r.mode === 'assume') return `按${CAMPUS[r.best]}回答：${lab(r.used)}。另一个校区的安排不同。`;
+  return `${Object.keys(g).map(part).join('；')}。\n（${when(r.used)}；来源：${src(r.used)}）`;
+}
+function inspectHTML(){
+  const d = ds(), f = d.facts.find(x => x.id === S.sel); if(!f) return '';
+  const r = B.r; if(!r) return '';
+  const s = r.st[f.id], used = r.used.some(x => x.id === f.id);
+  const mark = v => v === true ? '<span class="m y">✓</span>' : (v === false ? '<span class="m n">✕</span>' : '<span class="m z">–</span>');
+  const Tt = r.cycle ? `${r.cycle[1]} 寒假` : `今天 ${md(S.t)}`;
+  const c1 = S.campus ? (!f.campus || f.campus === S.campus) : null;
+  const c2 = f.pub <= S.t, c3 = covers(f, r.lo, r.hi), revs = r.revBy[f.id];
+  const revTxt = revs ? `被「${[...new Set(revs.map(id => d.facts.find(x => x.id === id).label))].join('、')}」改写（${[...new Set(revs.map(id => noticeOf(d, d.facts.find(x => x.id === id)).short))].join('、')}）` : '没有生效中的修订';
+  let verdict, vc;
+  if(S.fix && ERR.has(f.id)){ verdict = '已按原文更正去掉'; vc = 'n'; }
+  else if(used && r.mode === 'history'){ verdict = '作为往年参考被用上'; vc = 'h'; }
+  else if(used){ verdict = '适用，出现在答复里'; vc = 'y'; }
+  else if(r.mode === 'ask' && s === 'cur'){ verdict = '适用，但系统选择先追问校区'; vc = 'y'; }
+  else if(s === 'cur' && S.campus && f.campus && f.campus !== S.campus){ verdict = '属于另一个校区，不用'; vc = 'n'; }
+  else if(s === 'dropped'){ verdict = '常设安排，回答不了假期问题'; vc = 'n'; }
+  else if(s === 'hist'){ verdict = '往年候选（本期有事实，所以没用）'; vc = 'n'; }
+  else verdict = {future:'还没发布，看不见', revised:'已被新通知改写', out:'有效期不含所问时段', 'hist-old':'更早的往年，被更近的一期取代'}[s] || '不适用', vc = 'n';
+  return `<div class="insp"><div class="ih"><b>${esc(f.entity)} · ${esc(f.label)}</b><button class="x" id="inspX">×</button></div>
+    <div class="chk">${mark(c1)}<div>① 校区：${S.campus ? (c1 ? '对得上' : `属于${CSHORT[f.campus]}`) : '用户没说 → 两边都留下，按校区分组'}</div></div>
+    <div class="chk">${mark(c2)}<div>② 发布于 ${f.pub}${c2 ? '，在今天之前' : '，今天还没发布'}</div></div>
+    <div class="chk">${mark(c3)}<div>③ 有效期 ${esc(vShort(f))} ${c3 ? '盖住' : '不含'} ${Tt}</div></div>
+    <div class="chk">${mark(!revs)}<div>④ ${esc(revTxt)}</div></div>
+    <div class="verdict ${vc}">${verdict}</div>
+    <div class="kvs"><span>来源</span><span>${esc(noticeOf(d, f).title)}</span><span>引文</span><span>“${esc(f.quote)}”</span><span>校区来自</span><span>${esc(f.cSrc)}</span><span>编号</span><span style="font-family:var(--mono)">${f.id}</span></div>
+    ${f.err ? `<div class="callout amber" style="margin-top:8px">⚠ ${esc(f.err)}</div>` : ''}</div>`;
+}
+function renderPanel(onlyRes){
+  const box = $('#panel');
+  if(onlyRes && S.step === 5 && $('#res')){
+    $('#res').innerHTML = resultHTML(); $('#insp').innerHTML = inspectHTML(); wireInsp();
+    $('#cDate').textContent = S.t; const d = ds(); $('#cT').value = Math.round((toMs(S.t) - toMs(d.window[0]))/DAY);
+    document.querySelectorAll('.preset').forEach(b => b.classList.toggle('on', +b.dataset.i === S.preset));
+    const qm = box.querySelector('.qm .chip'); if(qm) qm.textContent = `今天 ${S.t}`;
+    return;
+  }
+  box.innerHTML = P[S.step]();
+  box.scrollTop = 0;
+  if(S.step === 3){
+    box.querySelectorAll('#fsw button').forEach(b => b.onclick = () => { S.sel = b.dataset.sel; updateA(true); renderPanel(); });
+  }
+  if(S.step === 5){
+    $('#res').innerHTML = resultHTML(); $('#insp').innerHTML = inspectHTML(); wireInsp();
+    box.querySelectorAll('#cQ button').forEach(b => b.onclick = () => { S.q = b.dataset.v; S.preset = -1; updateB(); renderPanel(); });
+    box.querySelectorAll('#cC button').forEach(b => b.onclick = () => { S.campus = b.dataset.v || null; S.preset = -1; updateB(); renderPanel(); });
+    $('#cT').oninput = e => { const d = ds(); S.t = fromMs(toMs(d.window[0]) + e.target.value*DAY); S.preset = -1; updateB(); renderPanel(true); };
+    box.querySelectorAll('.preset').forEach(b => b.onclick = () => { const p = PRESETS[S.ds][+b.dataset.i]; Object.assign(S, {t:p.t, campus:p.campus, q:p.q, preset:+b.dataset.i}); updateB(); renderPanel(); });
+  }
+}
+function wireInsp(){ const x = $('#inspX'); if(x) x.onclick = () => { S.sel = null; markSel(); $('#insp').innerHTML = ''; updateB(); }; }
+
+/* =====================================================================
+   8. step control
+   ===================================================================== */
+function renderSteps(){
+  $('#steps').innerHTML = STEPS.map((s, i) => `<button class="step ${S.step === i+1 ? 'active' : ''} ${S.step > i+1 ? 'done' : ''}" data-s="${i+1}">
+    <span class="n">${S.step > i+1 ? '✓' : i+1}</span><span style="min-width:0"><div class="t1">${s.t1}</div><div class="t2">${s.t2}</div></span><span class="bar"></span></button>`).join('');
+  document.querySelectorAll('.step').forEach(b => b.onclick = () => go(+b.dataset.s));
+  $('#dots').innerHTML = STEPS.map((_, i) => `<i class="${S.step === i+1 ? 'on' : ''}"></i>`).join('');
+  $('#prev').disabled = S.step === 1; $('#next').textContent = S.step === 5 ? '回到开头 ↺' : '下一步 →';
+}
+function stageTitle(){
+  const t = {1:['一篇通知的原文', '2026-01-07《寒假期间综合服务保障体系各单位营业时间》'],
+             2:['编译第一步：标题树（作用域树）', 'LLM 列出标题和每个标题引入的条件'],
+             3:['编译第二步：事实挂到标题下，继承条件', '点卡片切换事实'],
+             4:[S.ds === 'track' ? '田径场子图：时间 × 校区' : '东区浴室子图：修订边', '悬停看详情'],
+             5:[S.ds === 'track' ? '田径场子图：拖动「今天」提问' : '东区浴室：拖动「今天」看修订如何生效', '拖动底部黑色把手，或用右侧预设']}[S.step];
+  $('#stageTitle').innerHTML = `${t[0]}<small>${t[1]}</small>`;
+  $('#dsSeg').style.display = S.step >= 4 ? '' : 'none';
+  $('#swEdges').style.display = S.step >= 4 ? '' : 'none';
+  $('#swFix').style.display = (S.step >= 3 && S.ds === 'track') ? '' : 'none';
+  $('#swFix').classList.toggle('on', S.fix); $('#swEdges').classList.toggle('on', S.allEdges);
+  document.querySelectorAll('#dsSeg button').forEach(b => b.classList.toggle('on', b.dataset.ds === S.ds));
+}
+function go(n){
+  const prev = S.step; S.step = Math.max(1, Math.min(5, n));
+  const aOn = S.step <= 3;
+  $('#viewA').classList.toggle('off', !aOn); $('#viewB').classList.toggle('off', aOn);
+  if(S.step === 3 && !fact(S.sel)?.id?.startsWith('b28eb1484c#') ) S.sel = 'b28eb1484c#62';
+  if(S.step === 3 && !CARDPOS[S.sel]) S.sel = 'b28eb1484c#62';
+  if(S.step === 2 && prev !== 2){ A.tree.querySelectorAll('.rise').forEach(e => { e.style.animation = 'none'; e.getBoundingClientRect(); e.style.animation = ''; }); }
+  if(aOn) updateA(true);
+  else { if(prev <= 3 || !B.pills) buildB(); else { drawStaticEdges(); updateB(); } }
+  stageTitle(); renderSteps(); renderPanel(); hideTip();
+}
+$('#prev').onclick = () => go(S.step - 1);
+$('#next').onclick = () => go(S.step === 5 ? 1 : S.step + 1);
+document.addEventListener('keydown', e => { if(e.target.tagName === 'INPUT') return; if(e.key === 'ArrowRight') go(S.step + 1); if(e.key === 'ArrowLeft') go(S.step - 1); });
+document.querySelectorAll('#dsSeg button').forEach(b => b.onclick = () => {
+  S.ds = b.dataset.ds; S.preset = S.step === 5 ? 0 : S.preset;
+  const p = PRESETS[S.ds][0]; if(S.step === 5 || S.ds === 'bath') Object.assign(S, {t:p.t, campus:p.campus, q:p.q, preset:0});
+  if(S.ds === 'track' && S.step !== 5){ S.campus = null; S.q = 'today'; S.t = '2026-01-20'; }
+  S.sel = null; buildB(); stageTitle(); renderPanel(); });
+$('#swFix').onclick = () => { S.fix = !S.fix; if(S.fix && ERR.has(S.sel)) S.sel = S.step === 3 ? 'b28eb1484c#62' : null;
+  if(S.step <= 3) updateA(true); else buildB(); stageTitle(); renderPanel(); };
+$('#swEdges').onclick = () => { S.allEdges = !S.allEdges; drawStaticEdges(); updateB(); stageTitle(); };
+
+/* =====================================================================
+   9. boot (+ optional self-test against reference_engine.py vectors)
+   ===================================================================== */
+// deep links, e.g. ?step=5&ds=bath&t=2025-10-03  or  ?step=5&t=2025-12-28&q=寒假&campus=tz&fix=1&edges=1&sel=b28eb1484c%2362
+const QS = new URLSearchParams(location.search);
+if(QS.get('ds') === 'bath') S.ds = 'bath';
+if(QS.get('fix') === '1') S.fix = true;
+if(QS.get('edges') === '1') S.allEdges = true;
+if(QS.get('t')) S.t = QS.get('t');
+if(QS.get('q')) S.q = QS.get('q');
+if(QS.has('campus')) S.campus = QS.get('campus') || null;
+if(S.ds === 'bath' && !QS.get('t')) Object.assign(S, {t:PRESETS.bath[0].t, campus:'zgc', q:'today', preset:0});
+if(S.ds === 'bath') S.campus = 'zgc', S.q = 'today';
+if(QS.get('t') || QS.has('campus') || QS.get('q')) S.preset = PRESETS[S.ds].findIndex(p => p.t === S.t && p.campus === S.campus && p.q === S.q);
+if(QS.get('sel')) S.sel = QS.get('sel');
+buildA(); go(+QS.get('step') || 1);
+if(QS.get('sel')){ S.sel = QS.get('sel'); if(S.step <= 3) updateA(true); else updateB(); renderPanel(); }
+async function selftest(){
+  const res = [];
+  for(const [name, file] of [['track','test_vectors_track.json'],['bath','test_vectors_bath.json']]){
+    const tv = await (await fetch(file)).json(), d = DATA[name]; let bad = 0; const ex = [];
+    const ids = a => a.map(f => f.id).sort().join(',');
+    for(const v of tv){
+      const facts = d.facts.filter(f => !(v.corrected && ERR.has(f.id)));
+      const r = engine(d, facts, v.t, v.campus, v.q);
+      const br = JSON.stringify(Object.fromEntries(Object.keys(r.branches).sort().map(k => [k, r.branches[k].map(f => f.id).sort()])));
+      const bv = JSON.stringify(Object.fromEntries(Object.keys(v.branches).sort().map(k => [k, v.branches[k]])));
+      const cOk = (!r.costs && !v.costs) || (r.costs && v.costs && ['assume','enumerate','ask'].every(k => Math.abs(r.costs[k] - v.costs[k]) < 2e-3));
+      const ok = r.mode === v.mode && ids(r.used) === v.used.join(',') && ids(r.rev) === v.revised.join(',') && ids(r.hist) === v.history.join(',')
+        && br === bv && cOk && r.lo === v.target[0] && r.hi === v.target[1];
+      if(!ok){ bad++; if(ex.length < 3) ex.push({v, r:{mode:r.mode, used:ids(r.used), rev:ids(r.rev), hist:ids(r.hist), br, lo:r.lo, hi:r.hi, costs:r.costs}}); }
+    }
+    res.push({name, total:tv.length, pass:tv.length - bad, examples:ex});
+  }
+  return res;
+}
+window.__selftest = selftest;
+if(location.search.includes('selftest')) selftest().then(res => {
+  const div = document.createElement('div'); div.className = 'selftest';
+  div.textContent = res.map(r => `${r.name}: ${r.pass}/${r.total}`).join('   ·   ') + (res.every(r => r.pass === r.total) ? '   ✓ 与 Python 参考实现一致' : '   ✗ 有不一致');
+  document.body.appendChild(div); console.log('selftest', res);
+});
+</script>
+</body>
+</html>
