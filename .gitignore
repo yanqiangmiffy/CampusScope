@@ -218,3 +218,26 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# ---------------------------------------------------------------- CampusScope
+# secrets: never commit (demo/.env holds only ports, but stays local too)
+.env
+demo/.env
+!.env.example
+# LLM / embedding cache (distributed separately) and raw notice PDFs (not distributed)
+cache/
+notices_pdf/
+# local logs and environment checks
+outputs/env_check.json
+*.log
+
+# Node (demo/frontend)
+node_modules/
+demo/frontend/dist/
+*.tsbuildinfo
+# the Python template above ignores lib/: keep the frontend's
+!demo/frontend/src/lib/
+# data, run records and results are not distributed: only the documentation of the format is tracked
+data/*
+!data/README.md
+outputs/
