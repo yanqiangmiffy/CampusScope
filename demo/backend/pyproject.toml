@@ -1,0 +1,25 @@
+[project]
+name = "campusscope-demo-backend"
+version = "1.0.0"
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 140
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+ignore = ["B008", "E402"]
+
+[tool.ruff.lint.isort]
+# campusscope (the repository root) is imported after app: app.system must prepare its environment first
+known-first-party = ["app"]
+section-order = ["future", "standard-library", "third-party", "first-party", "campusscope", "local-folder"]
+
+[tool.ruff.lint.isort.sections]
+campusscope = ["campusscope"]
