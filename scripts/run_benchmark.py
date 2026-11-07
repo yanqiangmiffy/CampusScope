@@ -1,4 +1,4 @@
-"""Runs every system on CondQA-RUC with simulated users (Section 4.1; DeepSeek-V4.1-Flash as the backbone).
+"""Runs every system on CondQA-Campus with simulated users (Section 4.1; DeepSeek-V4.1-Flash as the backbone).
 
     python scripts/run_benchmark.py --suite main       # the seven baselines + CampusScope (Table 1)
     python scripts/run_benchmark.py --suite ablation   # components of CampusScope

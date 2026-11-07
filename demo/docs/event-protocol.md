@@ -21,7 +21,7 @@ Content-Type: application/json
 | --- | --- |
 | `conversation` | the dialogue so far (1–20 turns, `user` / `assistant`); the last turn is the question |
 | `today` | the visitor's "today" = the knowledge cutoff (notices published later are unknown) |
-| `campus` | `zgc` / `tz` / `null`: the campus picked in the top bar, prepended as a user turn ("（我在通州校区）") |
+| `campus` | `zgc` / `tz` / `null`: the campus picked in the top bar, prepended as a user turn naming the campus |
 | `compare` | also run the chunk-RAG baseline, in parallel |
 | `lang` | `en` (default) adds English glosses (a separate call; never feeds back into the answer); `zh` does not. Error messages follow it |
 
@@ -38,9 +38,9 @@ data: {"type": "baseline", "status": "running"}
 ...
 data: {"type": "graph", "graph": {"notices": [...], "facts": [...], "edges": [...], ...}}
 data: {"type": "used", "ids": ["b28eb1484c#44", ...], "mode": "enumerate", "passages": [...]}
-data: {"type": "delta", "text": "通州校区："}
+data: {"type": "delta", "text": "B校区："}
 ...
-data: {"type": "answer", "text": "通州校区：…", "action": "enumerate", "rewritten": false}
+data: {"type": "answer", "text": "B校区：…", "action": "enumerate", "rewritten": false}
 data: {"type": "baseline", "status": "done", "text": "…", "ms": 2100}
 data: {"type": "complete", "answer": "…", "action": "enumerate", "calls": 2, "latency": 1.3, "cached": true}
 data: [DONE]
