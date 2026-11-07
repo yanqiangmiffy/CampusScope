@@ -1,9 +1,9 @@
-"""CondQA-RUC (Section 4.1): condition-dependent questions over real notices, with hidden contexts.
+"""CondQA-Campus (Section 4.1): condition-dependent questions over real notices, with hidden contexts.
 
     python scripts/build_benchmark.py
 
 The released data/benchmark.jsonl, gold_facts.jsonl and audit_sheet.csv were produced by this script. The
-gold facts are extracted by Bonsai-27B and cross-checked by Qwen3-32B, so CondQA-RUC is independent of the
+gold facts are extracted by Bonsai-27B and cross-checked by Qwen3-32B, so CondQA-Campus is independent of the
 model under test (DeepSeek-V4.1-Flash) and of CampusScope's graph:
   A. source notices: service notices about hours, openings, schedules and adjustments;
   B. extraction by the *other* model (Bonsai-27B) over the whole notice;

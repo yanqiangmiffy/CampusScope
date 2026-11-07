@@ -1,1 +1,1 @@
-"""CondQA-RUC evaluation: simulated users, outcome-based judging and the metrics of Table 1."""
+"""CondQA-Campus evaluation: simulated users, outcome-based judging and the metrics of Table 1."""

@@ -1,17 +1,17 @@
 # Data
 
 Files read by `campusscope/` and written by `scripts/`. They are not included in this repository; this file
-documents their format. The MIT license of this repository covers the code; the notices are public posts of the
-General Services Department of Renmin University of China and remain theirs.
+documents their format. The MIT license of this repository covers the code; the notices are public posts of a
+university's logistics department and remain theirs.
 
 | File | Content | Produced by |
 | --- | --- | --- |
-| `notices.jsonl` | the 1,009 notices published from January 2023 to September 2026 on the department's website (Comprehensive Services Portal) and WeChat account: `doc_id`, `published`, `title`, `text`, and the tags `service`, `family`, `cycle` | `scripts/prepare_corpus.py` (from the notice PDFs; titles tagged by Qwen3-32B) |
+| `notices.jsonl` | the 1,009 notices published from January 2023 to September 2026 on the department's website and WeChat account: `doc_id`, `published`, `title`, `text`, and the tags `service`, `family`, `cycle` | `scripts/prepare_corpus.py` (from the notice PDFs; titles tagged by Qwen3-32B) |
 | `compiled_deepseek.jsonl` | raw compiler output for the 342 service notices: notice-level scope, outline (headings with the conditions they state) and span-grounded facts | `scripts/compile_graph.py` (DeepSeek-V4.1-Flash, temperature 0) |
 | `graph_stats.json` | statistics of the full evidence graph (4,031 facts, 1,947 passages, 1,964 revision and 627 recurrence edges) | `scripts/build_index.py` |
 | `gazetteer.json` | place names → campus (`zgc` / `tz`), the last resort of scope inheritance and the cue of T6 items | see *Provenance* below |
 | `campus_prior.json` | per-service-type campus prior P(campus \| type) of the cost-sensitive responder (Eq. 2) | see *Provenance* below |
-| `benchmark.jsonl` | CondQA-RUC: 247 items with question, hidden context (campus, date), gold and negative tokens, source fact | `scripts/build_benchmark.py` |
+| `benchmark.jsonl` | CondQA-Campus: 247 items with question, hidden context (campus, date), gold and negative tokens, source fact | `scripts/build_benchmark.py` |
 | `gold_facts.jsonl` | the verified gold facts of the 57 source notices | `scripts/build_benchmark.py` |
 | `benchmark_sources.jsonl` | the source notices of the benchmark | `scripts/build_benchmark.py` |
 | `audit_sheet.csv` | one row per item for manual verification | `scripts/build_benchmark.py` |

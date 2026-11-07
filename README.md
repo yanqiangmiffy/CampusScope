@@ -45,7 +45,7 @@ timeline of the graph.
 
 ### Why chunks are not enough
 
-Measured on the 1,009 public notices of the General Services Department of Renmin University of China and on its
+Measured on the 1,009 public notices of a university's logistics department and on its
 prototype RAG assistant:
 
 | | Challenge | Observation |
@@ -90,7 +90,7 @@ From 342 service notices, the graph holds 4,031 facts, 1,947 passages, 1,964 rev
 
 ## Results
 
-**CondQA-RUC**: 247 questions over 57 real notices, answered by simulated users who reveal their hidden campus and
+**CondQA-Campus**: 247 questions over 57 real notices, answered by simulated users who reveal their hidden campus and
 dates only when asked. All systems share the notices, retriever, knowledge cutoff, backbone
 (DeepSeek-V4.1-Flash) and simulated user.
 
@@ -123,7 +123,7 @@ explains the graph behind S1 step by step.
 | | Scenario | What the visitor sees |
 |---|---|---|
 | **S1** | Silent campus (C2) | "When is the track field open today?" on 20 January 2026 without a campus: the branches disagree, and listing both (0.80) beats asking (1.00) and guessing (1.71). |
-| **S2** | Scope stated (C1) | A Tongzhou student asks about the gym during the break and gets the Tongzhou section only. |
+| **S2** | Scope stated (C1) | A campus-B student asks about the gym during the break and gets the campus-B section only. |
 | **S3** | Revision (C3) | "When does the East bathhouse open in the morning?" on 9 March 2026: the September slot is struck through, revised in January; dragging "today" back to October makes it apply again. |
 | **S4** | No notice yet (C3) | Winter-break hours asked in December 2025: no fact of the new cycle exists, so the *rec* edge leads to last winter's hours, given with their year. |
 
@@ -172,17 +172,17 @@ campusscope/                the system
 └── llm.py, text.py, chunking.py, config.py
 scripts/                    the offline pipeline: corpus, graph compilation, index, benchmark runs, Table 1
 demo/                       the web demo: FastAPI + SSE back end, React front end, Docker Compose (§3.2, §3.3)
-data/                       notices, compiled notices, CondQA-RUC (see data/README.md)
+data/                       notices, compiled notices, CondQA-Campus (see data/README.md)
 tests/                      unit tests (no data or services needed)
 ```
 
 ## Data and ethics
 
-CampusScope is built on the notices that the General Services Department of Renmin University of China publishes
-on its website (Comprehensive Services Portal) and on its official WeChat account. Two small aggregate files, a
+CampusScope is built on the public notices that a university's logistics department publishes on its website
+and on its official WeChat account; the demo shows its two campuses as campus A and campus B. Two small aggregate files, a
 place-name gazetteer and a per-type campus prior, were derived from the department's internal service log; they
 contain no request text and no personal data (see [data/README.md](data/README.md)). No personal data reach a
-model. The questions of CondQA-RUC are generated from the notices, and the users in the evaluation are simulated
+model. The questions of CondQA-Campus are generated from the notices, and the users in the evaluation are simulated
 by rules that answer a clarification truthfully, only about what was asked.
 
 ## License
@@ -202,5 +202,5 @@ The code is released under the [MIT License](LICENSE). The notices remain the pr
 
 ## Acknowledgments
 
-We thank the General Services Department of Renmin University of China for publishing the notices this work builds
-on and for their advice on the system and on the design of its services.
+We thank the university logistics department that published the notices this work builds on, for its advice on
+the system and on the design of its services.

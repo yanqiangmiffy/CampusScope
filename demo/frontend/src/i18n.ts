@@ -2,8 +2,8 @@ import type { Lang } from "./types";
 
 const zh = {
   lang: "zh" as Lang,
-  brandSub: "条件感知的校园服务问答", today: "今天", campus: "我的校区", unstated: "未说明", zgc: "中关村", tz: "通州",
-  zgcFull: "中关村校区", tzFull: "通州校区", allFull: "两校区 / 未注明", compare: "对比 RAG", walkthrough: "证据图详解",
+  brandSub: "条件感知的校园服务问答", today: "今天", campus: "我的校区", unstated: "未说明", zgc: "A校区", tz: "B校区",
+  zgcFull: "A校区", tzFull: "B校区", allFull: "两校区 / 未注明", compare: "对比 RAG", walkthrough: "证据图详解",
   newChat: "新对话", dialogue: "对话", trace: "智能体轨迹", evidence: "条件作用域证据图", send: "发送", stop: "停止",
   placeholder: "问一个校园服务问题，例如：寒假期间田径场几点开放？", tryThese: "试试这些场景",
   heroTitle: "问一个问题，看它怎样在证据图上被回答",
@@ -12,7 +12,7 @@ const zh = {
   act: { answer: "直接回答", enumerate: "分校区列出", assume: "按最可能校区回答", ask: "追问校区", history: "往年参考", abstain: "无法回答" } as Record<string, string>,
   baseline: "RAG（部署路径）", baselineRunning: "RAG 生成中…", thinking: "推理中", writing: "生成中",
   calls: "次 LLM 调用", cached: "缓存命中", retry: "模型网关繁忙，第 {n} 次重试…", warmingMsg: "后端正在加载证据图与索引…",
-  stopped: "已停止", errorPrefix: "出错了：", quickZgc: "我在中关村校区", quickTz: "我在通州校区",
+  stopped: "已停止", errorPrefix: "出错了：", quickZgc: "我在A校区", quickTz: "我在B校区",
   traceEmpty: "提问后，这里逐步显示：理解问题 → 检索与图扩展 → 目标时段 → 适用性推理 → 代价敏感决策 → 生成 → 校验。",
   st: { plan: "理解问题", ground: "检索与图扩展", target: "目标时段", apply: "适用性推理", decide: "代价敏感决策", write: "生成答复", verify: "校验" } as Record<string, string>,
   stHint: { plan: "LLM 规划器", ground: "Milvus 混合检索 + 按键扩展", target: "把「今天/寒假」落到日期", apply: "在图上逐条判断", decide: "猜 · 列出 · 追问", write: "LLM，仅用许可证据", verify: "时间必须来自证据" } as Record<string, string>,
@@ -50,8 +50,8 @@ type Dict = typeof zh;
 
 const en: Dict = {
   lang: "en",
-  brandSub: "condition-aware campus service QA", today: "Today", campus: "My campus", unstated: "not stated", zgc: "Zhongguancun", tz: "Tongzhou",
-  zgcFull: "Zhongguancun campus", tzFull: "Tongzhou campus", allFull: "both / unstated", compare: "Compare RAG", walkthrough: "Graph walkthrough",
+  brandSub: "condition-aware campus service QA", today: "Today", campus: "My campus", unstated: "not stated", zgc: "Campus A", tz: "Campus B",
+  zgcFull: "Campus A", tzFull: "Campus B", allFull: "both / unstated", compare: "Compare RAG", walkthrough: "Graph walkthrough",
   newChat: "New chat", dialogue: "Dialogue", trace: "Agent trace", evidence: "Condition-scoped evidence graph", send: "Send", stop: "Stop",
   placeholder: "Ask in Chinese, e.g. 寒假期间田径场几点开放？ (track field hours in the winter break)", tryThese: "Try a scenario",
   heroTitle: "Ask a question and watch it being answered on the evidence graph",
@@ -60,7 +60,7 @@ const en: Dict = {
   act: { answer: "answer", enumerate: "lists both campuses", assume: "answers for the likely campus", ask: "asks for the campus", history: "last cycle, labeled", abstain: "no answer" },
   baseline: "RAG (deployed path)", baselineRunning: "RAG is writing…", thinking: "Reasoning", writing: "Writing",
   calls: "LLM calls", cached: "cached", retry: "Gateway busy, retry {n}…", warmingMsg: "The backend is loading the graph and the index…",
-  stopped: "Stopped", errorPrefix: "Error: ", quickZgc: "我在中关村校区", quickTz: "我在通州校区",
+  stopped: "Stopped", errorPrefix: "Error: ", quickZgc: "我在A校区", quickTz: "我在B校区",
   traceEmpty: "After you ask: plan → retrieval and graph expansion → target period → applicability → cost-sensitive decision → write → verify.",
   st: { plan: "Plan", ground: "Retrieve & expand", target: "Target period", apply: "Applicability", decide: "Cost-sensitive decision", write: "Write", verify: "Verify" },
   stHint: { plan: "LLM planner", ground: "Milvus hybrid + key expansion", target: "resolve now / a break to dates", apply: "fact by fact on the graph", decide: "guess · list · ask", write: "LLM, licensed evidence only", verify: "times must come from evidence" },

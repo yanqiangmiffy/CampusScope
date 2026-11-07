@@ -52,6 +52,17 @@ def safe_gloss(text: str, model: str) -> str | None:
         return None
 
 
+CAMPUS_ALIAS = (("A校区", "中关村校区"), ("B校区", "通州校区"), ("Campus A", "中关村校区"), ("Campus B", "通州校区"),
+                ("campus A", "中关村校区"), ("campus B", "通州校区"))
+
+
+def campus_alias(text: str) -> str:
+    """What a visitor types with the displayed campus names, in the notices' own names."""
+    for shown, real in CAMPUS_ALIAS:
+        text = text.replace(shown, real)
+    return text
+
+
 class QAService:
     def __init__(self, agents: Callable[[str], tuple], settings: Settings):
         self._agents = agents          # model -> (StreamingCampusScope, RAG)
@@ -60,6 +71,8 @@ class QAService:
     @staticmethod
     def conversation(req: ChatRequest) -> list[dict]:
         conv = [t.model_dump() for t in req.conversation]
+        # the interface shows the two campuses as A / B (deid.js); the notices, and so the system, name them
+        conv = [dict(t, text=campus_alias(t["text"])) if t["role"] == "user" else t for t in conv]
         # the campus picked in the top bar counts as something the visitor said (the system only trusts the dialogue)
         if req.campus in CAMPUS_HINT and not any("校区" in t["text"] for t in conv if t["role"] == "user"):
             conv = [dict(role="user", text=CAMPUS_HINT[req.campus])] + conv
