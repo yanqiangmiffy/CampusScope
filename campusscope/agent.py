@@ -16,7 +16,7 @@ import re
 from datetime import date
 
 from .config import SYSTEM_MODEL, collections_for
-from .graph import ATTR_GROUP, Options, load_graph
+from .graph import ATTR_GROUP, Options, entity_key, load_graph
 from .llm import chat, parse_json
 from .policy import DEFAULT_BETA, DEFAULT_LAMBDA, decide
 from .search import fact_nodes
@@ -175,6 +175,60 @@ class CampusScope:
             out.append(p)
         return out[:k]
 
+    def cycle_facts(self, plan, cycle, today, group):
+        """Facts of the target cycle's own notice for the named service point, matched by containment of the
+        normalized name (a notice may list 拳道馆 as 拳道馆健身房 or 公共教学2楼 by floor), so that a published
+        notice of this cycle is not mistaken for one that is not out yet."""
+        n = entity_key(plan.get("entity") or "")
+        if len(n) < 2:
+            return []
+        return [f for f in self.g.facts if f.ptype == cycle[0] and f.cycle == cycle[1] and f.published <= today
+                and (not group or f.group == group) and (n in f.ekey or (len(f.ekey) >= 2 and f.ekey in n))]
+
+    def current_passages(self, plan, conv, today, campus, target, cycle):
+        """Scoped passages that state the arrangement in force at the target: of the target cycle's own notice
+        for a named break, or carrying dates that cover the target otherwise. Undated passages do not count,
+        so standing text never stands in for a break whose notice is not out yet."""
+        lo, hi = target
+        out = []
+        for p in self.scoped_passages(plan, conv, today, campus, target):
+            if cycle:
+                if p["ptype"] == cycle[0] and p["cycle"] == cycle[1]:
+                    out.append(p)
+            elif (p["start"] or p["end"]) and (p["start"] or date.min) <= lo and hi <= (p["end"] or date.max):
+                out.append(p)
+        return out
+
+    def cycle_status(self, plan, conv, today, campus, cands, st, target, cycle, audience):
+        """For a named break: decide whether its own notice is out before falling back to an earlier cycle.
+
+        Returns (cands, st, branches, hist_passages, cur_passages). Labeled history is used only if no notice
+        of the target cycle published by today mentions the service point (by fact or by scoped passage)."""
+        branches = st["branches"]
+        hist_passages, cur_passages = [], []
+        if not (cycle and self.opt.recurrence):
+            return cands, st, branches, hist_passages, cur_passages
+
+        def of_cycle(br):
+            return [f for fs in br.values() for f in fs if f.ptype == cycle[0] and f.cycle == cycle[1]]
+
+        if not of_cycle(branches):
+            seen = {f.id for f in cands}
+            extra = [f for f in self.cycle_facts(plan, cycle, iso(parse_date(today)), ATTR_GROUP.get(plan.get("attr")))
+                     if f.id not in seen]
+            if extra:
+                cands = cands + extra
+                st = self.g.status(cands, dict(campus=None, audience=audience), today, target, cycle)
+                branches = st["branches"]
+        if not of_cycle(branches):
+            if self.opt.passages:
+                cur_passages = self.current_passages(plan, conv, today, campus, target, cycle)
+                if not cur_passages:
+                    hist_passages = self.history_passages(plan, conv, today, campus, cycle)
+            if (st["history"] or hist_passages) and not cur_passages:
+                branches = {}
+        return cands, st, branches, hist_passages, cur_passages
+
     def history_passages(self, plan, conv, today, campus, cycle, k=3):
         """Passages of the same kind of period from the most recent earlier cycle (passage-level rec edges)."""
         q = plan.get("query") or " ".join(t["text"] for t in conv if t["role"] == "user")
@@ -201,17 +255,10 @@ class CampusScope:
         # an audience restricts the evidence only if the user said who they are
         audience = plan.get("audience") if AUDIENCE_WORDS.search(user_text) else None
         st = self.g.status(cands, dict(campus=None, audience=audience), today, (lo, hi), cycle)
-        branches = st["branches"]
         # a named break whose own notice is not out yet: regular (standing) arrangements do not tell what
         # happens during the break, the same break of the last cycle (rec edge) does -> labeled history
-        hist_passages = []
-        if cycle and self.opt.recurrence:
-            of_cycle = [f for fs in branches.values() for f in fs if f.ptype == cycle[0] and f.cycle == cycle[1]]
-            if not of_cycle:
-                if self.opt.passages:
-                    hist_passages = self.history_passages(plan, conv, today, campus, cycle)
-                if st["history"] or hist_passages:
-                    branches = {}
+        cands, st, branches, hist_passages, cur_passages = self.cycle_status(
+            plan, conv, today, campus, cands, st, (lo, hi), cycle, audience)
         trace = dict(plan=plan, campus=campus, target=[iso(lo), iso(hi)], cycle=cycle, candidates=len(cands),
                      branches={k: [f.id for f in v] for k, v in branches.items()},
                      history=[f.id for f in st["history"]], revised=[f.id for f in st["revised"]])
@@ -241,7 +288,10 @@ class CampusScope:
                 mode, assumed = ("answer", None) if use else (None, None)
         facts = [f for fs in (use or {}).values() for f in fs] if mode else []
         scoped = []
-        if not facts:
+        if not facts and self.opt.passages and not cur_passages and not hist_passages:
+            # before falling back to an earlier cycle, a dated passage in force at the target answers
+            cur_passages = self.current_passages(plan, conv, today, campus or assumed, (lo, hi), cycle)
+        if not facts and not cur_passages:
             hist = [f for f in st["history"] if not campus or f.campus in (campus, None)]
             if hist or hist_passages:
                 mode, facts, scoped = "history", hist, hist_passages

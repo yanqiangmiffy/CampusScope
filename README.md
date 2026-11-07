@@ -103,15 +103,16 @@ dates only when asked. All systems share the notices, retriever, knowledge cutof
 | Passage RAG | 71.7 | 87 | 67 | 96 | 17 | 75 | 74 | 1.5 | 8.0 | 2.8 |
 | &nbsp;&nbsp;+ date filter | 70.9 | 82 | 67 | 100 | 0 | 77 | 82 | 0.7 | 4.4 | 3.2 |
 | Long context | 74.5 | 87 | 67 | 96 | 7 | 83 | 84 | 3.7 | 14.2 | 3.7 |
-| **CampusScope** | **85.0** | 87 | 71 | 87 | 70 | 90 | 92 | 4.5 | 7.1 | 8.1 |
+| **CampusScope** | **86.2** | 87 | **71** | **100** | **70** | **90** | **92** | 3.7 | **3.5** | 8.1 |
 
 Accuracy overall and per question type, in %. T1 campus stated · T2 silent campus, values differ · T3 this cycle
 differs from the last · T4 asked before its cycle's notice · T5 a later notice revised the field · T6 the place
 implies the campus. SCE: silent-condition error (another campus's value). TE: temporal error (a stale or revised
 value). Sec.: median seconds per item.
 
-CampusScope answers 85.0% of the items correctly (95% CI 79.9–90.2), against 74.5% for the long-context reader
-(*p* = 0.02 or lower against every baseline, bootstrap over notices).
+CampusScope answers 86.2% of the items correctly (95% CI 80.5–92.7), against 74.5% for the long-context reader
+(*p* = 0.001 or lower against every baseline, bootstrap over notices). Bold: CampusScope is best in the column
+(ties included).
 
 ## Demonstration scenarios
 

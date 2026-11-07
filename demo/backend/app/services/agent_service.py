@@ -96,15 +96,8 @@ class StreamingCampusScope(CampusScope):
         t0 = time.perf_counter()
         audience = plan.get("audience") if AUDIENCE_WORDS.search(user_text) else None
         st = self.g.status(cands, dict(campus=None, audience=audience), today, (lo, hi), cycle)
-        branches = st["branches"]
-        hist_passages = []
-        if cycle and self.opt.recurrence:
-            of_cycle = [f for fs in branches.values() for f in fs if f.ptype == cycle[0] and f.cycle == cycle[1]]
-            if not of_cycle:
-                if self.opt.passages:
-                    hist_passages = self.history_passages(plan, conv, today, campus, cycle)
-                if st["history"] or hist_passages:
-                    branches = {}
+        cands, st, branches, hist_passages, cur_passages = self.cycle_status(
+            plan, conv, today, campus, cands, st, (lo, hi), cycle, audience)
         future = sum(f.published > today for f in cands)
         yield dict(type="graph", graph=graph_service.build(self.g, cands, st, today, lo, hi, cycle, branches))
         yield stage("apply", "done", t0, branches={k: len(v) for k, v in branches.items()}, revised=len(st["revised"]),
@@ -142,7 +135,10 @@ class StreamingCampusScope(CampusScope):
                 mode = "answer" if use else None
         facts = [f for fs in (use or {}).values() for f in fs] if mode else []
         scoped = []
-        if not facts:
+        if not facts and self.opt.passages and not cur_passages and not hist_passages:
+            # before falling back to an earlier cycle, a dated passage in force at the target answers
+            cur_passages = self.current_passages(plan, conv, today, campus or assumed, (lo, hi), cycle)
+        if not facts and not cur_passages:
             hist = [f for f in st["history"] if not campus or f.campus in (campus, None)]
             if hist or hist_passages:
                 mode, facts, scoped = "history", hist, hist_passages
