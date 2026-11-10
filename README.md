@@ -6,7 +6,7 @@ Demo paper submitted to The Web Conference 2027 (WWW '27 Companion, Demo Track).
 
 <p align="center">
   <a href="http://82.157.0.181:8084/"><b>Live demo</b></a> ·
-  <a href="https://youtu.be/5Gy8rtLjVBg"><b>Demo video</b></a> ·
+  <a href="https://youtu.be/J-lam5BBBSc"><b>Demo video</b></a> ·
   <a href="http://82.157.0.181:8084/cseg.html"><b>Evidence-graph walkthrough</b></a>
 </p>
 
@@ -116,7 +116,7 @@ CampusScope answers 86.2% of the items correctly (95% CI 80.5–92.7), against 7
 
 ## Demonstration scenarios
 
-Watch them in the [demo video](https://youtu.be/5Gy8rtLjVBg), or try them in the [live demo](http://82.157.0.181:8084/)
+Watch them in the [demo video](https://youtu.be/J-lam5BBBSc), or try them in the [live demo](http://82.157.0.181:8084/)
 with the S1–S4 buttons of the dialogue panel. The [evidence-graph walkthrough](http://82.157.0.181:8084/cseg.html)
 explains the graph behind S1 step by step.
 
