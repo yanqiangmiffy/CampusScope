@@ -30,6 +30,8 @@ logger.add(sys.stderr, level=settings.LOG_LEVEL)
 def warmup() -> None:
     try:
         retrieval.install()
+        # check the embedding endpoint now, not at the first question the cache cannot answer
+        threading.Thread(target=retrieval.probe, daemon=True, name="embed-probe").start()
         set_stage("loading graph")
         _, STATE["stats"] = load_graph()
         set_stage("waiting for Milvus")

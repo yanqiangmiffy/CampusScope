@@ -1,5 +1,6 @@
 """Pure helpers: the incremental answer decoder, SSE frames, host rewriting, the embedding breaker."""
 import json
+import time
 
 from app.services import retrieval
 from app.services.llm_stream import AnswerStream
@@ -62,6 +63,43 @@ def test_breaker_opens_and_falls_back(monkeypatch):
     assert len(calls) == 1
     vecs = retrieval.cached_vectors(["a", "b"])
     assert len(vecs) == 2 and not any(vecs[0])          # zero vectors for index rows
+
+
+def test_status_recovers_after_the_breaker(monkeypatch):
+    """A failure must not pin the top bar to BM25: once the breaker runs out, /api/health probes again."""
+    up = []
+
+    class Flaky:
+        class embeddings:  # noqa: N801
+            @staticmethod
+            def create(**kw):
+                if not up:
+                    raise RuntimeError("400 Model does not exist")
+
+                class D:
+                    index, embedding = 0, [0.1] * 4
+
+                class R:
+                    data = [D] * len(kw["input"])
+                return R
+
+    stored = []
+    monkeypatch.setattr(retrieval.llm, "_put", lambda *a: stored.append(a))
+    monkeypatch.setattr(retrieval, "_endpoint", lambda: Flaky)
+    monkeypatch.setitem(retrieval.STATUS, "until", 0.0)
+    monkeypatch.setitem(retrieval.STATUS, "state", "unknown")
+    retrieval.probe()
+    assert retrieval.status()["state"] == "down" and "EMBEDDING_MODEL=" in retrieval.STATUS["error"]
+    up.append(1)                                         # endpoint fixed, breaker still open
+    assert retrieval.status()["state"] == "down"
+    monkeypatch.setitem(retrieval.STATUS, "until", 0.0)  # breaker ran out
+    retrieval.status()                                   # starts a background probe
+    for _ in range(100):
+        if retrieval.STATUS["state"] == "ok":
+            break
+        time.sleep(0.02)
+    assert retrieval.status()["state"] == "ok"
+    assert not stored                                    # the probe text never enters the cache
 
 
 def test_llm_probe_fails_fast_when_nothing_listens(monkeypatch):

@@ -18,7 +18,7 @@ def health() -> dict:
     return dict(
         ready=STATE["ready"], stage=STATE["stage"], error=STATE["error"], uptime=round(time.time() - STATE["t0"], 1),
         index=STATE["index"],
-        embedding=dict(state=retrieval.STATUS["state"], error=retrieval.STATUS["error"]),
+        embedding=retrieval.status(),
         llm=dict(configured=bool(MODELS[SYSTEM_MODEL][0] and MODELS[SYSTEM_MODEL][2]),
                  reachable=llm_probe.reachable(SYSTEM_MODEL), model=MODEL_LABEL[SYSTEM_MODEL]),
     )
