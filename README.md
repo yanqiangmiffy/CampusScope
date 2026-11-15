@@ -178,7 +178,7 @@ tests/                      unit tests (no data or services needed)
 
 ## Data and ethics
 
-CampusScope is built on public campus-service notices published through a university’s official web and WeChat channels; the demo labels its two campuses as Campus A and Campus B. Two small aggregate files—a place-name gazetteer and a campus prior by service type—were derived from internal campus service logs; they contain no request text or personal data (see [data/README.md](data/README.md)). No personal data are provided to any model. The questions in CondQA-Campus are generated from the notices, and evaluation users are simulated by rules that answer clarification questions truthfully, providing only the information explicitly requested.
+CampusScope is built on public campus-service notices published through a university’s official web and WeChat channels; the demo labels its two campuses as Campus A and Campus B. No personal data are provided to any model. The questions in CondQA-Campus are generated from the notices, and evaluation users are simulated by rules that answer clarification questions truthfully, providing only the information explicitly requested.
 
 ## License
 
